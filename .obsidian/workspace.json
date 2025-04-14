@@ -11,10 +11,14 @@
             "id": "99fac3d1a5accab7",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "_posts/2025-04-14-포스팅-테스트.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "새 탭"
+              "title": "2025-04-14-포스팅-테스트"
             }
           }
         ]
@@ -163,6 +167,17 @@
   },
   "active": "99fac3d1a5accab7",
   "lastOpenFiles": [
+    "_site/tags/태그2/index.html",
+    "_site/tags/태그2",
+    "_site/tags/asd/index.html",
+    "_site/tags/asd",
+    "_site/categories/1/index.html",
+    "_site/categories/1",
+    "_site/posts/포스팅-테스트/index.html",
+    "_site/posts/포스팅-테스트",
+    "_site/categories/카테고리2/index.html",
+    "_site/categories/카테고리2",
+    "_site/categories/카테고리1/index.html",
     "_site/assets/img/bg-sidebar.jpg",
     "assets/img/bg-sidebar.jpg",
     "_site/assets/img/bg.jpg",
@@ -173,18 +188,7 @@
     "_site/assets/img/bg6.jpg",
     "_site/assets/img/bg5.jpg",
     "_site/assets/img/bg4.jpg",
-    "_site/assets/img/bg3.jpg",
-    "_site/assets/css/jekyll-theme-chirpy.css.map",
-    "_site/posts/드래프트/index.html",
-    "_site/posts/드래프트",
-    "_site/posts/test1/index.html",
-    "_site/posts/test1",
-    "_site/posts/test/index.html",
-    "_site/posts/test",
     "_site/joonangler-dev/환영합니다!.md",
-    "_site/joonangler-dev",
-    "_site/categories/우웅/index.html",
-    "_site/categories/우웅",
     "_drafts/testtest1.md",
     "_drafts/test2.md 05-45-53-860.md",
     "_drafts/test2.md 05-45-05-711.md",
