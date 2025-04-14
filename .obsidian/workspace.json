@@ -1,0 +1,203 @@
+{
+  "main": {
+    "id": "83931dc7aa454780",
+    "type": "split",
+    "children": [
+      {
+        "id": "9179474c2d34efda",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "99fac3d1a5accab7",
+            "type": "leaf",
+            "state": {
+              "type": "empty",
+              "state": {},
+              "icon": "lucide-file",
+              "title": "새 탭"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "d342cba64ec75e0f",
+    "type": "split",
+    "children": [
+      {
+        "id": "901a8d8757c1e9e6",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0f2d76e1e7dffac2",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "파일 탐색기"
+            }
+          },
+          {
+            "id": "9c010ac01e14acac",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "검색"
+            }
+          },
+          {
+            "id": "0bc08b3ff3e13f6b",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "북마크"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "5678b30d81887a36",
+    "type": "split",
+    "children": [
+      {
+        "id": "213af27e95c11a68",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "58f54419de16b99d",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "백링크"
+            }
+          },
+          {
+            "id": "295e2c28c38e41a0",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "나가는 링크"
+            }
+          },
+          {
+            "id": "5bad880155525b44",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "태그"
+            }
+          },
+          {
+            "id": "f4b63ef1e79f9374",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "개요"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:빠른 전환기 열기": false,
+      "graph:그래프 뷰 열기": false,
+      "canvas:새 캔버스 만들기": false,
+      "daily-notes:오늘의 일일 노트 열기": false,
+      "templates:템플릿 삽입": false,
+      "command-palette:명령어 팔레트 열기": false
+    }
+  },
+  "active": "99fac3d1a5accab7",
+  "lastOpenFiles": [
+    "_site/assets/img/bg-sidebar.jpg",
+    "assets/img/bg-sidebar.jpg",
+    "_site/assets/img/bg.jpg",
+    "assets/img/bg.jpg",
+    "_site/assets/img/bg9.jpg",
+    "_site/assets/img/bg8.jpg",
+    "_site/assets/img/bg7.jpg",
+    "_site/assets/img/bg6.jpg",
+    "_site/assets/img/bg5.jpg",
+    "_site/assets/img/bg4.jpg",
+    "_site/assets/img/bg3.jpg",
+    "_site/assets/css/jekyll-theme-chirpy.css.map",
+    "_site/posts/드래프트/index.html",
+    "_site/posts/드래프트",
+    "_site/posts/test1/index.html",
+    "_site/posts/test1",
+    "_site/posts/test/index.html",
+    "_site/posts/test",
+    "_site/joonangler-dev/환영합니다!.md",
+    "_site/joonangler-dev",
+    "_site/categories/우웅/index.html",
+    "_site/categories/우웅",
+    "_drafts/testtest1.md",
+    "_drafts/test2.md 05-45-53-860.md",
+    "_drafts/test2.md 05-45-05-711.md",
+    "_drafts/test2.md",
+    "_drafts/test1.md",
+    "_drafts/test.md",
+    "joonangler-dev/환영합니다!.md",
+    "_plugins/2025-04-14.md",
+    "_posts/2025-04-14-test1.md",
+    "_posts/2025-04-14-test.md",
+    "_posts/2025-04-14-이건-포스트.md",
+    "_posts/2025-04-14-뭐야-되는거야.md",
+    "_posts/2025-04-14-드래프트.md",
+    "_posts/2025-04-13-test.md"
+  ]
+}
