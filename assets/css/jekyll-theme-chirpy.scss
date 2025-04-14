@@ -11,44 +11,44 @@
 
 // ===============================================
 // sidebar
-#sidebar {
-  background: url(../img/bg-sidebar.jpg);
-  background-size: cover;
-  background-position: center;
-}
+// #sidebar {
+//   background: url(../img/bg-sidebar.jpg);
+//   background-size: cover;
+//   background-position: center;
+// }
 
-#sidebar::after {
-  content: '';
-  position: absolute;
-  background: var(--sidebar-bg);
-  z-index: -1;
-  inset: 0;
-  opacity: 0.7;
-}
+// #sidebar::after {
+//   content: '';
+//   position: absolute;
+//   background: var(--sidebar-bg);
+//   z-index: -1;
+//   inset: 0;
+//   opacity: 0.7;
+// }
 
-#sidebar .site-title {
-  color: #f0f6fc;
-}
+// #sidebar .site-title {
+//   color: #f0f6fc;
+// }
 
-#sidebar .site-subtitle {
-  color: #9198a1;
-  font-style: normal !important;
-}
+// #sidebar .site-subtitle {
+//   color: #9198a1;
+//   font-style: normal !important;
+// }
 
-#sidebar .profile-wrapper {
-  padding-left: 2.5rem;
-  padding-right: 2.5rem;
-}
+// #sidebar .profile-wrapper {
+//   padding-left: 2.5rem;
+//   padding-right: 2.5rem;
+// }
 
-#sidebar #avatar {
-  margin: auto;
-  display: flex;
-  justify-content: center;
-}
+// #sidebar #avatar {
+//   margin: auto;
+//   display: flex;
+//   justify-content: center;
+// }
 
-#sidebar .sidebar-bottom {
-  justify-content: center;
-  padding-left: 2rem;
-  padding-right: 2rem;
-}
+// #sidebar .sidebar-bottom {
+//   justify-content: center;
+//   padding-left: 2rem;
+//   padding-right: 2rem;
+// }
 // ===============================================
