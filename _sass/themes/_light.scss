@@ -1,4 +1,9 @@
 @mixin styles {
+  /* custom */
+  --sidebar-bg-img: url(../img/bg-sidebar-light.jpg);
+  --sidebar-bg-img-opacity: 0.4;
+  /* ====== */
+
   /* Framework color */
   --main-bg: white;
   --mask-bg: #c1c3c5;

@@ -257,8 +257,10 @@ $sidebar-display: 'sidebar-display'; /* the attribute for sidebar display */
   }
 }
 
+// ===============================================
+
 #sidebar {
-  background: url(../img/bg-sidebar.jpg);
+  background: var(--sidebar-bg-img);
   background-size: cover;
   background-position: center;
 }
@@ -269,15 +271,15 @@ $sidebar-display: 'sidebar-display'; /* the attribute for sidebar display */
   background: var(--sidebar-bg);
   z-index: -1;
   inset: 0;
-  opacity: 0.7;
+  opacity: var(--sidebar-bg-img-opacity);
 }
 
 #sidebar .site-title {
-  color: #f0f6fc;
+  color: var(--sidebar-active-color);
 }
 
 #sidebar .site-subtitle {
-  color: #9198a1;
+  color: var(--sidebar-muted-color);
   font-style: normal !important;
 }
 

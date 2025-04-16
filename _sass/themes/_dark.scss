@@ -1,6 +1,11 @@
 @mixin styles {
   color-scheme: dark;
 
+  /* custom */
+  --sidebar-bg-img: url(../img/bg-sidebar-dark.jpg);
+  --sidebar-bg-img-opacity: 0.7;
+  /* ====== */
+
   /* Framework color */
   --main-bg: rgb(27, 27, 30);
   --mask-bg: rgb(68, 69, 70);
