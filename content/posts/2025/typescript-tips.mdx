@@ -1,0 +1,411 @@
+---
+# 📝 TEMPLATE SAMPLE POST - You can safely delete this file
+# 템플릿 샘플 포스트 - 이 파일은 안전하게 삭제할 수 있습니다
+title: "TypeScript 실전 팁과 트릭"
+description: "Next.js 프로젝트에서 활용할 수 있는 TypeScript 고급 기법들"
+date: "2025-01-30"
+tags: ["typescript", "nextjs", "programming"]
+series: "블로그 개발기"
+seriesOrder: 3
+author: "Template Author"
+draft: false
+---
+
+# TypeScript 실전 팁과 트릭
+
+Next.js 프로젝트에서 TypeScript를 효과적으로 활용하는 방법을 알아봅니다.
+
+## TypeScript의 장점
+
+TypeScript를 사용하면 다음과 같은 이점이 있습니다:
+
+- **타입 안정성**: 컴파일 타임에 오류 발견
+- **자동 완성**: IDE에서 강력한 인텔리센스 지원
+- **리팩토링**: 안전한 코드 변경
+- **문서화**: 타입 자체가 문서 역할
+
+<Callout type="info" title="TypeScript 5.x">
+이 포스트는 TypeScript 5.x를 기준으로 작성되었습니다.
+</Callout>
+
+## 유틸리티 타입
+
+### Partial과 Required
+
+```typescript
+interface User {
+  id: string
+  name: string
+  email: string
+  age?: number
+}
+
+// 모든 필드를 선택적으로
+type PartialUser = Partial<User>
+
+// 모든 필드를 필수로
+type RequiredUser = Required<User>
+```
+
+### Pick과 Omit
+
+```typescript
+// 특정 필드만 선택
+type UserPreview = Pick<User, 'id' | 'name'>
+
+// 특정 필드 제외
+type UserWithoutEmail = Omit<User, 'email'>
+```
+
+### Record 타입
+
+```typescript
+// 키-값 쌍의 객체 타입 정의
+type UserRoles = Record<string, 'admin' | 'user' | 'guest'>
+
+const roles: UserRoles = {
+  alice: 'admin',
+  bob: 'user',
+  charlie: 'guest'
+}
+```
+
+## 제네릭 활용
+
+### 기본 제네릭
+
+```typescript
+function identity<T>(value: T): T {
+  return value
+}
+
+// 타입 추론
+const result1 = identity('hello')  // string
+const result2 = identity(42)       // number
+
+// 명시적 타입
+const result3 = identity<boolean>(true)
+```
+
+### 제약이 있는 제네릭
+
+```typescript
+interface Lengthwise {
+  length: number
+}
+
+function logLength<T extends Lengthwise>(arg: T): T {
+  console.log(arg.length)
+  return arg
+}
+
+logLength('hello')     // ✅ OK
+logLength([1, 2, 3])   // ✅ OK
+logLength({ length: 10 })  // ✅ OK
+// logLength(42)       // ❌ Error
+```
+
+### 여러 제네릭 타입
+
+```typescript
+function merge<T, U>(obj1: T, obj2: U): T & U {
+  return { ...obj1, ...obj2 }
+}
+
+const result = merge(
+  { name: 'Alice' },
+  { age: 30 }
+)
+// 타입: { name: string; age: number }
+```
+
+## 고급 타입
+
+### 유니온과 인터섹션
+
+```typescript
+// 유니온 타입 (OR)
+type Status = 'pending' | 'approved' | 'rejected'
+
+function handleStatus(status: Status) {
+  switch (status) {
+    case 'pending':
+      return '대기 중'
+    case 'approved':
+      return '승인됨'
+    case 'rejected':
+      return '거절됨'
+  }
+}
+
+// 인터섹션 타입 (AND)
+type Employee = User & {
+  employeeId: string
+  department: string
+}
+```
+
+### 조건부 타입
+
+```typescript
+type IsString<T> = T extends string ? 'yes' : 'no'
+
+type A = IsString<string>   // 'yes'
+type B = IsString<number>   // 'no'
+
+// 실용 예제
+type NonNullable<T> = T extends null | undefined ? never : T
+
+type C = NonNullable<string | null>  // string
+type D = NonNullable<number | undefined>  // number
+```
+
+### 매핑된 타입
+
+```typescript
+type Readonly<T> = {
+  readonly [P in keyof T]: T[P]
+}
+
+type Nullable<T> = {
+  [P in keyof T]: T[P] | null
+}
+
+interface Todo {
+  title: string
+  completed: boolean
+}
+
+type ReadonlyTodo = Readonly<Todo>
+type NullableTodo = Nullable<Todo>
+```
+
+## Next.js에서의 TypeScript
+
+### 페이지 Props 타입
+
+```typescript title="app/posts/[slug]/page.tsx"
+interface PageProps {
+  params: {
+    slug: string
+  }
+  searchParams: {
+    [key: string]: string | string[] | undefined
+  }
+}
+
+export default function Page({ params, searchParams }: PageProps) {
+  return <div>Post: {params.slug}</div>
+}
+```
+
+### 서버 액션 타입
+
+```typescript title="actions.ts"
+'use server'
+
+interface FormData {
+  name: string
+  email: string
+}
+
+interface ActionResult {
+  success: boolean
+  message: string
+}
+
+export async function submitForm(data: FormData): Promise<ActionResult> {
+  try {
+    // 서버 로직
+    return { success: true, message: '성공!' }
+  } catch (error) {
+    return { success: false, message: '실패!' }
+  }
+}
+```
+
+### API 라우트 타입
+
+```typescript title="app/api/users/route.ts"
+import { NextRequest, NextResponse } from 'next/server'
+
+interface User {
+  id: string
+  name: string
+}
+
+export async function GET(request: NextRequest): Promise<NextResponse<User[]>> {
+  const users: User[] = [
+    { id: '1', name: 'Alice' },
+    { id: '2', name: 'Bob' }
+  ]
+
+  return NextResponse.json(users)
+}
+```
+
+## 타입 가드
+
+### typeof 가드
+
+```typescript
+function processValue(value: string | number) {
+  if (typeof value === 'string') {
+    // 여기서 value는 string
+    return value.toUpperCase()
+  } else {
+    // 여기서 value는 number
+    return value.toFixed(2)
+  }
+}
+```
+
+### 사용자 정의 타입 가드
+
+```typescript
+interface Fish {
+  swim: () => void
+}
+
+interface Bird {
+  fly: () => void
+}
+
+function isFish(pet: Fish | Bird): pet is Fish {
+  return (pet as Fish).swim !== undefined
+}
+
+function move(pet: Fish | Bird) {
+  if (isFish(pet)) {
+    pet.swim()
+  } else {
+    pet.fly()
+  }
+}
+```
+
+## 모범 사례
+
+### 1. any 피하기
+
+```typescript
+// ❌ Bad
+function processData(data: any) {
+  return data.value
+}
+
+// ✅ Good
+function processData<T extends { value: unknown }>(data: T) {
+  return data.value
+}
+```
+
+### 2. 타입 단언 최소화
+
+```typescript
+// ❌ Bad
+const value = data as string
+
+// ✅ Good
+const value = typeof data === 'string' ? data : undefined
+```
+
+### 3. strictNullChecks 활성화
+
+```json title="tsconfig.json"
+{
+  "compilerOptions": {
+    "strictNullChecks": true,
+    "strict": true
+  }
+}
+```
+
+<Callout type="warning" title="주의">
+strict 모드를 활성화하면 초기에는 많은 오류가 발생할 수 있지만, 장기적으로 코드 품질이 크게 향상됩니다.
+</Callout>
+
+## 실전 예제
+
+### 포스트 타입 정의
+
+```typescript title="types/post.ts"
+export interface PostFrontmatter {
+  title: string
+  description: string
+  date: string
+  tags: string[]
+  series?: string
+  seriesOrder?: number
+  author?: string
+  draft?: boolean
+}
+
+export interface Post extends PostFrontmatter {
+  slug: string
+  content: React.ReactNode
+  readingTime: {
+    text: string
+    minutes: number
+    words: number
+  }
+}
+```
+
+### 타입 안전한 유틸리티 함수
+
+```typescript title="lib/utils.ts"
+export function formatDate(date: string | Date): string {
+  const d = typeof date === 'string' ? new Date(date) : date
+  return d.toLocaleDateString('ko-KR', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  })
+}
+
+export function generateSlug(title: string): string {
+  return title
+    .toLowerCase()
+    .replace(/[^\w\s가-힣-]/g, '')
+    .replace(/\s+/g, '-')
+}
+```
+
+## 디버깅 팁
+
+### 타입 확인
+
+```typescript
+type Expect<T extends true> = T
+type Equal<X, Y> = X extends Y ? Y extends X ? true : false : false
+
+// 테스트
+type Test1 = Expect<Equal<string, string>>  // ✅
+// type Test2 = Expect<Equal<string, number>>  // ❌ 컴파일 에러
+```
+
+### 타입 추론 확인
+
+```typescript
+// 마우스 오버로 타입 확인
+const value = [1, 2, 3].map(x => x * 2)
+// value: number[]
+
+// 복잡한 타입의 경우
+type InferredType = typeof value
+```
+
+## 마무리
+
+TypeScript를 잘 활용하면 더 안전하고 유지보수하기 쉬운 코드를 작성할 수 있습니다!
+
+<Callout type="success" title="시리즈 완료">
+이것으로 "블로그 개발기" 시리즈를 마칩니다. 질문이 있다면 댓글로 남겨주세요!
+</Callout>
+
+## 참고 자료
+
+- [TypeScript 공식 문서](https://www.typescriptlang.org/docs/)
+- [TypeScript Deep Dive](https://basarat.gitbook.io/typescript/)
+- [Next.js TypeScript](https://nextjs.org/docs/app/building-your-application/configuring/typescript)
