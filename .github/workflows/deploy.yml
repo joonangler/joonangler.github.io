@@ -33,18 +33,18 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Create .env.production
-        run: |
-          echo "NEXT_PUBLIC_SITE_URL=https://username.github.io" >> .env.production
-          echo "NEXT_PUBLIC_SITE_NAME=Your Blog Name" >> .env.production
-          echo "NEXT_PUBLIC_SITE_DESCRIPTION=Your blog description" >> .env.production
-          echo "NEXT_PUBLIC_AUTHOR_NAME=Your Name" >> .env.production
-          echo "NEXT_PUBLIC_AUTHOR_EMAIL=your.email@example.com" >> .env.production
-          echo "NEXT_PUBLIC_GITHUB_URL=https://github.com/yourusername" >> .env.production
-          # Optional: Add GA_ID from GitHub Secrets
-          # echo "NEXT_PUBLIC_GA_ID=${{ secrets.GA_ID }}" >> .env.production
-          # Optional: Add Giscus config from GitHub Secrets
-          # echo "NEXT_PUBLIC_GISCUS_REPO=${{ secrets.GISCUS_REPO }}" >> .env.production
+      # - name: Create .env.production
+      #   run: |
+      #     echo "NEXT_PUBLIC_SITE_URL=https://username.github.io" >> .env.production
+      #     echo "NEXT_PUBLIC_SITE_NAME=Your Blog Name" >> .env.production
+      #     echo "NEXT_PUBLIC_SITE_DESCRIPTION=Your blog description" >> .env.production
+      #     echo "NEXT_PUBLIC_AUTHOR_NAME=Your Name" >> .env.production
+      #     echo "NEXT_PUBLIC_AUTHOR_EMAIL=your.email@example.com" >> .env.production
+      #     echo "NEXT_PUBLIC_GITHUB_URL=https://github.com/yourusername" >> .env.production
+      #     # Optional: Add GA_ID from GitHub Secrets
+      #     # echo "NEXT_PUBLIC_GA_ID=${{ secrets.GA_ID }}" >> .env.production
+      #     # Optional: Add Giscus config from GitHub Secrets
+      #     # echo "NEXT_PUBLIC_GISCUS_REPO=${{ secrets.GISCUS_REPO }}" >> .env.production
 
       - name: Build Next.js app
         run: npm run build
