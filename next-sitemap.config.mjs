@@ -1,5 +1,19 @@
+import dotenv from 'dotenv'
+import path from 'path'
+import { fileURLToPath } from 'url'
+import fs from 'fs'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+// Load .env.production file
+const envPath = path.join(__dirname, '.env.production')
+if (fs.existsSync(envPath)) {
+  dotenv.config({ path: envPath })
+}
+
 /** @type {import('next-sitemap').IConfig} */
-module.exports = {
+const config = {
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com',
   generateRobotsTxt: true,
   generateIndexSitemap: false,
@@ -93,3 +107,5 @@ module.exports = {
     ],
   },
 }
+
+export default config

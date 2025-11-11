@@ -3,9 +3,19 @@ import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import matter from 'gray-matter'
+import dotenv from 'dotenv'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
+
+// Load .env.production file
+const envPath = path.join(__dirname, '..', '.env.production')
+if (fs.existsSync(envPath)) {
+  dotenv.config({ path: envPath })
+  console.log('✅ Loaded environment variables from .env.production')
+} else {
+  console.warn('⚠️  .env.production file not found, using default values')
+}
 
 /**
  * RSS Feed 생성 스크립트
