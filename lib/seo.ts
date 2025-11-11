@@ -56,6 +56,11 @@ export function getBaseMetadata(): Metadata {
     },
     alternates: {
       canonical: SITE_CONFIG.url,
+      types: {
+        'application/rss+xml': `${SITE_CONFIG.url}/rss.xml`,
+        'application/atom+xml': `${SITE_CONFIG.url}/atom.xml`,
+        'application/feed+json': `${SITE_CONFIG.url}/feed.json`,
+      },
     },
   }
 }

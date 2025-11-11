@@ -25,6 +25,9 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning className={inter.variable}>
       <head>
+        <link rel="alternate" type="application/rss+xml" title="RSS Feed" href="/rss.xml" />
+        <link rel="alternate" type="application/atom+xml" title="Atom Feed" href="/atom.xml" />
+        <link rel="alternate" type="application/feed+json" title="JSON Feed" href="/feed.json" />
         <JsonLd data={generateWebSiteSchema()} />
       </head>
       <body className="min-h-screen bg-background font-sans antialiased flex flex-col">

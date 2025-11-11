@@ -67,12 +67,14 @@ export function Footer() {
               </h4>
               <ul className="flex flex-col gap-2 text-sm">
                 <li>
-                  <Link
-                    href="/api/rss"
+                  <a
+                    href="/rss.xml"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-muted-foreground transition-colors hover:text-foreground"
                   >
                     RSS Feed
-                  </Link>
+                  </a>
                 </li>
                 <li>
                   <a
