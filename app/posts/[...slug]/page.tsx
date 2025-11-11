@@ -16,14 +16,14 @@ import { generateBlogPostingSchema, generateBreadcrumbSchema } from '@/lib/json-
 
 interface PostPageProps {
   params: Promise<{
-    slug: string
+    slug: string[]
   }>
 }
 
 export async function generateStaticParams() {
   const posts = await getAllPosts()
   return posts.map((post) => ({
-    slug: post.slug,
+    slug: post.slug.split('/'),
   }))
 }
 
@@ -31,7 +31,8 @@ export async function generateMetadata({
   params,
 }: PostPageProps): Promise<Metadata> {
   const { slug } = await params
-  const post = await getPostBySlug(slug)
+  const slugString = slug.join('/')
+  const post = await getPostBySlug(slugString)
 
   if (!post) {
     return {
@@ -47,7 +48,7 @@ export async function generateMetadata({
   return getPageMetadata({
     title: post.title,
     description: post.description,
-    path: `/posts/${slug}`,
+    path: `/posts/${slugString}`,
     image: getOgImageUrl(post.coverImage),
     type: 'article',
     publishedTime: post.date,
@@ -58,14 +59,15 @@ export async function generateMetadata({
 
 export default async function PostPage({ params }: PostPageProps) {
   const { slug } = await params
-  const post = await getPostBySlug(slug)
+  const slugString = slug.join('/')
+  const post = await getPostBySlug(slugString)
 
   if (!post) {
     notFound()
   }
 
   // 시리즈 네비게이션 정보 가져오기
-  const seriesNavigation = post.series ? await getSeriesNavigation(slug) : null
+  const seriesNavigation = post.series ? await getSeriesNavigation(slugString) : null
 
   // 관련 포스트 가져오기
   const relatedPosts = await getRelatedPosts(post, 3)
@@ -77,12 +79,12 @@ export default async function PostPage({ params }: PostPageProps) {
   const breadcrumbItems = [
     { name: 'Home', url: '/' },
     { name: 'Posts', url: '/posts' },
-    { name: post.title, url: `/posts/${slug}` },
+    { name: post.title, url: `/posts/${slugString}` },
   ]
 
   return (
     <>
-      <JsonLd data={generateBlogPostingSchema(post, slug)} />
+      <JsonLd data={generateBlogPostingSchema(post, slugString)} />
       <JsonLd data={generateBreadcrumbSchema(breadcrumbItems)} />
       <Container className="py-12">
         {hasTOC ? (
