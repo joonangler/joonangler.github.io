@@ -26,6 +26,11 @@ if (fs.existsSync(envPath)) {
  * 재귀적으로 모든 MDX 파일 찾기
  */
 function getMDXFiles(dir, fileList = []) {
+  // 디렉토리가 없으면 빈 배열 반환
+  if (!fs.existsSync(dir)) {
+    return fileList
+  }
+
   const files = fs.readdirSync(dir)
 
   files.forEach((file) => {
