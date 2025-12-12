@@ -26,27 +26,19 @@ export const metadata: Metadata = {
  *
  * Server Component that:
  * 1. Fetches all posts on the server
- * 2. Extracts search query from URL params
- * 3. Passes data to client-side SearchInterface
+ * 2. Passes data to client-side SearchInterface
  *
  * The actual search is performed client-side for instant results
+ * Note: initialQuery is read from URL on client side for static export compatibility
  */
-export default async function SearchPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ q?: string }>
-}) {
+export default async function SearchPage() {
   // Fetch all posts on the server (cached by React)
   const posts = await getAllPosts()
-
-  // Get initial query from URL (for direct links)
-  const params = await searchParams
-  const initialQuery = params.q || ''
 
   return (
     <Container className="py-12">
       <Suspense fallback={<SearchFallback />}>
-        <SearchInterface posts={posts} initialQuery={initialQuery} />
+        <SearchInterface posts={posts} />
       </Suspense>
     </Container>
   )

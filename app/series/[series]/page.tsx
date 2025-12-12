@@ -11,8 +11,18 @@ interface SeriesPageProps {
   }>
 }
 
+// generateStaticParams에서 반환되지 않은 경로는 404
+export const dynamicParams = false
+
+// 플레이스홀더 - 빈 배열 반환 시 빌드 에러 방지
+const PLACEHOLDER_SERIES = '__placeholder__'
+
 export async function generateStaticParams() {
   const series = await getAllSeries()
+  if (series.length === 0) {
+    // 콘텐츠가 없을 때 플레이스홀더 반환 (페이지에서 notFound 처리)
+    return [{ series: PLACEHOLDER_SERIES }]
+  }
   return series.map((item) => ({
     series: item.slug,
   }))

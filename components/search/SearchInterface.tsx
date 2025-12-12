@@ -18,11 +18,6 @@ interface SearchInterfaceProps {
    * All posts to search through
    */
   posts: Post[]
-
-  /**
-   * Initial search query from URL params
-   */
-  initialQuery?: string
 }
 
 /**
@@ -35,16 +30,13 @@ interface SearchInterfaceProps {
  * - Executes search and displays results
  *
  * @example
- * <SearchInterface posts={allPosts} initialQuery="typescript" />
+ * <SearchInterface posts={allPosts} />
  */
-export function SearchInterface({
-  posts,
-  initialQuery = '',
-}: SearchInterfaceProps) {
-  const [query, setQuery] = useState(initialQuery)
+export function SearchInterface({ posts }: SearchInterfaceProps) {
+  const searchParams = useSearchParams()
+  const [query, setQuery] = useState(() => searchParams.get('q') || '')
   const [isSearching, setIsSearching] = useState(false)
   const router = useRouter()
-  const searchParams = useSearchParams()
 
   // Debounced URL update
   const debouncedUrlUpdate = useMemo(
@@ -117,7 +109,7 @@ export function SearchInterface({
       <div className="mx-auto mb-8 max-w-2xl">
         <SearchBar
           onSearch={handleSearch}
-          defaultValue={initialQuery}
+          defaultValue={query}
           placeholder="검색어를 입력하세요..."
           autoFocus
           showIcon

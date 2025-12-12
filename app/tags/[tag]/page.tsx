@@ -13,8 +13,17 @@ interface TagPageProps {
   }>
 }
 
+// generateStaticParams에서 반환되지 않은 경로는 404
+export const dynamicParams = false
+
+// 플레이스홀더 - 빈 배열 반환 시 빌드 에러 방지
+const PLACEHOLDER_TAG = '__placeholder__'
+
 export async function generateStaticParams() {
   const tags = await getAllTags()
+  if (tags.length === 0) {
+    return [{ tag: PLACEHOLDER_TAG }]
+  }
   return tags.map((tag) => ({
     tag: tag.name,
   }))
