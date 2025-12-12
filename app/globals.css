@@ -1,0 +1,252 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 4%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 4%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 4%;
+    --primary: 221 83% 53%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222 47% 11%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222 47% 11%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 221 83% 53%;
+  }
+
+  .dark {
+    --background: 0 0% 4%;
+    --foreground: 0 0% 93%;
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 93%;
+    --popover: 0 0% 7%;
+    --popover-foreground: 0 0% 93%;
+    --primary: 217 91% 60%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+    --accent: 217 33% 17%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 217 91% 60%;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-geist-sans);
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Shiki code block styles */
+pre {
+  @apply overflow-x-auto rounded-lg p-4;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+pre code {
+  @apply text-sm;
+}
+
+/* Shiki CSS 변수를 실제 색상으로 변환 */
+pre code span {
+  color: var(--shiki-light);
+}
+
+.dark pre code span {
+  color: var(--shiki-dark);
+}
+
+/* Custom scrollbar for code blocks */
+pre::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+pre::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-gray-800;
+  border-radius: 4px;
+}
+
+pre::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 dark:bg-gray-600;
+  border-radius: 4px;
+}
+
+pre::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400 dark:bg-gray-500;
+}
+
+/* Firefox scrollbar */
+pre {
+  scrollbar-width: thin;
+  scrollbar-color: theme('colors.gray.300') theme('colors.gray.100');
+}
+
+.dark pre {
+  scrollbar-color: theme('colors.gray.600') theme('colors.gray.800');
+}
+
+/* Code line highlighting (Shiki) */
+.highlighted {
+  @apply -mx-4 border-l-4 border-yellow-500 bg-yellow-200/20 px-4 dark:border-yellow-400 dark:bg-yellow-900/30;
+}
+
+/* Code word highlighting (Shiki) */
+.word-highlighted {
+  @apply rounded bg-orange-200/40 px-1 py-0.5 dark:bg-orange-900/40;
+}
+
+/* Line numbers for code blocks */
+pre[data-line-numbers] {
+  counter-reset: line;
+}
+
+pre[data-line-numbers] > code {
+  display: grid;
+}
+
+pre[data-line-numbers] code > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 1rem;
+  margin-right: 1.5rem;
+  text-align: right;
+  color: theme('colors.gray.400');
+  user-select: none;
+}
+
+.dark pre[data-line-numbers] code > [data-line]::before {
+  color: theme('colors.gray.500');
+}
+
+/* Custom scrollbar for TOC */
+.toc-scrollbar {
+  max-height: calc(100vh - 200px); /* 뷰포트 높이에 맞춰 최대 높이 설정 */
+  overflow-y: auto; /* 스크롤이 필요할 때만 스크롤바 표시 */
+}
+
+.toc-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  -webkit-appearance: none; /* macOS 자동 숨김 방지 */
+}
+
+.toc-scrollbar::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-gray-800;
+  border-radius: 3px;
+}
+
+.toc-scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-gray-300 dark:bg-gray-600;
+  border-radius: 3px;
+  min-height: 40px; /* 최소 높이로 항상 보이게 */
+}
+
+.toc-scrollbar::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400 dark:bg-gray-500;
+}
+
+/* Firefox scrollbar for TOC */
+.toc-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: theme('colors.gray.300') theme('colors.gray.100');
+}
+
+.dark .toc-scrollbar {
+  scrollbar-color: theme('colors.gray.600') theme('colors.gray.800');
+}
+
+/* Prose styles for MDX content */
+.prose {
+  @apply max-w-none text-foreground;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  @apply font-bold text-foreground;
+}
+
+.prose h1 {
+  @apply mb-6 mt-8 text-4xl;
+}
+
+.prose h2 {
+  @apply mb-4 mt-8 text-3xl;
+}
+
+.prose h3 {
+  @apply mb-3 mt-6 text-2xl;
+}
+
+.prose p {
+  @apply mb-4 leading-7;
+}
+
+.prose ul,
+.prose ol {
+  @apply mb-4 ml-6;
+}
+
+.prose li {
+  @apply mb-2;
+}
+
+.prose a {
+  @apply text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300;
+}
+
+.prose code {
+  @apply rounded bg-gray-100 px-1.5 py-0.5 text-sm
+}
+
+/* Shiki inline styles를 보존하기 위해 text-inherit 제거 */
+.prose pre code {
+  @apply bg-transparent p-0;
+}
+
+.prose img {
+  @apply rounded-lg;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-gray-300 pl-4 italic text-gray-700 dark:border-gray-700 dark:text-gray-300;
+}
+
+/* Screen reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}

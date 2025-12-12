@@ -1,0 +1,375 @@
+# Next.js Blog Template
+
+[![Deploy to GitHub Pages](https://github.com/joonangler/blog/actions/workflows/deploy.yml/badge.svg)](https://github.com/joonangler/blog/actions/workflows/deploy.yml)
+
+> 🚀 Next.js 16 기반 프로덕션 레벨 블로그 템플릿
+>
+> **288개 단위 테스트 | 85.66% 커버리지 | GitHub Pages 자동 배포**
+
+## ✨ 주요 특징
+
+### 📝 콘텐츠 관리
+- **MDX 지원**: Markdown + React 컴포넌트
+- **시리즈/태그 분류**: 자동 그룹핑 및 네비게이션
+- **목차(TOC)**: 자동 생성 및 스티키 내비게이션
+- **읽기 시간**: 자동 계산
+
+### 🎨 사용자 경험
+- **다크모드**: 시스템 설정 자동 연동 (next-themes)
+- **검색**: 클라이언트 사이드 전체 검색 (가중치 스코어링)
+- **반응형**: 모바일 퍼스트 디자인
+- **댓글**: Giscus 통합
+
+### 🔧 개발자 경험
+- **TypeScript**: 100% 타입 안전성
+- **Tailwind CSS**: 유틸리티 우선 스타일링
+- **ESLint + Prettier**: 코드 품질 자동화
+- **Testing**: Vitest + Playwright E2E
+- **CI/CD**: GitHub Actions 자동 배포
+
+### 🚀 성능 & SEO
+- **SSG**: 정적 사이트 생성 (빠른 로딩)
+- **Shiki**: 서버사이드 구문 강조
+- **SEO**: Metadata API, Sitemap, RSS/Atom/JSON Feed
+- **Analytics**: Google Analytics 4 지원
+- **Lighthouse**: 95+ 점수 목표
+
+---
+
+## 🎯 빠른 시작
+
+### 1. 템플릿에서 리포지토리 생성
+
+**방법 A: GitHub UI 사용**
+```
+1. 이 리포지토리 페이지 상단의 "Use this template" 버튼 클릭
+2. Repository name 입력:
+   - User/Org Page: "username.github.io"
+   - Project Page: 원하는 이름 (예: "my-blog")
+3. "Create repository" 클릭
+```
+
+**방법 B: GitHub CLI 사용**
+```bash
+# User/Org Page로 생성
+gh repo create username.github.io --template joonangler/blog --public --clone
+
+# Project Page로 생성
+gh repo create my-blog --template joonangler/blog --public --clone
+```
+
+### 2. 로컬 환경 설정
+
+```bash
+# 클론 (이미 했으면 스킵)
+git clone https://github.com/username/your-repo.git
+cd your-repo
+
+# 의존성 설치
+npm install
+
+# 환경변수 설정
+cp .env.example .env.local
+# .env.local 파일을 편집하여 개인 정보 입력
+
+# 개발 서버 실행
+npm run dev
+```
+
+개발 서버: http://localhost:3000
+
+### 3. 사이트 정보 수정
+
+**`.env.local` 및 `.env.production` 편집:**
+```bash
+NEXT_PUBLIC_SITE_URL=https://username.github.io
+NEXT_PUBLIC_SITE_NAME=Your Blog Name
+NEXT_PUBLIC_AUTHOR_NAME=Your Name
+NEXT_PUBLIC_GITHUB_URL=https://github.com/username
+# ... 기타 설정
+```
+
+**`next.config.ts` 수정 (basePath):**
+```typescript
+// User Page (username.github.io) - 변경 불필요
+basePath: ''
+
+// Project Page (username.github.io/blog)
+basePath: process.env.NODE_ENV === 'production' ? '/blog' : ''
+```
+
+### 4. 첫 포스트 작성
+
+```bash
+# content/posts/YYYY/your-post.mdx 생성
+```
+
+```markdown
+---
+title: "첫 포스트 제목"
+description: "포스트 설명"
+date: "2025-01-28"
+tags: ["nextjs", "blog"]
+---
+
+# 제목
+
+내용...
+```
+
+### 5. GitHub Pages 배포
+
+```bash
+# GitHub에 푸시
+git add .
+git commit -m "feat: 초기 설정 완료"
+git push origin main
+```
+
+**GitHub 설정:**
+```
+1. 리포지토리 Settings → Pages
+2. Source: "GitHub Actions" 선택
+3. 배포 완료 대기 (Actions 탭에서 진행상황 확인)
+4. 배포 URL 접속
+```
+
+---
+
+## 📂 프로젝트 구조
+
+```
+blog/
+├── app/                    # Next.js App Router
+│   ├── posts/             # 포스트 목록/상세
+│   ├── tags/              # 태그 페이지
+│   ├── series/            # 시리즈 페이지
+│   └── search/            # 검색 페이지
+├── components/            # React 컴포넌트
+│   ├── layout/           # 레이아웃 (Header, Footer)
+│   ├── post/             # 포스트 관련
+│   ├── mdx/              # MDX 커스텀 컴포넌트
+│   └── ui/               # 재사용 UI 컴포넌트
+├── lib/                   # 유틸리티 함수
+│   ├── mdx.ts            # MDX 처리
+│   ├── posts.ts          # 포스트 CRUD
+│   ├── search.ts         # 검색 알고리즘
+│   ├── tags.ts           # 태그 관리
+│   └── series.ts         # 시리즈 관리
+├── content/
+│   └── posts/            # MDX 포스트 파일
+│       └── YYYY/         # 연도별 구조
+├── public/               # 정적 파일
+├── __tests__/            # 단위 테스트 (288개)
+├── e2e/                  # E2E 테스트 (5개 시나리오)
+├── docs/                 # 프로젝트 문서
+│   ├── tech-stack-decision.md
+│   └── project-execution-plan.md
+└── CLAUDE.md             # 개발 가이드라인
+```
+
+---
+
+## 🛠️ 주요 명령어
+
+### 개발
+```bash
+npm run dev           # 개발 서버 (http://localhost:3000)
+npm run build         # 프로덕션 빌드
+npm run start         # 프로덕션 서버 (빌드 후)
+npm run lint          # ESLint 실행
+npm run type-check    # TypeScript 타입 체크
+npm run format        # Prettier 포맷팅
+```
+
+### 테스팅
+```bash
+npm run test          # Vitest (watch 모드)
+npm run test:run      # Vitest (1회 실행)
+npm run test:ui       # Vitest UI 모드
+npm run test:coverage # 커버리지 리포트
+npm run test:e2e      # Playwright E2E 테스트
+npm run test:e2e:ui   # Playwright UI 모드
+```
+
+### 성능 분석
+```bash
+npm run analyze       # 번들 분석
+npm run lighthouse    # Lighthouse CI 실행
+```
+
+---
+
+## 📝 콘텐츠 작성 가이드
+
+### Frontmatter 필수 필드
+
+```yaml
+---
+title: "포스트 제목"                    # 필수
+description: "SEO용 설명 (150자 이내)"  # 필수
+date: "2025-01-28"                      # 필수 (YYYY-MM-DD)
+tags: ["nextjs", "typescript"]          # 필수 (배열)
+series: "시리즈 이름"                   # 선택
+seriesOrder: 1                          # 선택 (시리즈 순서)
+coverImage: "/images/posts/cover.jpg"   # 선택
+draft: false                            # 선택 (기본 false)
+---
+```
+
+### 코드 블록
+
+````markdown
+```typescript title="example.ts" {3-5}
+function example() {
+  const highlighted = true  // 이 줄들이
+  const alsoHighlighted = true  // 강조됩니다
+  const andThisOne = true
+  return highlighted
+}
+```
+````
+
+### Callout 컴포넌트
+
+```markdown
+<Callout type="info">
+정보성 내용
+</Callout>
+
+<Callout type="warning">
+경고 내용
+</Callout>
+
+<Callout type="error">
+에러 내용
+</Callout>
+```
+
+---
+
+## 🔧 커스터마이징
+
+### 1. 테마 색상 변경
+
+`app/globals.css` 편집:
+```css
+:root {
+  --primary: 220 90% 56%;
+  --secondary: 280 60% 50%;
+  /* ... 기타 색상 */
+}
+```
+
+### 2. 폰트 변경
+
+`app/layout.tsx` 편집:
+```typescript
+import { YourFont } from 'next/font/google'
+
+const font = YourFont({ subsets: ['latin'] })
+```
+
+### 3. 댓글 시스템 설정
+
+`.env.production`에 Giscus 정보 추가:
+```bash
+NEXT_PUBLIC_GISCUS_REPO=username/repo
+NEXT_PUBLIC_GISCUS_REPO_ID=R_xxxxx
+NEXT_PUBLIC_GISCUS_CATEGORY=General
+NEXT_PUBLIC_GISCUS_CATEGORY_ID=DIC_xxxxx
+```
+
+[Giscus 설정 페이지](https://giscus.app/)에서 값을 얻을 수 있습니다.
+
+### 4. Google Analytics 추가
+
+`.env.production`:
+```bash
+NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
+```
+
+---
+
+## 📊 테스트 현황
+
+### 단위 테스트 (Vitest)
+- **288개 테스트** 작성
+- **85.66% Branch Coverage** (목표: 80%)
+- **93.2% Statement Coverage**
+- **96.26% Function Coverage**
+
+### E2E 테스트 (Playwright)
+- 5개 시나리오: Homepage, Post Detail, Search, Dark Mode, Responsive
+- 5개 브라우저/디바이스 조합
+
+### 성능 테스트 (Lighthouse CI)
+- Performance: 90+ 목표
+- Accessibility: 95+ 목표
+- Best Practices: 90+ 목표
+- SEO: 95+ 목표
+
+상세 내용: [TEST_README.md](./TEST_README.md)
+
+---
+
+## 📚 문서
+
+- **[TEMPLATE_SETUP.md](./TEMPLATE_SETUP.md)** - 상세 설정 가이드 ⭐
+- **[CLAUDE.md](./CLAUDE.md)** - 코딩 컨벤션 및 가이드라인
+- **[tech-stack-decision.md](./docs/tech-stack-decision.md)** - 기술 스택 선정 근거
+- **[project-execution-plan.md](./docs/project-execution-plan.md)** - 개발 로드맵
+- **[TEST_README.md](./TEST_README.md)** - 테스트 문서
+
+---
+
+## 🚀 배포 옵션
+
+### User/Organization Page
+- **리포지토리 이름**: `username.github.io`
+- **배포 URL**: `https://username.github.io`
+- **basePath**: 빈 문자열
+
+### Project Page
+- **리포지토리 이름**: 자유 (예: `blog`, `my-blog`)
+- **배포 URL**: `https://username.github.io/blog`
+- **basePath**: `/blog` (next.config.ts에서 설정)
+
+---
+
+## 🤝 기여
+
+버그 리포트, 기능 제안, PR 환영합니다!
+
+1. Fork
+2. Feature 브랜치 생성 (`git checkout -b feature/amazing-feature`)
+3. 커밋 (`git commit -m 'feat: Add amazing feature'`)
+4. Push (`git push origin feature/amazing-feature`)
+5. Pull Request 생성
+
+---
+
+## 📄 라이선스
+
+MIT License - 자유롭게 사용하세요!
+
+---
+
+## 🙏 크레딧
+
+- **Framework**: [Next.js](https://nextjs.org)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com)
+- **Syntax Highlighting**: [Shiki](https://shiki.style)
+- **Icons**: [Lucide](https://lucide.dev)
+- **Comments**: [Giscus](https://giscus.app)
+
+---
+
+## 💬 지원
+
+- **Issues**: [GitHub Issues](https://github.com/joonangler/blog/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/joonangler/blog/discussions)
+
+---
+
+**Made with ❤️ using Next.js 16**
