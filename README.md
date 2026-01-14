@@ -1,10 +1,4 @@
-# Next.js Blog Template
-
-[![Deploy to GitHub Pages](https://github.com/joonangler/blog/actions/workflows/deploy.yml/badge.svg)](https://github.com/joonangler/blog/actions/workflows/deploy.yml)
-
-> 🚀 Next.js 16 기반 프로덕션 레벨 블로그 템플릿
->
-> **288개 단위 테스트 | 85.66% 커버리지 | GitHub Pages 자동 배포**
+# Next.js Blog
 
 ## ✨ 주요 특징
 
@@ -38,27 +32,7 @@
 
 ## 🎯 빠른 시작
 
-### 1. 템플릿에서 리포지토리 생성
-
-**방법 A: GitHub UI 사용**
-```
-1. 이 리포지토리 페이지 상단의 "Use this template" 버튼 클릭
-2. Repository name 입력:
-   - User/Org Page: "username.github.io"
-   - Project Page: 원하는 이름 (예: "my-blog")
-3. "Create repository" 클릭
-```
-
-**방법 B: GitHub CLI 사용**
-```bash
-# User/Org Page로 생성
-gh repo create username.github.io --template joonangler/blog --public --clone
-
-# Project Page로 생성
-gh repo create my-blog --template joonangler/blog --public --clone
-```
-
-### 2. 로컬 환경 설정
+### 1. 로컬 환경 설정
 
 ```bash
 # 클론 (이미 했으면 스킵)
@@ -78,7 +52,7 @@ npm run dev
 
 개발 서버: http://localhost:3000
 
-### 3. 사이트 정보 수정
+### 2. 사이트 정보 수정
 
 **`.env.local` 및 `.env.production` 편집:**
 ```bash
@@ -98,10 +72,10 @@ basePath: ''
 basePath: process.env.NODE_ENV === 'production' ? '/blog' : ''
 ```
 
-### 4. 첫 포스트 작성
+### 3. 첫 포스트 작성
 
 ```bash
-# content/posts/YYYY/your-post.mdx 생성
+# content/posts/your-post.mdx 생성
 ```
 
 ```markdown
@@ -117,7 +91,7 @@ tags: ["nextjs", "blog"]
 내용...
 ```
 
-### 5. GitHub Pages 배포
+### 4. GitHub Pages 배포
 
 ```bash
 # GitHub에 푸시
@@ -158,14 +132,7 @@ blog/
 │   └── series.ts         # 시리즈 관리
 ├── content/
 │   └── posts/            # MDX 포스트 파일
-│       └── YYYY/         # 연도별 구조
-├── public/               # 정적 파일
-├── __tests__/            # 단위 테스트 (288개)
-├── e2e/                  # E2E 테스트 (5개 시나리오)
-├── docs/                 # 프로젝트 문서
-│   ├── tech-stack-decision.md
-│   └── project-execution-plan.md
-└── CLAUDE.md             # 개발 가이드라인
+└── public/               # 정적 파일
 ```
 
 ---
@@ -200,9 +167,9 @@ npm run lighthouse    # Lighthouse CI 실행
 
 ---
 
-## 📝 콘텐츠 작성 가이드
+## 📝 콘텐츠 작성
 
-### Frontmatter 필수 필드
+### Frontmatter 필드
 
 ```yaml
 ---
@@ -288,88 +255,3 @@ NEXT_PUBLIC_GISCUS_CATEGORY_ID=DIC_xxxxx
 ```bash
 NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
 ```
-
----
-
-## 📊 테스트 현황
-
-### 단위 테스트 (Vitest)
-- **288개 테스트** 작성
-- **85.66% Branch Coverage** (목표: 80%)
-- **93.2% Statement Coverage**
-- **96.26% Function Coverage**
-
-### E2E 테스트 (Playwright)
-- 5개 시나리오: Homepage, Post Detail, Search, Dark Mode, Responsive
-- 5개 브라우저/디바이스 조합
-
-### 성능 테스트 (Lighthouse CI)
-- Performance: 90+ 목표
-- Accessibility: 95+ 목표
-- Best Practices: 90+ 목표
-- SEO: 95+ 목표
-
-상세 내용: [TEST_README.md](./TEST_README.md)
-
----
-
-## 📚 문서
-
-- **[TEMPLATE_SETUP.md](./TEMPLATE_SETUP.md)** - 상세 설정 가이드 ⭐
-- **[CLAUDE.md](./CLAUDE.md)** - 코딩 컨벤션 및 가이드라인
-- **[tech-stack-decision.md](./docs/tech-stack-decision.md)** - 기술 스택 선정 근거
-- **[project-execution-plan.md](./docs/project-execution-plan.md)** - 개발 로드맵
-- **[TEST_README.md](./TEST_README.md)** - 테스트 문서
-
----
-
-## 🚀 배포 옵션
-
-### User/Organization Page
-- **리포지토리 이름**: `username.github.io`
-- **배포 URL**: `https://username.github.io`
-- **basePath**: 빈 문자열
-
-### Project Page
-- **리포지토리 이름**: 자유 (예: `blog`, `my-blog`)
-- **배포 URL**: `https://username.github.io/blog`
-- **basePath**: `/blog` (next.config.ts에서 설정)
-
----
-
-## 🤝 기여
-
-버그 리포트, 기능 제안, PR 환영합니다!
-
-1. Fork
-2. Feature 브랜치 생성 (`git checkout -b feature/amazing-feature`)
-3. 커밋 (`git commit -m 'feat: Add amazing feature'`)
-4. Push (`git push origin feature/amazing-feature`)
-5. Pull Request 생성
-
----
-
-## 📄 라이선스
-
-MIT License - 자유롭게 사용하세요!
-
----
-
-## 🙏 크레딧
-
-- **Framework**: [Next.js](https://nextjs.org)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com)
-- **Syntax Highlighting**: [Shiki](https://shiki.style)
-- **Icons**: [Lucide](https://lucide.dev)
-- **Comments**: [Giscus](https://giscus.app)
-
----
-
-## 💬 지원
-
-- **Issues**: [GitHub Issues](https://github.com/joonangler/blog/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/joonangler/blog/discussions)
-
----
-
-**Made with ❤️ using Next.js 16**
