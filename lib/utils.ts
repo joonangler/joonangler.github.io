@@ -12,10 +12,12 @@ export function cn(...inputs: ClassValue[]) {
 
 /**
  * 날짜 포매팅
+ * "YYYY-MM-DD"는 UTC 자정으로 해석되므로, UTC로 표시해야 시간대와 무관하게 같은 날짜가 나온다.
  */
 export function formatDate(date: string | Date): string {
   const d = typeof date === 'string' ? new Date(date) : date
   return d.toLocaleDateString('ko-KR', {
+    timeZone: 'UTC',
     year: 'numeric',
     month: 'long',
     day: 'numeric',
