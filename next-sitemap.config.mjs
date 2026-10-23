@@ -15,6 +15,7 @@ if (fs.existsSync(envPath)) {
 /** @type {import('next-sitemap').IConfig} */
 const config = {
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com',
+  outDir: 'out',
   generateRobotsTxt: true,
   generateIndexSitemap: false,
   exclude: ['/api/*', '/404'],

@@ -58,13 +58,15 @@ export default async function Home() {
           >
             <SiGithub className="h-8 w-8" />
           </a>
-          <a
-            href={`mailto:${SITE_CONFIG.author.email}`}
-            className="text-muted-foreground transition-colors hover:text-foreground"
-            aria-label="Email"
-          >
-            <Mail className="h-8 w-8" />
-          </a>
+          {SITE_CONFIG.author.email && (
+            <a
+              href={`mailto:${SITE_CONFIG.author.email}`}
+              className="text-muted-foreground transition-colors hover:text-foreground"
+              aria-label="Email"
+            >
+              <Mail className="h-8 w-8" />
+            </a>
+          )}
         </div>
       </section>
 
