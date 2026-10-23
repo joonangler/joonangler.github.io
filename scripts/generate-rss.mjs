@@ -50,7 +50,7 @@ function getMDXFiles(dir, fileList = []) {
 /**
  * MDX 파일에서 포스트 데이터 추출
  */
-function getPostFromFile(filePath, postsDir) {
+function getPostFromFile(filePath) {
   const fileContent = fs.readFileSync(filePath, 'utf-8')
   const { data } = matter(fileContent)
 
@@ -119,7 +119,7 @@ async function generateRSSFeed() {
 
     // 각 파일에서 포스트 데이터 추출
     const posts = mdxFiles
-      .map((file) => getPostFromFile(file, postsDir))
+      .map((file) => getPostFromFile(file))
       .filter((post) => post !== null)
       .sort((a, b) => new Date(b.date) - new Date(a.date))
 
