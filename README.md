@@ -1,257 +1,74 @@
-# Next.js Blog
+# Joonangler.log
 
-## ✨ 주요 특징
+https://joonangler.github.io — Next.js 정적 export로 만들어 GitHub Pages에 배포하는 개인 블로그.
 
-### 📝 콘텐츠 관리
-- **MDX 지원**: Markdown + React 컴포넌트
-- **시리즈/태그 분류**: 자동 그룹핑 및 네비게이션
-- **목차(TOC)**: 자동 생성 및 스티키 내비게이션
-- **읽기 시간**: 자동 계산
+## 기능
 
-### 🎨 사용자 경험
-- **다크모드**: 시스템 설정 자동 연동 (next-themes)
-- **검색**: 클라이언트 사이드 전체 검색 (가중치 스코어링)
-- **반응형**: 모바일 퍼스트 디자인
-- **댓글**: Giscus 통합
+- **MDX 글**: Markdown + React 컴포넌트(`Callout` 등), GFM, 수식(KaTeX)
+- **코드 블록**: 서버사이드 구문 강조(rehype-pretty-code/Shiki), 복사 버튼
+- **글 탐색**: 태그·시리즈 페이지, 시리즈 이전/다음 이동, 관련 글, 목차(TOC), 읽기 시간
+- **검색**: 클라이언트 사이드 전체 검색(제목·태그·설명 가중치)
+- **다크모드**: 시스템 설정 연동, 토글(next-themes)
+- **SEO·피드**: Metadata API, JSON-LD, sitemap, RSS·Atom·JSON Feed
 
-### 🔧 개발자 경험
-- **TypeScript**: 100% 타입 안전성
-- **Tailwind CSS**: 유틸리티 우선 스타일링
-- **ESLint + Prettier**: 코드 품질 자동화
-- **Testing**: Vitest + Playwright E2E
-- **CI/CD**: GitHub Actions 자동 배포
-
-### 🚀 성능 & SEO
-- **SSG**: 정적 사이트 생성 (빠른 로딩)
-- **Shiki**: 서버사이드 구문 강조
-- **SEO**: Metadata API, Sitemap, RSS/Atom/JSON Feed
-- **Analytics**: Google Analytics 4 지원
-- **Lighthouse**: 95+ 점수 목표
-
----
-
-## 🎯 빠른 시작
-
-### 1. 로컬 환경 설정
+## 개발 명령
 
 ```bash
-# 클론 (이미 했으면 스킵)
-git clone https://github.com/username/your-repo.git
-cd your-repo
-
-# 의존성 설치
-npm install
-
-# 환경변수 설정
-cp .env.example .env.local
-# .env.local 파일을 편집하여 개인 정보 입력
-
-# 개발 서버 실행
-npm run dev
+npm ci                    # 의존성 설치
+npm run dev               # 개발 서버 (http://localhost:3000)
+npm run lint              # ESLint
+npm run type-check        # TypeScript 타입 체크
+npm run test:run          # Vitest 단위 테스트 (1회 실행)
+npm run build:production  # 정적 빌드(out/) + sitemap·RSS
 ```
 
-개발 서버: http://localhost:3000
+E2E(`npm run test:e2e`, Playwright)는 로컬 전용이다. 개발 서버를 직접 띄워 테스트하며 CI에서는 돌리지 않는다.
 
-### 2. 사이트 정보 수정
+## 글 쓰기
 
-**`.env.local` 및 `.env.production` 편집:**
-```bash
-NEXT_PUBLIC_SITE_URL=https://username.github.io
-NEXT_PUBLIC_SITE_NAME=Your Blog Name
-NEXT_PUBLIC_AUTHOR_NAME=Your Name
-NEXT_PUBLIC_GITHUB_URL=https://github.com/username
-# ... 기타 설정
-```
-
-**`next.config.ts` 수정 (basePath):**
-```typescript
-// User Page (username.github.io) - 변경 불필요
-basePath: ''
-
-// Project Page (username.github.io/blog)
-basePath: process.env.NODE_ENV === 'production' ? '/blog' : ''
-```
-
-### 3. 첫 포스트 작성
-
-```bash
-# content/posts/your-post.mdx 생성
-```
+`content/posts/**/*.mdx`에 파일을 추가한다. 하위 폴더는 자유롭게 나눌 수 있고, 슬러그는 폴더와 무관하게 **파일명**이다.
 
 ```markdown
 ---
-title: "첫 포스트 제목"
-description: "포스트 설명"
-date: "2025-01-28"
+title: "글 제목"
+description: "요약 (150자 이내)"
+date: "YYYY-MM-DD"
 tags: ["nextjs", "blog"]
 ---
 
-# 제목
-
-내용...
+본문...
 ```
 
-### 4. GitHub Pages 배포
+- 필수: `title`, `description`(150자 이내), `date`(`"YYYY-MM-DD"` — 따옴표로 문자열), `tags`(배열)
+- 선택: `series`, `seriesOrder`(숫자), `coverImage`, `draft`(기본 false)
+
+## 배포
+
+1. main에서 브랜치를 만들어 PR을 연다. main 직접 푸시는 하지 않는다.
+2. PR의 필수 체크 `test`(lint · type-check · 단위 테스트 · 프로덕션 빌드)가 초록이어야 병합한다.
+3. main에 병합되면 GitHub Actions(`deploy.yml`)가 빌드해 GitHub Pages로 배포한다.
+
+> 저장소 Settings → Pages의 Source는 반드시 **GitHub Actions**여야 한다. 브랜치 빌드로 바뀌면 Jekyll이 이 README를 홈으로 내보낸다.
+
+병합 전 로컬 확인:
 
 ```bash
-# GitHub에 푸시
-git add .
-git commit -m "feat: 초기 설정 완료"
-git push origin main
+npm ci && npm run lint && npm run type-check && npm run test:run && npm run build:production
 ```
 
-**GitHub 설정:**
-```
-1. 리포지토리 Settings → Pages
-2. Source: "GitHub Actions" 선택
-3. 배포 완료 대기 (Actions 탭에서 진행상황 확인)
-4. 배포 URL 접속
-```
+## 선택 기능 (현재 꺼짐)
 
----
+Giscus 댓글과 Google Analytics 4는 코드에 들어 있지만 꺼져 있다. `.env.production`의 주석 처리된 `NEXT_PUBLIC_GISCUS_*`, `NEXT_PUBLIC_GA_ID` 줄을 풀고 값을 채우면 켜진다. 값이 없으면 댓글 영역과 GA 스크립트가 렌더링되지 않는다.
 
-## 📂 프로젝트 구조
+## 폴더 구조
 
 ```
-blog/
-├── app/                    # Next.js App Router
-│   ├── posts/             # 포스트 목록/상세
-│   ├── tags/              # 태그 페이지
-│   ├── series/            # 시리즈 페이지
-│   └── search/            # 검색 페이지
-├── components/            # React 컴포넌트
-│   ├── layout/           # 레이아웃 (Header, Footer)
-│   ├── post/             # 포스트 관련
-│   ├── mdx/              # MDX 커스텀 컴포넌트
-│   └── ui/               # 재사용 UI 컴포넌트
-├── lib/                   # 유틸리티 함수
-│   ├── mdx.ts            # MDX 처리
-│   ├── posts.ts          # 포스트 CRUD
-│   ├── search.ts         # 검색 알고리즘
-│   ├── tags.ts           # 태그 관리
-│   └── series.ts         # 시리즈 관리
-├── content/
-│   └── posts/            # MDX 포스트 파일
-└── public/               # 정적 파일
-```
-
----
-
-## 🛠️ 주요 명령어
-
-### 개발
-```bash
-npm run dev           # 개발 서버 (http://localhost:3000)
-npm run build         # 프로덕션 빌드
-npm run start         # 프로덕션 서버 (빌드 후)
-npm run lint          # ESLint 실행
-npm run type-check    # TypeScript 타입 체크
-npm run format        # Prettier 포맷팅
-```
-
-### 테스팅
-```bash
-npm run test          # Vitest (watch 모드)
-npm run test:run      # Vitest (1회 실행)
-npm run test:ui       # Vitest UI 모드
-npm run test:coverage # 커버리지 리포트
-npm run test:e2e      # Playwright E2E 테스트
-npm run test:e2e:ui   # Playwright UI 모드
-```
-
-### 성능 분석
-```bash
-npm run analyze       # 번들 분석
-npm run lighthouse    # Lighthouse CI 실행
-```
-
----
-
-## 📝 콘텐츠 작성
-
-### Frontmatter 필드
-
-```yaml
----
-title: "포스트 제목"                    # 필수
-description: "SEO용 설명 (150자 이내)"  # 필수
-date: "2025-01-28"                      # 필수 (YYYY-MM-DD)
-tags: ["nextjs", "typescript"]          # 필수 (배열)
-series: "시리즈 이름"                   # 선택
-seriesOrder: 1                          # 선택 (시리즈 순서)
-coverImage: "/images/posts/cover.jpg"   # 선택
-draft: false                            # 선택 (기본 false)
----
-```
-
-### 코드 블록
-
-````markdown
-```typescript title="example.ts" {3-5}
-function example() {
-  const highlighted = true  // 이 줄들이
-  const alsoHighlighted = true  // 강조됩니다
-  const andThisOne = true
-  return highlighted
-}
-```
-````
-
-### Callout 컴포넌트
-
-```markdown
-<Callout type="info">
-정보성 내용
-</Callout>
-
-<Callout type="warning">
-경고 내용
-</Callout>
-
-<Callout type="error">
-에러 내용
-</Callout>
-```
-
----
-
-## 🔧 커스터마이징
-
-### 1. 테마 색상 변경
-
-`app/globals.css` 편집:
-```css
-:root {
-  --primary: 220 90% 56%;
-  --secondary: 280 60% 50%;
-  /* ... 기타 색상 */
-}
-```
-
-### 2. 폰트 변경
-
-`app/layout.tsx` 편집:
-```typescript
-import { YourFont } from 'next/font/google'
-
-const font = YourFont({ subsets: ['latin'] })
-```
-
-### 3. 댓글 시스템 설정
-
-`.env.production`에 Giscus 정보 추가:
-```bash
-NEXT_PUBLIC_GISCUS_REPO=username/repo
-NEXT_PUBLIC_GISCUS_REPO_ID=R_xxxxx
-NEXT_PUBLIC_GISCUS_CATEGORY=General
-NEXT_PUBLIC_GISCUS_CATEGORY_ID=DIC_xxxxx
-```
-
-[Giscus 설정 페이지](https://giscus.app/)에서 값을 얻을 수 있습니다.
-
-### 4. Google Analytics 추가
-
-`.env.production`:
-```bash
-NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
+app/          Next.js App Router (posts, tags, series, search)
+components/   React 컴포넌트 (layout, post, mdx, search, ui)
+lib/          글 로딩(mdx.ts), 검색, 태그·시리즈, SEO·JSON-LD
+content/posts/  MDX 글 (글을 추가할 때 만든다)
+scripts/      RSS·Atom·JSON Feed 생성
+public/       정적 파일
+__tests__/    단위 테스트와 픽스처
+e2e/          Playwright 테스트
 ```
