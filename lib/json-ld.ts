@@ -105,7 +105,7 @@ export function generatePersonSchema() {
     name: SITE_CONFIG.author.name,
     ...(SITE_CONFIG.author.email && { email: SITE_CONFIG.author.email }),
     url: SITE_CONFIG.url,
-    sameAs: [SITE_CONFIG.social.github, SITE_CONFIG.social.twitter],
+    sameAs: [SITE_CONFIG.social.github, SITE_CONFIG.social.twitter].filter(Boolean),
   }
 }
 

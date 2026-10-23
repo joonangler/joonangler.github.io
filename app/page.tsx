@@ -49,15 +49,17 @@ export default async function Home() {
 
         {/* Social Links */}
         <div className="flex items-center gap-4">
-          <a
-            href={SITE_CONFIG.social.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-muted-foreground transition-colors hover:text-foreground"
-            aria-label="GitHub"
-          >
-            <SiGithub className="h-8 w-8" />
-          </a>
+          {SITE_CONFIG.social.github && (
+            <a
+              href={SITE_CONFIG.social.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-muted-foreground transition-colors hover:text-foreground"
+              aria-label="GitHub"
+            >
+              <SiGithub className="h-8 w-8" />
+            </a>
+          )}
           {SITE_CONFIG.author.email && (
             <a
               href={`mailto:${SITE_CONFIG.author.email}`}
