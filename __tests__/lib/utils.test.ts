@@ -1,4 +1,4 @@
-import { describe, it, expect, vi } from 'vitest'
+import { describe, it, expect, vi, afterEach } from 'vitest'
 import React from 'react'
 import { cn, formatDate, generateSlug, toSlug, isSafeUrl, getTextContent, debounce } from '@/lib/utils'
 
@@ -27,6 +27,20 @@ describe('utils', () => {
       const date = new Date('2025-01-28')
       const result = formatDate(date)
       expect(result).toMatch(/2025년/)
+    })
+
+    describe('시간대와 무관하게 날짜 문자열의 날짜를 그대로 보여준다', () => {
+      const originalTZ = process.env.TZ
+
+      afterEach(() => {
+        if (originalTZ === undefined) delete process.env.TZ
+        else process.env.TZ = originalTZ
+      })
+
+      it.each(['America/Los_Angeles', 'UTC', 'Asia/Seoul'])('%s', (tz) => {
+        process.env.TZ = tz
+        expect(formatDate('2025-10-29')).toMatch(/10월 29일/)
+      })
     })
   })
 
