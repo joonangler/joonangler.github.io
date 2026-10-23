@@ -11,7 +11,6 @@ const nextConfig: NextConfig = {
   output: process.env.NODE_ENV === 'production' ? 'export' : undefined,
 
   // GitHub Pages용 basePath (리포지토리 이름이 경로에 포함되는 경우)
-  // 예: https://username.github.io/blog
   // 실제 배포 시 환경에 맞게 수정하세요
   basePath: process.env.NODE_ENV === 'production' ? '' : '',
 
