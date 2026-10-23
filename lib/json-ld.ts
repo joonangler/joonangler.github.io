@@ -22,7 +22,7 @@ export function generateWebSiteSchema() {
     author: {
       '@type': 'Person',
       name: SITE_CONFIG.author.name,
-      email: SITE_CONFIG.author.email,
+      ...(SITE_CONFIG.author.email && { email: SITE_CONFIG.author.email }),
     },
     potentialAction: {
       '@type': 'SearchAction',
@@ -54,7 +54,7 @@ export function generateBlogPostingSchema(post: Post, slug: string) {
     author: {
       '@type': 'Person',
       name: post.author || SITE_CONFIG.author.name,
-      email: SITE_CONFIG.author.email,
+      ...(SITE_CONFIG.author.email && { email: SITE_CONFIG.author.email }),
     },
     publisher: {
       '@type': 'Organization',
@@ -103,9 +103,9 @@ export function generatePersonSchema() {
     '@context': 'https://schema.org',
     '@type': 'Person',
     name: SITE_CONFIG.author.name,
-    email: SITE_CONFIG.author.email,
+    ...(SITE_CONFIG.author.email && { email: SITE_CONFIG.author.email }),
     url: SITE_CONFIG.url,
-    sameAs: [SITE_CONFIG.social.github, SITE_CONFIG.social.twitter],
+    sameAs: [SITE_CONFIG.social.github, SITE_CONFIG.social.twitter].filter(Boolean),
   }
 }
 
@@ -124,7 +124,7 @@ export function generateBlogSchema() {
     author: {
       '@type': 'Person',
       name: SITE_CONFIG.author.name,
-      email: SITE_CONFIG.author.email,
+      ...(SITE_CONFIG.author.email && { email: SITE_CONFIG.author.email }),
     },
     publisher: {
       '@type': 'Organization',

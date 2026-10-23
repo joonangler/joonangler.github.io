@@ -15,9 +15,17 @@ if (fs.existsSync(envPath)) {
 /** @type {import('next-sitemap').IConfig} */
 const config = {
   siteUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://example.com',
+  outDir: 'out',
   generateRobotsTxt: true,
   generateIndexSitemap: false,
-  exclude: ['/api/*', '/404'],
+  exclude: [
+    '/api/*',
+    '/404',
+    // 글이 0개일 때 정적 export 빌드용 자리채움 경로
+    '/posts/__placeholder__*',
+    '/series/__placeholder__*',
+    '/tags/__placeholder__*',
+  ],
   changefreq: 'weekly',
   priority: 0.7,
   transform: async (config, path) => {

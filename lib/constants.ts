@@ -32,12 +32,12 @@ export const SITE_CONFIG = {
   locale: 'ko_KR',
   author: {
     name: process.env.NEXT_PUBLIC_AUTHOR_NAME || 'Blog Author',
-    email: process.env.NEXT_PUBLIC_AUTHOR_EMAIL || 'author@example.com',
+    email: process.env.NEXT_PUBLIC_AUTHOR_EMAIL || undefined,
     image: process.env.NEXT_PUBLIC_AUTHOR_IMAGE || '/favicon.svg'
   },
   social: {
-    twitter: process.env.NEXT_PUBLIC_TWITTER_HANDLE || '@yourusername',
-    github: process.env.NEXT_PUBLIC_GITHUB_URL || 'https://github.com/yourusername',
+    twitter: process.env.NEXT_PUBLIC_TWITTER_HANDLE || undefined,
+    github: process.env.NEXT_PUBLIC_GITHUB_URL || undefined,
   },
   analytics: {
     gaId: process.env.NEXT_PUBLIC_GA_ID,
