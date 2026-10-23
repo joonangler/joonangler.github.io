@@ -57,7 +57,7 @@ export function Callout({ children, type = 'info', title }: CalloutProps) {
     >
       <div className="flex gap-3">
         {/* 아이콘 */}
-        <div className="flex-shrink-0 text-xl" aria-hidden="true">
+        <div className="shrink-0 text-xl" aria-hidden="true">
           {icon}
         </div>
 

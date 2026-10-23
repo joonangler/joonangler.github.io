@@ -24,7 +24,7 @@ export function ThemeToggle() {
     return (
       <button
         type="button"
-        className="relative inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-background text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
+        className="relative inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-background text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
         disabled
       >
         <span className="sr-only">Toggle theme</span>
@@ -51,7 +51,7 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={cycleTheme}
-      className="relative inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-background text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+      className="relative inline-flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-background text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
       aria-label={`Current theme: ${theme}. Click to cycle themes.`}
       title={isSystemMode ? `Using system preference (${systemTheme})` : `${theme} mode`}
     >

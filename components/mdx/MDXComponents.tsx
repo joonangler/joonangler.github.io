@@ -107,7 +107,7 @@ export const mdxComponents: MDXComponents = {
 
   // 문단
   p: ({ children }) => (
-    <p className="my-4 leading-7 [&:not(:first-child)]:mt-6">
+    <p className="my-4 leading-7 not-first:mt-6">
       {children}
     </p>
   ),
@@ -177,7 +177,7 @@ export const mdxComponents: MDXComponents = {
 
     // 인라인 코드
     return (
-      <code className="relative rounded bg-gray-100 px-1.5 py-0.5 font-mono text-sm text-gray-900 dark:bg-gray-800 dark:text-gray-100">
+      <code className="relative rounded-sm bg-gray-100 px-1.5 py-0.5 font-mono text-sm text-gray-900 dark:bg-gray-800 dark:text-gray-100">
         {children}
       </code>
     )

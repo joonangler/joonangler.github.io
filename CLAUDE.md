@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-Next.js 16 (App Router, 정적 export) + React 19 + TypeScript + Tailwind 3 + MDX(next-mdx-remote) 블로그. GitHub Pages 배포.
+Next.js 16 (App Router, 정적 export) + React 19 + TypeScript + Tailwind 4 + MDX(next-mdx-remote) 블로그. GitHub Pages 배포.
 
 ## 명령
 
