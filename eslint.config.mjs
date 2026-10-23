@@ -1,5 +1,4 @@
 import nextPlugin from '@next/eslint-plugin-next'
-import reactPlugin from 'eslint-plugin-react'
 import hooksPlugin from 'eslint-plugin-react-hooks'
 import tseslint from 'typescript-eslint'
 
@@ -19,7 +18,6 @@ export default [
     files: ['**/*.{js,jsx,ts,tsx}'],
     plugins: {
       '@next/next': nextPlugin,
-      'react': reactPlugin,
       'react-hooks': hooksPlugin,
     },
     rules: {
@@ -34,11 +32,6 @@ export default [
       ],
       '@typescript-eslint/no-explicit-any': 'warn',
       'react-hooks/exhaustive-deps': 'warn',
-    },
-    settings: {
-      react: {
-        version: 'detect',
-      },
     },
   },
 ]
