@@ -202,193 +202,187 @@
   }
 }
 
-/* Shiki code block styles */
-pre {
-  @apply overflow-x-auto rounded-lg p-4;
-  max-height: 600px;
-  overflow-y: auto;
-}
+/*
+  아래 직접 작성 규칙은 v3에서 레이어 밖, 유틸리티 뒤에 놓여 명시도→순서로 유틸리티와 겨뤘다.
+  v4의 네이티브 @layer에서는 레이어 밖 규칙이 모든 유틸리티를 이기므로, 생성된 유틸리티 뒤의 utilities 레이어에
+  두어 v3와 같은 승부를 유지한다. (내장과 중복이던 직접 작성 .sr-only는 지웠다 — 그 clip이 v4 not-sr-only로 풀리지 않는다.)
+*/
+@layer utilities {
+  /* Shiki code block styles */
+  pre {
+    @apply overflow-x-auto rounded-lg p-4;
+    max-height: 600px;
+    overflow-y: auto;
+  }
 
-pre code {
-  @apply text-sm;
-}
+  pre code {
+    @apply text-sm;
+  }
 
-/* Shiki CSS 변수를 실제 색상으로 변환 */
-pre code span {
-  color: var(--shiki-light);
-}
+  /* Shiki CSS 변수를 실제 색상으로 변환 */
+  pre code span {
+    color: var(--shiki-light);
+  }
 
-.dark pre code span {
-  color: var(--shiki-dark);
-}
+  .dark pre code span {
+    color: var(--shiki-dark);
+  }
 
-/* Custom scrollbar for code blocks */
-pre::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
+  /* Custom scrollbar for code blocks */
+  pre::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
 
-pre::-webkit-scrollbar-track {
-  @apply bg-gray-100 dark:bg-gray-800;
-  border-radius: 4px;
-}
+  pre::-webkit-scrollbar-track {
+    @apply bg-gray-100 dark:bg-gray-800;
+    border-radius: 4px;
+  }
 
-pre::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 dark:bg-gray-600;
-  border-radius: 4px;
-}
+  pre::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark:bg-gray-600;
+    border-radius: 4px;
+  }
 
-pre::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-400 dark:bg-gray-500;
-}
+  pre::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400 dark:bg-gray-500;
+  }
 
-/* Firefox scrollbar */
-pre {
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-gray-300) var(--color-gray-100);
-}
+  /* Firefox scrollbar */
+  pre {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-gray-300) var(--color-gray-100);
+  }
 
-.dark pre {
-  scrollbar-color: var(--color-gray-600) var(--color-gray-800);
-}
+  .dark pre {
+    scrollbar-color: var(--color-gray-600) var(--color-gray-800);
+  }
 
-/* Code line highlighting (Shiki) */
-.highlighted {
-  @apply -mx-4 border-l-4 border-yellow-500 bg-yellow-200/20 px-4 dark:border-yellow-400 dark:bg-yellow-900/30;
-}
+  /* Code line highlighting (Shiki) */
+  .highlighted {
+    @apply -mx-4 border-l-4 border-yellow-500 bg-yellow-200/20 px-4 dark:border-yellow-400 dark:bg-yellow-900/30;
+  }
 
-/* Code word highlighting (Shiki) */
-.word-highlighted {
-  @apply rounded-sm bg-orange-200/40 px-1 py-0.5 dark:bg-orange-900/40;
-}
+  /* Code word highlighting (Shiki) */
+  .word-highlighted {
+    @apply rounded-sm bg-orange-200/40 px-1 py-0.5 dark:bg-orange-900/40;
+  }
 
-/* Line numbers for code blocks */
-pre[data-line-numbers] {
-  counter-reset: line;
-}
+  /* Line numbers for code blocks */
+  pre[data-line-numbers] {
+    counter-reset: line;
+  }
 
-pre[data-line-numbers] > code {
-  display: grid;
-}
+  pre[data-line-numbers] > code {
+    display: grid;
+  }
 
-pre[data-line-numbers] code > [data-line]::before {
-  counter-increment: line;
-  content: counter(line);
-  display: inline-block;
-  width: 1rem;
-  margin-right: 1.5rem;
-  text-align: right;
-  color: var(--color-gray-400);
-  user-select: none;
-}
+  pre[data-line-numbers] code > [data-line]::before {
+    counter-increment: line;
+    content: counter(line);
+    display: inline-block;
+    width: 1rem;
+    margin-right: 1.5rem;
+    text-align: right;
+    color: var(--color-gray-400);
+    user-select: none;
+  }
 
-.dark pre[data-line-numbers] code > [data-line]::before {
-  color: var(--color-gray-500);
-}
+  .dark pre[data-line-numbers] code > [data-line]::before {
+    color: var(--color-gray-500);
+  }
 
-/* Custom scrollbar for TOC */
-.toc-scrollbar {
-  max-height: calc(100vh - 200px); /* 뷰포트 높이에 맞춰 최대 높이 설정 */
-  overflow-y: auto; /* 스크롤이 필요할 때만 스크롤바 표시 */
-}
+  /* Custom scrollbar for TOC */
+  .toc-scrollbar {
+    max-height: calc(100vh - 200px); /* 뷰포트 높이에 맞춰 최대 높이 설정 */
+    overflow-y: auto; /* 스크롤이 필요할 때만 스크롤바 표시 */
+  }
 
-.toc-scrollbar::-webkit-scrollbar {
-  width: 6px;
-  -webkit-appearance: none; /* macOS 자동 숨김 방지 */
-}
+  .toc-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    -webkit-appearance: none; /* macOS 자동 숨김 방지 */
+  }
 
-.toc-scrollbar::-webkit-scrollbar-track {
-  @apply bg-gray-100 dark:bg-gray-800;
-  border-radius: 3px;
-}
+  .toc-scrollbar::-webkit-scrollbar-track {
+    @apply bg-gray-100 dark:bg-gray-800;
+    border-radius: 3px;
+  }
 
-.toc-scrollbar::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 dark:bg-gray-600;
-  border-radius: 3px;
-  min-height: 40px; /* 최소 높이로 항상 보이게 */
-}
+  .toc-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark:bg-gray-600;
+    border-radius: 3px;
+    min-height: 40px; /* 최소 높이로 항상 보이게 */
+  }
 
-.toc-scrollbar::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-400 dark:bg-gray-500;
-}
+  .toc-scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400 dark:bg-gray-500;
+  }
 
-/* Firefox scrollbar for TOC */
-.toc-scrollbar {
-  scrollbar-width: thin;
-  scrollbar-color: var(--color-gray-300) var(--color-gray-100);
-}
+  /* Firefox scrollbar for TOC */
+  .toc-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-gray-300) var(--color-gray-100);
+  }
 
-.dark .toc-scrollbar {
-  scrollbar-color: var(--color-gray-600) var(--color-gray-800);
-}
+  .dark .toc-scrollbar {
+    scrollbar-color: var(--color-gray-600) var(--color-gray-800);
+  }
 
-/* Prose styles for MDX content */
-.prose {
-  @apply max-w-none text-foreground;
-}
+  /* Prose styles for MDX content */
+  .prose {
+    @apply max-w-none text-foreground;
+  }
 
-.prose h1,
-.prose h2,
-.prose h3,
-.prose h4 {
-  @apply font-bold text-foreground;
-}
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4 {
+    @apply font-bold text-foreground;
+  }
 
-.prose h1 {
-  @apply mb-6 mt-8 text-4xl;
-}
+  .prose h1 {
+    @apply mb-6 mt-8 text-4xl;
+  }
 
-.prose h2 {
-  @apply mb-4 mt-8 text-3xl;
-}
+  .prose h2 {
+    @apply mb-4 mt-8 text-3xl;
+  }
 
-.prose h3 {
-  @apply mb-3 mt-6 text-2xl;
-}
+  .prose h3 {
+    @apply mb-3 mt-6 text-2xl;
+  }
 
-.prose p {
-  @apply mb-4 leading-7;
-}
+  .prose p {
+    @apply mb-4 leading-7;
+  }
 
-.prose ul,
-.prose ol {
-  @apply mb-4 ml-6;
-}
+  .prose ul,
+  .prose ol {
+    @apply mb-4 ml-6;
+  }
 
-.prose li {
-  @apply mb-2;
-}
+  .prose li {
+    @apply mb-2;
+  }
 
-.prose a {
-  @apply text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300;
-}
+  .prose a {
+    @apply text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300;
+  }
 
-.prose code {
-  @apply rounded-sm bg-gray-100 px-1.5 py-0.5 text-sm
-}
+  .prose code {
+    @apply rounded-sm bg-gray-100 px-1.5 py-0.5 text-sm
+  }
 
-/* Shiki inline styles를 보존하기 위해 text-inherit 제거 */
-.prose pre code {
-  @apply bg-transparent p-0;
-}
+  /* Shiki inline styles를 보존하기 위해 text-inherit 제거 */
+  .prose pre code {
+    @apply bg-transparent p-0;
+  }
 
-.prose img {
-  @apply rounded-lg;
-}
+  .prose img {
+    @apply rounded-lg;
+  }
 
-.prose blockquote {
-  @apply border-l-4 border-gray-300 pl-4 italic text-gray-700 dark:border-gray-700 dark:text-gray-300;
-}
-
-/* Screen reader only */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
+  .prose blockquote {
+    @apply border-l-4 border-gray-300 pl-4 italic text-gray-700 dark:border-gray-700 dark:text-gray-300;
+  }
 }
