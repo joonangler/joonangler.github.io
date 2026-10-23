@@ -59,7 +59,7 @@ export function SeriesNav({ navigation }: SeriesNavProps) {
         <div className="mt-4">
           <div className="h-2 overflow-hidden rounded-full bg-gray-200 dark:bg-gray-800">
             <div
-              className="h-full bg-linear-to-r from-blue-500 to-purple-500 transition-all duration-300"
+              className="h-full bg-linear-to-r/srgb from-blue-500 to-purple-500 transition-all duration-300"
               style={{ width: `${percentage}%` }}
               role="progressbar"
               aria-valuenow={percentage}
