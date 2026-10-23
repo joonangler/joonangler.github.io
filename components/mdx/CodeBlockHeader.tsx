@@ -86,9 +86,9 @@ export function CodeBlockHeader({ code, language, title }: CodeBlockHeaderProps)
         type="button"
         onClick={handleCopy}
         className={cn(
-          'flex items-center gap-1.5 rounded px-2.5 py-1.5 text-xs font-medium',
+          'flex items-center gap-1.5 rounded-sm px-2.5 py-1.5 text-xs font-medium',
           'transition-all duration-200',
-          'focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2',
+          'focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:ring-offset-2',
           {
             // idle 상태: 인터랙션 가능
             'hover:bg-gray-200 dark:hover:bg-gray-800 active:scale-95 cursor-pointer':

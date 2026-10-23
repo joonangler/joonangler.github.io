@@ -1,6 +1,58 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@utility text-balance {
+  text-wrap: balance;
+}
 
 @layer base {
   :root {
@@ -48,15 +100,11 @@
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: var(--font-geist-sans);
-}
-
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  body {
+    color: var(--foreground);
+    background: var(--background);
+    font-family: var(--font-geist-sans);
   }
 }
 
@@ -103,11 +151,11 @@ pre::-webkit-scrollbar-thumb:hover {
 /* Firefox scrollbar */
 pre {
   scrollbar-width: thin;
-  scrollbar-color: theme('colors.gray.300') theme('colors.gray.100');
+  scrollbar-color: var(--color-gray-300) var(--color-gray-100);
 }
 
 .dark pre {
-  scrollbar-color: theme('colors.gray.600') theme('colors.gray.800');
+  scrollbar-color: var(--color-gray-600) var(--color-gray-800);
 }
 
 /* Code line highlighting (Shiki) */
@@ -117,7 +165,7 @@ pre {
 
 /* Code word highlighting (Shiki) */
 .word-highlighted {
-  @apply rounded bg-orange-200/40 px-1 py-0.5 dark:bg-orange-900/40;
+  @apply rounded-sm bg-orange-200/40 px-1 py-0.5 dark:bg-orange-900/40;
 }
 
 /* Line numbers for code blocks */
@@ -136,12 +184,12 @@ pre[data-line-numbers] code > [data-line]::before {
   width: 1rem;
   margin-right: 1.5rem;
   text-align: right;
-  color: theme('colors.gray.400');
+  color: var(--color-gray-400);
   user-select: none;
 }
 
 .dark pre[data-line-numbers] code > [data-line]::before {
-  color: theme('colors.gray.500');
+  color: var(--color-gray-500);
 }
 
 /* Custom scrollbar for TOC */
@@ -173,11 +221,11 @@ pre[data-line-numbers] code > [data-line]::before {
 /* Firefox scrollbar for TOC */
 .toc-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: theme('colors.gray.300') theme('colors.gray.100');
+  scrollbar-color: var(--color-gray-300) var(--color-gray-100);
 }
 
 .dark .toc-scrollbar {
-  scrollbar-color: theme('colors.gray.600') theme('colors.gray.800');
+  scrollbar-color: var(--color-gray-600) var(--color-gray-800);
 }
 
 /* Prose styles for MDX content */
@@ -222,7 +270,7 @@ pre[data-line-numbers] code > [data-line]::before {
 }
 
 .prose code {
-  @apply rounded bg-gray-100 px-1.5 py-0.5 text-sm
+  @apply rounded-sm bg-gray-100 px-1.5 py-0.5 text-sm
 }
 
 /* Shiki inline styles를 보존하기 위해 text-inherit 제거 */

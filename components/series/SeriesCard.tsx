@@ -40,7 +40,7 @@ export function SeriesCard({ series }: SeriesCardProps) {
             />
           </div>
         ) : (
-          <div className="relative aspect-video w-full overflow-hidden bg-gradient-to-br from-primary/20 to-secondary/20" />
+          <div className="relative aspect-video w-full overflow-hidden bg-linear-to-br from-primary/20 to-secondary/20" />
         )}
 
         {/* 콘텐츠 */}
@@ -54,7 +54,7 @@ export function SeriesCard({ series }: SeriesCardProps) {
             </div>
             {/* <Badge
               variant={isCompleted ? 'default' : 'secondary'}
-              className="ml-2 flex-shrink-0"
+              className="ml-2 shrink-0"
             >
               {isCompleted ? 'Completed' : 'Ongoing'}
             </Badge> */}
@@ -85,7 +85,7 @@ export function SeriesCard({ series }: SeriesCardProps) {
                 className={`h-full transition-all duration-300 ${
                   isCompleted
                     ? 'bg-green-500'
-                    : 'bg-gradient-to-r from-blue-500 to-purple-500'
+                    : 'bg-linear-to-r from-blue-500 to-purple-500'
                 }`}
                 style={{ width: isCompleted ? '100%' : '75%' }}
               />

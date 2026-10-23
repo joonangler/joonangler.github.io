@@ -31,7 +31,7 @@ export function PostCard({ post }: PostCardProps) {
             />
           </div>
         ) : (
-          <div className="relative aspect-video w-full overflow-hidden bg-gradient-to-br from-primary/20 to-secondary/20" />
+          <div className="relative aspect-video w-full overflow-hidden bg-linear-to-br from-primary/20 to-secondary/20" />
         )}
 
         <article className="flex flex-1 flex-col p-6">

@@ -150,7 +150,7 @@ export function SearchBar({
           'w-full rounded-lg border border-input bg-background',
           'px-4 py-2 text-sm',
           'placeholder:text-muted-foreground',
-          'focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2',
+          'focus:border-primary focus:outline-hidden focus:ring-2 focus:ring-primary focus:ring-offset-2',
           'disabled:cursor-not-allowed disabled:opacity-50',
           'transition-colors',
           showIcon && 'pl-10',
@@ -173,10 +173,10 @@ export function SearchBar({
             type="button"
             onClick={handleClear}
             className={cn(
-              'rounded p-1',
+              'rounded-sm p-1',
               'text-muted-foreground hover:text-foreground',
               'transition-colors',
-              'focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2'
+              'focus:outline-hidden focus:ring-2 focus:ring-primary focus:ring-offset-2'
             )}
             aria-label="Clear search"
           >
@@ -201,7 +201,7 @@ export function SearchBar({
           <kbd
             className={cn(
               'hidden sm:inline-flex',
-              'items-center gap-1 rounded border border-border',
+              'items-center gap-1 rounded-sm border border-border',
               'bg-muted px-2 py-1',
               'text-xs font-semibold text-muted-foreground'
             )}

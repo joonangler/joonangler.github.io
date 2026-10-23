@@ -108,7 +108,7 @@ export function TableOfContents({
               'block py-1 text-sm transition-colors hover:text-foreground',
               'border-l-2 pl-3',
               // 키보드 포커스 스타일 추가
-              'focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
+              'focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
               isActive
                 ? 'border-primary font-semibold text-foreground'
                 : 'border-transparent text-muted-foreground hover:border-border'
@@ -153,7 +153,7 @@ export function TableOfContents({
             'flex cursor-pointer items-center justify-between p-4',
             'text-sm font-semibold uppercase tracking-wide text-card-foreground',
             'transition-colors hover:bg-accent',
-            'focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
+            'focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2',
             'list-none [&::-webkit-details-marker]:hidden'
           )}
           aria-label="Toggle table of contents"

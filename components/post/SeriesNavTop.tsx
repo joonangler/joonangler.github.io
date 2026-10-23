@@ -90,7 +90,7 @@ export function SeriesNavTop({ navigation }: SeriesNavProps) {
                   <li key={post.slug}>
                     {isCurrent ? (
                       <div className="flex items-center gap-4 bg-blue-50 px-6 py-3 dark:bg-blue-950/20">
-                        <span className="flex-shrink-0 text-sm font-semibold text-blue-600 dark:text-blue-400">
+                        <span className="shrink-0 text-sm font-semibold text-blue-600 dark:text-blue-400">
                           {post.seriesOrder || '?'}
                         </span>
                         <div className="flex-1">
@@ -110,7 +110,7 @@ export function SeriesNavTop({ navigation }: SeriesNavProps) {
                           'hover:bg-gray-50 dark:hover:bg-gray-900'
                         )}
                       >
-                        <span className="flex-shrink-0 text-sm font-medium text-gray-500 dark:text-gray-400">
+                        <span className="shrink-0 text-sm font-medium text-gray-500 dark:text-gray-400">
                           {post.seriesOrder || '?'}
                         </span>
                         <div className="flex-1">

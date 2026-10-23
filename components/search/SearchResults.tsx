@@ -91,7 +91,7 @@ export function SearchResults({
     return (
       <div className="mt-8">
         <div className="mb-6">
-          <div className="h-6 w-32 animate-pulse rounded bg-muted" />
+          <div className="h-6 w-32 animate-pulse rounded-sm bg-muted" />
         </div>
         <SearchSkeleton />
       </div>
