@@ -14,8 +14,9 @@ import { type Post, type PostFrontmatter } from '@/types/post'
 import { extractHeadings, buildTOCTree } from './toc'
 import { SITE_CONFIG } from '@/lib/constants'
 
-// 포스트 디렉토리 경로
-const POSTS_PATH = path.join(process.cwd(), 'content', 'posts')
+// 포스트 디렉토리 경로 (테스트는 POSTS_DIR로 픽스처 디렉토리를 지정)
+const POSTS_PATH =
+  process.env.POSTS_DIR ?? path.join(process.cwd(), 'content', 'posts')
 
 /**
  * Shiki 코드 하이라이팅 설정
