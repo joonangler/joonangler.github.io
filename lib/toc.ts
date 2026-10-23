@@ -3,8 +3,9 @@ import path from 'path'
 import matter from 'gray-matter'
 import { type TOCItem } from '@/types'
 
-// 포스트 디렉토리 경로
-const POSTS_PATH = path.join(process.cwd(), 'content', 'posts')
+// 포스트 디렉토리 경로 (테스트는 POSTS_DIR로 픽스처 디렉토리를 지정)
+const POSTS_PATH =
+  process.env.POSTS_DIR ?? path.join(process.cwd(), 'content', 'posts')
 
 /**
  * 텍스트를 ID로 변환 (앵커 링크용)
