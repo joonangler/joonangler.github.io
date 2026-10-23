@@ -2,7 +2,7 @@ import { type HTMLAttributes, forwardRef } from 'react'
 import { cn } from '@/lib/utils'
 
 interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
-  variant?: 'default' | 'secondary' | 'outline-solid' | 'success' | 'warning'
+  variant?: 'default' | 'secondary' | 'outline' | 'success' | 'warning'
 }
 
 /**
@@ -24,7 +24,7 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
             'bg-secondary text-secondary-foreground hover:bg-secondary/80':
               variant === 'secondary',
             'border border-border bg-background hover:bg-accent':
-              variant === 'outline-solid',
+              variant === 'outline',
             'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400':
               variant === 'success',
             'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400':
