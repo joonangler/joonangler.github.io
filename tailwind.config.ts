@@ -44,33 +44,6 @@ const config: Config = {
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
       },
-      typography: {
-        DEFAULT: {
-          css: {
-            maxWidth: 'none',
-            color: 'var(--foreground)',
-            a: {
-              color: '#3b82f6',
-              '&:hover': {
-                color: '#2563eb',
-              },
-            },
-            code: {
-              color: '#e11d48',
-              backgroundColor: 'rgba(0, 0, 0, 0.05)',
-              padding: '0.25rem 0.375rem',
-              borderRadius: '0.25rem',
-              fontWeight: '400',
-            },
-            'code::before': {
-              content: '""',
-            },
-            'code::after': {
-              content: '""',
-            },
-          },
-        },
-      },
     },
   },
   plugins: [],
