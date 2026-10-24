@@ -130,25 +130,41 @@ describe('series', () => {
     it('should be case insensitive', async () => {
       const allSeries = await getAllSeries()
 
-      if (allSeries.length > 0) {
-        const series = allSeries[0].name
-        const lower = await getSeriesInfo(series.toLowerCase())
-        const upper = await getSeriesInfo(series.toUpperCase())
+      expect(allSeries.length).toBeGreaterThan(0)
 
-        expect(lower?.name).toBe(upper?.name)
-      }
+      const series = allSeries[0].name
+      const lower = await getSeriesInfo(series.toLowerCase())
+      const upper = await getSeriesInfo(series.toUpperCase())
+
+      expect(lower).not.toBeNull()
+      expect(lower?.name).toBe(upper?.name)
     })
 
     it('should return null for non-existing series', async () => {
       const info = await getSeriesInfo('non-existing-series-xyz')
       expect(info).toBeNull()
     })
+
+    // 픽스처 시리즈 이름은 대문자·공백이 든 "Sample Series"
+    it.each([
+      ['original name', 'Sample Series'],
+      ['lower case name', 'sample series'],
+      ['slug', 'sample-series'],
+      ['padded upper case name', '  SAMPLE SERIES  '],
+    ])('should find the fixture series by %s', async (_label, input) => {
+      const info = await getSeriesInfo(input)
+
+      expect(info).not.toBeNull()
+      expect(info?.name).toBe('Sample Series')
+      expect(info?.slug).toBe('sample-series')
+      expect(info?.count).toBe(3)
+    })
   })
 
   describe('getSeriesNavigation', () => {
     it('should return null for post without series', async () => {
       // Assuming getting-started doesn't have a series
-      const nav = await getSeriesNavigation('2025/test-post')
+      const nav = await getSeriesNavigation('test-post')
 
       // If it has series, skip this test
       if (!nav) {
@@ -216,6 +232,36 @@ describe('series', () => {
     it('should return null for non-existing post', async () => {
       const nav = await getSeriesNavigation('non-existing-post')
       expect(nav).toBeNull()
+    })
+
+    it('should return null for fixture post without series', async () => {
+      const nav = await getSeriesNavigation('test-post')
+      expect(nav).toBeNull()
+    })
+
+    it('should return previous and next for the middle post of a mixed-case series', async () => {
+      const nav = await getSeriesNavigation('sample-series-2')
+
+      expect(nav).not.toBeNull()
+      expect(nav?.previous?.slug).toBe('sample-series-1')
+      expect(nav?.next?.slug).toBe('sample-series-3')
+      expect(nav?.series.name).toBe('Sample Series')
+    })
+
+    it('should have null previous for the first post of a mixed-case series', async () => {
+      const nav = await getSeriesNavigation('sample-series-1')
+
+      expect(nav).not.toBeNull()
+      expect(nav?.previous).toBeNull()
+      expect(nav?.next?.slug).toBe('sample-series-2')
+    })
+
+    it('should have null next for the last post of a mixed-case series', async () => {
+      const nav = await getSeriesNavigation('sample-series-3')
+
+      expect(nav).not.toBeNull()
+      expect(nav?.previous?.slug).toBe('sample-series-2')
+      expect(nav?.next).toBeNull()
     })
   })
 
