@@ -93,11 +93,12 @@ describe('series', () => {
       })
     })
 
-    it('should normalize series names', async () => {
+    it('should trim series names but keep their original case', async () => {
       const series = await getAllSeries()
 
+      expect(series.map((s) => s.name)).toContain('Sample Series')
       series.forEach((s) => {
-        expect(s.name).toBe(s.name.toLowerCase().trim())
+        expect(s.name).toBe(s.name.trim())
       })
     })
   })
