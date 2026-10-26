@@ -76,11 +76,14 @@ export async function getSeriesInfo(
   series: string
 ): Promise<SeriesInfo | null> {
   const allSeries = await getAllSeries()
-  const normalizedSeries = series.toLowerCase().trim()
+  const normalizedName = series.toLowerCase().trim()
+  const normalizedSlug = seriesToSlug(series)
 
   return (
     allSeries.find(
-      (s) => s.name === normalizedSeries || s.slug === normalizedSeries
+      (s) =>
+        s.name.toLowerCase().trim() === normalizedName ||
+        s.slug === normalizedSlug
     ) || null
   )
 }
