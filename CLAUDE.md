@@ -14,11 +14,11 @@ Next.js 16 (App Router, 정적 export) + React 19 + TypeScript + Tailwind 4 + MD
 슬러그는 하위 폴더와 무관하게 **파일명**이다. frontmatter:
 
 - 필수: `title`, `description`(150자 이내), `date`(`"YYYY-MM-DD"` — 따옴표로 문자열), `tags`(배열)
-- 선택: `series`, `seriesOrder`(숫자), `coverImage`, `draft`(기본 false)
+- 선택: `series`, `seriesOrder`(숫자), `seriesSlug`(영문 소문자·숫자·하이픈, 같은 시리즈 글은 같은 값), `coverImage`, `draft`(기본 false)
 
 ## 테스트
 
-단위 테스트는 실제 글이 아니라 `__tests__/fixtures/posts`를 읽는다 — vitest 설정이 `POSTS_DIR`을 그쪽으로 지정한다(`lib/mdx.ts`·`lib/toc.ts`가 이 변수를 우선, 없으면 `content/posts`). 실제 글을 추가·삭제해도 테스트가 깨지지 않아야 한다.
+단위 테스트는 실제 글이 아니라 `__tests__/fixtures/posts`를 읽는다 — vitest 설정이 `POSTS_DIR`을 그쪽으로 지정한다(`lib/mdx.ts`·`lib/toc.ts`가 이 변수를 우선, 없으면 `content/posts`). 실제 글을 추가·삭제해도 테스트가 깨지지 않아야 한다. `DRAFTS_DIR`은 `__tests__/fixtures/drafts`를 가리킨다(초안 폴더 기본값 `content/drafts`, 개발 모드 또는 `INCLUDE_DRAFTS=1`에서만 읽는다).
 
 ## 브랜치
 
