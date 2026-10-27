@@ -1,4 +1,5 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import path from 'path'
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import {
   getPostBySlug,
   getAllPosts,
@@ -7,6 +8,8 @@ import {
   postExists,
   getPostPaths,
 } from '@/lib/mdx'
+
+afterEach(() => vi.unstubAllEnvs())
 
 describe('mdx', () => {
   describe('postExists', () => {
@@ -290,5 +293,24 @@ describe('mdx', () => {
       expect(post?.tags).toBeInstanceOf(Array) // Should be [] if not provided
       expect(post?.draft).toBeDefined() // Should be false if not provided
     })
+  })
+})
+
+describe('drafts directory', () => {
+  it('does not see drafts dir by default (NODE_ENV=test)', () => {
+    expect(postExists('draft-in-drafts')).toBe(false)
+  })
+  it('sees drafts dir when INCLUDE_DRAFTS=1', () => {
+    vi.stubEnv('INCLUDE_DRAFTS', '1')
+    expect(postExists('draft-in-drafts')).toBe(true)
+  })
+  it('is silent when the drafts dir does not exist', async () => {
+    vi.stubEnv('INCLUDE_DRAFTS', '1'); vi.stubEnv('DRAFTS_DIR', '/nonexistent/drafts')
+    await expect(getAllPosts()).resolves.toBeInstanceOf(Array)
+  })
+  it('throws on posts/drafts slug collision', () => {
+    vi.stubEnv('INCLUDE_DRAFTS', '1')
+    vi.stubEnv('DRAFTS_DIR', path.resolve(__dirname, '../fixtures/drafts-collision'))
+    expect(() => getPostPaths()).toThrow(/slug collision: "test-post"/)
   })
 })

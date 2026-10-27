@@ -13,6 +13,7 @@ import type { PluggableList } from 'unified'
 import { type Post, type PostFrontmatter } from '@/types/post'
 import { extractHeadings, buildTOCTree } from './toc'
 import { SITE_CONFIG } from '@/lib/constants'
+import { draftsEnabled, getDraftsPath } from '@/lib/drafts'
 
 // 포스트 디렉토리 경로 (테스트는 POSTS_DIR로 픽스처 디렉토리를 지정)
 const POSTS_PATH =
@@ -78,7 +79,7 @@ export const mdxOptions = {
  * 슬러그로부터 파일 경로 생성 (파일명으로 재귀 검색)
  */
 function getPostFilePath(slug: string): string | null {
-  const files = getPostFiles()
+  const files = getAllContentFiles()
   const found = files.find((file) => path.basename(file, '.mdx') === slug)
   return found || null
 }
@@ -107,6 +108,30 @@ function getPostFiles(dir: string = POSTS_PATH): string[] {
   }
 
   return files
+}
+
+/**
+ * 글 폴더 + (초안이 켜진 경우) 초안 폴더의 파일 경로.
+ * 두 폴더에 같은 파일명이 있으면 슬러그가 겹치므로 오류.
+ */
+function getAllContentFiles(): string[] {
+  const posts = getPostFiles(POSTS_PATH)
+  if (!draftsEnabled()) {
+    return posts
+  }
+
+  const drafts = getPostFiles(getDraftsPath())
+  const postSlugs = new Set(posts.map(getSlugFromFilePath))
+  for (const file of drafts) {
+    const slug = getSlugFromFilePath(file)
+    if (postSlugs.has(slug)) {
+      throw new Error(
+        `[drafts] slug collision: "${slug}" exists in both posts and drafts`
+      )
+    }
+  }
+
+  return [...posts, ...drafts]
 }
 
 /**
@@ -191,7 +216,7 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
  * @internal
  */
 async function _getAllPosts(includeDrafts: boolean = false): Promise<Post[]> {
-  const files = getPostFiles()
+  const files = getAllContentFiles()
 
   // 병렬 처리로 성능 개선
   const postPromises = files.map(async (file) => {
@@ -226,7 +251,7 @@ export const getAllPosts = cache(_getAllPosts)
  * generateStaticParams를 위한 포스트 경로 가져오기
  */
 export function getPostPaths(): Array<{ slug: string[] }> {
-  const files = getPostFiles()
+  const files = getAllContentFiles()
 
   // 중복 파일명 감지
   const slugs = files.map((file) => path.basename(file, '.mdx'))

@@ -10,6 +10,7 @@ export default defineConfig({
     setupFiles: ['./setupTests.tsx'],
     env: {
       POSTS_DIR: path.resolve(__dirname, '__tests__/fixtures/posts'),
+      DRAFTS_DIR: path.resolve(__dirname, '__tests__/fixtures/drafts'),
     },
     coverage: {
       provider: 'v8',
