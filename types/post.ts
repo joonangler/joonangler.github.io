@@ -9,6 +9,7 @@ export interface Post {
   tags: string[]
   series?: string
   seriesOrder?: number
+  seriesSlug?: string
   coverImage?: string
   author?: string
   draft?: boolean
@@ -32,6 +33,7 @@ export interface PostFrontmatter {
   tags: string[]
   series?: string
   seriesOrder?: number
+  seriesSlug?: string
   coverImage?: string
   author?: string
   draft?: boolean

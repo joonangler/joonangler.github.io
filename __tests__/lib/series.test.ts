@@ -63,11 +63,13 @@ describe('series', () => {
       })
     })
 
-    it('should sort series by count descending', async () => {
+    it('should sort series by last post date descending', async () => {
       const series = await getAllSeries()
+      const lastDate = (s: (typeof series)[number]) =>
+        +new Date(s.posts[s.posts.length - 1].date)
 
       for (let i = 0; i < series.length - 1; i++) {
-        expect(series[i].count).toBeGreaterThanOrEqual(series[i + 1].count)
+        expect(lastDate(series[i])).toBeGreaterThanOrEqual(lastDate(series[i + 1]))
       }
     })
 
@@ -307,12 +309,13 @@ describe('series', () => {
       expect(popular.length).toBeLessThanOrEqual(5)
     })
 
-    it('should sort by count descending', async () => {
+    it('should follow getAllSeries order', async () => {
       const popular = await getPopularSeries(10)
+      const all = await getAllSeries()
 
-      for (let i = 0; i < popular.length - 1; i++) {
-        expect(popular[i].count).toBeGreaterThanOrEqual(popular[i + 1].count)
-      }
+      expect(popular.map((s) => s.slug)).toEqual(
+        all.slice(0, 10).map((s) => s.slug)
+      )
     })
 
     it('should use default limit of 5', async () => {

@@ -332,3 +332,22 @@ describe('draft visibility', () => {
     expect(paths).toContainEqual({ slug: ['draft-in-drafts'] })
   })
 })
+
+describe('seriesSlug', () => {
+  it('reads seriesSlug from frontmatter', async () => {
+    expect((await getPostBySlug('slugged-series-1'))?.seriesSlug).toBe('slugged-series')
+    expect(getPostFrontmatter('slugged-series-1')?.seriesSlug).toBe('slugged-series')
+  })
+  it('is undefined when frontmatter has no seriesSlug', async () => {
+    expect((await getPostBySlug('sample-series-1'))?.seriesSlug).toBeUndefined()
+  })
+  it('rejects a seriesSlug that is not lowercase-hyphen', async () => {
+    expect(await getPostBySlug('bad-series-slug')).toBeNull()
+    expect(getPostFrontmatter('bad-series-slug')).toBeNull()
+  })
+  it('keeps the post but drops seriesSlug when series is missing', async () => {
+    const post = await getPostBySlug('orphan-series-slug')
+    expect(post).not.toBeNull()
+    expect(post?.seriesSlug).toBeUndefined()
+  })
+})

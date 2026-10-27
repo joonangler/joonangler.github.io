@@ -75,6 +75,36 @@ export const mdxOptions = {
   },
 }
 
+// 시리즈 주소 슬러그 형식: 영문 소문자·숫자·하이픈
+export const SERIES_SLUG_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/
+
+/**
+ * frontmatter seriesSlug 읽기·검증
+ * @returns 값 | undefined(없음 또는 series 없이 지정돼 무시) | null(형식 위반)
+ */
+function readSeriesSlug(
+  data: Record<string, unknown>,
+  slug: string
+): string | null | undefined {
+  if (data.seriesSlug === undefined || data.seriesSlug === null) {
+    return undefined
+  }
+  if (!data.series) {
+    console.warn(`Ignoring seriesSlug in ${slug}: no series`)
+    return undefined
+  }
+  if (
+    typeof data.seriesSlug !== 'string' ||
+    !SERIES_SLUG_PATTERN.test(data.seriesSlug)
+  ) {
+    console.warn(
+      `Invalid seriesSlug in ${slug}: must be lowercase letters, digits and hyphens`
+    )
+    return null
+  }
+  return data.seriesSlug
+}
+
 /**
  * 슬러그로부터 파일 경로 생성 (파일명으로 재귀 검색)
  */
@@ -162,6 +192,11 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
       return null
     }
 
+    const seriesSlug = readSeriesSlug(data, slug)
+    if (seriesSlug === null) {
+      return null
+    }
+
     // MDX 유효성 검증 (컴파일 테스트)
     try {
       await compileMDX({
@@ -198,6 +233,7 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
       },
       series: data.series,
       seriesOrder: data.seriesOrder,
+      seriesSlug,
       coverImage: data.coverImage,
       author: data.author || SITE_CONFIG.author.name,
       draft: data.draft || false,
@@ -300,6 +336,11 @@ export function getPostFrontmatter(slug: string): PostFrontmatter | null {
       return null
     }
 
+    const seriesSlug = readSeriesSlug(data, slug)
+    if (seriesSlug === null) {
+      return null
+    }
+
     const readingTimeResult = readingTime(content)
 
     return {
@@ -310,6 +351,7 @@ export function getPostFrontmatter(slug: string): PostFrontmatter | null {
       tags: data.tags || [],
       series: data.series,
       seriesOrder: data.seriesOrder,
+      seriesSlug,
       coverImage: data.coverImage,
       author: data.author,
       draft: data.draft || false,
