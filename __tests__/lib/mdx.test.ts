@@ -314,3 +314,21 @@ describe('drafts directory', () => {
     expect(() => getPostPaths()).toThrow(/slug collision: "test-post"/)
   })
 })
+
+describe('draft visibility', () => {
+  it('getPostPaths excludes draft files by default', () => {
+    expect(getPostPaths()).not.toContainEqual({ slug: ['draft-post'] })
+  })
+  it('getAllPosts includes drafts from both dirs when INCLUDE_DRAFTS=1', async () => {
+    vi.stubEnv('INCLUDE_DRAFTS', '1')
+    const slugs = (await getAllPosts()).map((p) => p.slug)
+    expect(slugs).toContain('draft-post')
+    expect(slugs).toContain('draft-in-drafts')
+  })
+  it('getPostPaths includes drafts when INCLUDE_DRAFTS=1', () => {
+    vi.stubEnv('INCLUDE_DRAFTS', '1')
+    const paths = getPostPaths()
+    expect(paths).toContainEqual({ slug: ['draft-post'] })
+    expect(paths).toContainEqual({ slug: ['draft-in-drafts'] })
+  })
+})

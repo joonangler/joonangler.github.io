@@ -215,7 +215,9 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
  * 모든 포스트 가져오기 (내부 함수)
  * @internal
  */
-async function _getAllPosts(includeDrafts: boolean = false): Promise<Post[]> {
+async function _getAllPosts(
+  includeDrafts: boolean = draftsEnabled()
+): Promise<Post[]> {
   const files = getAllContentFiles()
 
   // 병렬 처리로 성능 개선
@@ -260,9 +262,16 @@ export function getPostPaths(): Array<{ slug: string[] }> {
     console.warn(`[Warning] Duplicate post filenames detected: ${[...new Set(duplicates)].join(', ')}`)
   }
 
-  return files.map((file) => ({
-    slug: [path.basename(file, '.mdx')],
-  }))
+  // 초안은 개발 모드에서만 정적 경로에 포함 (frontmatter만 읽는다)
+  const includeDrafts = draftsEnabled()
+  return files
+    .filter((file) => {
+      if (includeDrafts) return true
+      return matter(fs.readFileSync(file, 'utf-8')).data.draft !== true
+    })
+    .map((file) => ({
+      slug: [path.basename(file, '.mdx')],
+    }))
 }
 
 /**
