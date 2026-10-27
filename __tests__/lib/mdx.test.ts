@@ -1,4 +1,5 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import path from 'path'
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import {
   getPostBySlug,
   getAllPosts,
@@ -7,6 +8,8 @@ import {
   postExists,
   getPostPaths,
 } from '@/lib/mdx'
+
+afterEach(() => vi.unstubAllEnvs())
 
 describe('mdx', () => {
   describe('postExists', () => {
@@ -290,5 +293,64 @@ describe('mdx', () => {
       expect(post?.tags).toBeInstanceOf(Array) // Should be [] if not provided
       expect(post?.draft).toBeDefined() // Should be false if not provided
     })
+  })
+})
+
+describe('drafts directory', () => {
+  it('does not see drafts dir by default (NODE_ENV=test)', () => {
+    expect(postExists('draft-in-drafts')).toBe(false)
+  })
+  it('sees drafts dir when INCLUDE_DRAFTS=1', () => {
+    vi.stubEnv('INCLUDE_DRAFTS', '1')
+    expect(postExists('draft-in-drafts')).toBe(true)
+  })
+  it('is silent when the drafts dir does not exist', async () => {
+    vi.stubEnv('INCLUDE_DRAFTS', '1'); vi.stubEnv('DRAFTS_DIR', '/nonexistent/drafts')
+    await expect(getAllPosts()).resolves.toBeInstanceOf(Array)
+  })
+  it('throws on posts/drafts slug collision', () => {
+    vi.stubEnv('INCLUDE_DRAFTS', '1')
+    vi.stubEnv('DRAFTS_DIR', path.resolve(__dirname, '../fixtures/drafts-collision'))
+    expect(() => getPostPaths()).toThrow(/slug collision: "test-post"/)
+  })
+})
+
+describe('draft visibility', () => {
+  it('getPostPaths excludes draft files by default', () => {
+    expect(getPostPaths()).not.toContainEqual({ slug: ['draft-post'] })
+  })
+  it('getAllPosts includes drafts from both dirs when INCLUDE_DRAFTS=1', async () => {
+    vi.stubEnv('INCLUDE_DRAFTS', '1')
+    const slugs = (await getAllPosts()).map((p) => p.slug)
+    expect(slugs).toContain('draft-post')
+    expect(slugs).toContain('draft-in-drafts')
+  })
+  it('getPostPaths includes drafts when INCLUDE_DRAFTS=1', () => {
+    vi.stubEnv('INCLUDE_DRAFTS', '1')
+    const paths = getPostPaths()
+    expect(paths).toContainEqual({ slug: ['draft-post'] })
+    expect(paths).toContainEqual({ slug: ['draft-in-drafts'] })
+  })
+})
+
+describe('seriesSlug', () => {
+  it('reads seriesSlug from frontmatter', async () => {
+    expect((await getPostBySlug('slugged-series-1'))?.seriesSlug).toBe('slugged-series')
+    expect(getPostFrontmatter('slugged-series-1')?.seriesSlug).toBe('slugged-series')
+  })
+  it('is undefined when frontmatter has no seriesSlug', async () => {
+    expect((await getPostBySlug('sample-series-1'))?.seriesSlug).toBeUndefined()
+  })
+  it('rejects a seriesSlug that is not lowercase-hyphen', async () => {
+    expect(await getPostBySlug('bad-series-slug')).toBeNull()
+    expect(getPostFrontmatter('bad-series-slug')).toBeNull()
+  })
+  it('keeps the post but drops seriesSlug when series is missing', async () => {
+    const post = await getPostBySlug('orphan-series-slug')
+    expect(post).not.toBeNull()
+    expect(post?.seriesSlug).toBeUndefined()
+  })
+  it('getPostPaths treats a string draft flag as a draft', () => {
+    expect(getPostPaths()).not.toContainEqual({ slug: ['string-draft-post'] })
   })
 })

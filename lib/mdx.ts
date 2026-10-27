@@ -13,6 +13,7 @@ import type { PluggableList } from 'unified'
 import { type Post, type PostFrontmatter } from '@/types/post'
 import { extractHeadings, buildTOCTree } from './toc'
 import { SITE_CONFIG } from '@/lib/constants'
+import { draftsEnabled, getDraftsPath } from '@/lib/drafts'
 
 // 포스트 디렉토리 경로 (테스트는 POSTS_DIR로 픽스처 디렉토리를 지정)
 const POSTS_PATH =
@@ -74,11 +75,41 @@ export const mdxOptions = {
   },
 }
 
+// 시리즈 주소 슬러그 형식: 영문 소문자·숫자·하이픈
+export const SERIES_SLUG_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/
+
+/**
+ * frontmatter seriesSlug 읽기·검증
+ * @returns 값 | undefined(없음 또는 series 없이 지정돼 무시) | null(형식 위반)
+ */
+function readSeriesSlug(
+  data: Record<string, unknown>,
+  slug: string
+): string | null | undefined {
+  if (data.seriesSlug === undefined || data.seriesSlug === null) {
+    return undefined
+  }
+  if (!data.series) {
+    console.warn(`Ignoring seriesSlug in ${slug}: no series`)
+    return undefined
+  }
+  if (
+    typeof data.seriesSlug !== 'string' ||
+    !SERIES_SLUG_PATTERN.test(data.seriesSlug)
+  ) {
+    console.warn(
+      `Invalid seriesSlug in ${slug}: must be lowercase letters, digits and hyphens`
+    )
+    return null
+  }
+  return data.seriesSlug
+}
+
 /**
  * 슬러그로부터 파일 경로 생성 (파일명으로 재귀 검색)
  */
 function getPostFilePath(slug: string): string | null {
-  const files = getPostFiles()
+  const files = getAllContentFiles()
   const found = files.find((file) => path.basename(file, '.mdx') === slug)
   return found || null
 }
@@ -110,6 +141,30 @@ function getPostFiles(dir: string = POSTS_PATH): string[] {
 }
 
 /**
+ * 글 폴더 + (초안이 켜진 경우) 초안 폴더의 파일 경로.
+ * 두 폴더에 같은 파일명이 있으면 슬러그가 겹치므로 오류.
+ */
+function getAllContentFiles(): string[] {
+  const posts = getPostFiles(POSTS_PATH)
+  if (!draftsEnabled()) {
+    return posts
+  }
+
+  const drafts = getPostFiles(getDraftsPath())
+  const postSlugs = new Set(posts.map(getSlugFromFilePath))
+  for (const file of drafts) {
+    const slug = getSlugFromFilePath(file)
+    if (postSlugs.has(slug)) {
+      throw new Error(
+        `[drafts] slug collision: "${slug}" exists in both posts and drafts`
+      )
+    }
+  }
+
+  return [...posts, ...drafts]
+}
+
+/**
  * 파일 경로로부터 슬러그 생성 (파일명만 추출)
  */
 function getSlugFromFilePath(filePath: string): string {
@@ -134,6 +189,11 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
     // Frontmatter 검증
     if (!data.title || !data.date) {
       console.warn(`Invalid frontmatter in ${slug}: missing title or date`)
+      return null
+    }
+
+    const seriesSlug = readSeriesSlug(data, slug)
+    if (seriesSlug === null) {
       return null
     }
 
@@ -173,6 +233,7 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
       },
       series: data.series,
       seriesOrder: data.seriesOrder,
+      seriesSlug,
       coverImage: data.coverImage,
       author: data.author || SITE_CONFIG.author.name,
       draft: data.draft || false,
@@ -190,8 +251,10 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
  * 모든 포스트 가져오기 (내부 함수)
  * @internal
  */
-async function _getAllPosts(includeDrafts: boolean = false): Promise<Post[]> {
-  const files = getPostFiles()
+async function _getAllPosts(
+  includeDrafts: boolean = draftsEnabled()
+): Promise<Post[]> {
+  const files = getAllContentFiles()
 
   // 병렬 처리로 성능 개선
   const postPromises = files.map(async (file) => {
@@ -226,7 +289,7 @@ export const getAllPosts = cache(_getAllPosts)
  * generateStaticParams를 위한 포스트 경로 가져오기
  */
 export function getPostPaths(): Array<{ slug: string[] }> {
-  const files = getPostFiles()
+  const files = getAllContentFiles()
 
   // 중복 파일명 감지
   const slugs = files.map((file) => path.basename(file, '.mdx'))
@@ -235,9 +298,16 @@ export function getPostPaths(): Array<{ slug: string[] }> {
     console.warn(`[Warning] Duplicate post filenames detected: ${[...new Set(duplicates)].join(', ')}`)
   }
 
-  return files.map((file) => ({
-    slug: [path.basename(file, '.mdx')],
-  }))
+  // 초안은 개발 모드에서만 정적 경로에 포함 (frontmatter만 읽는다)
+  const includeDrafts = draftsEnabled()
+  return files
+    .filter((file) => {
+      if (includeDrafts) return true
+      return !matter(fs.readFileSync(file, 'utf-8')).data.draft
+    })
+    .map((file) => ({
+      slug: [path.basename(file, '.mdx')],
+    }))
 }
 
 /**
@@ -266,6 +336,11 @@ export function getPostFrontmatter(slug: string): PostFrontmatter | null {
       return null
     }
 
+    const seriesSlug = readSeriesSlug(data, slug)
+    if (seriesSlug === null) {
+      return null
+    }
+
     const readingTimeResult = readingTime(content)
 
     return {
@@ -276,6 +351,7 @@ export function getPostFrontmatter(slug: string): PostFrontmatter | null {
       tags: data.tags || [],
       series: data.series,
       seriesOrder: data.seriesOrder,
+      seriesSlug,
       coverImage: data.coverImage,
       author: data.author,
       draft: data.draft || false,

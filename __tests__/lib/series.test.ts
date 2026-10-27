@@ -1,4 +1,5 @@
-import { describe, it, expect } from 'vitest'
+import path from 'path'
+import { describe, it, expect, afterEach, vi } from 'vitest'
 import {
   seriesToSlug,
   getAllSeries,
@@ -63,11 +64,13 @@ describe('series', () => {
       })
     })
 
-    it('should sort series by count descending', async () => {
+    it('should sort series by last post date descending', async () => {
       const series = await getAllSeries()
+      const lastDate = (s: (typeof series)[number]) =>
+        +new Date(s.posts[s.posts.length - 1].date)
 
       for (let i = 0; i < series.length - 1; i++) {
-        expect(series[i].count).toBeGreaterThanOrEqual(series[i + 1].count)
+        expect(lastDate(series[i])).toBeGreaterThanOrEqual(lastDate(series[i + 1]))
       }
     })
 
@@ -307,12 +310,13 @@ describe('series', () => {
       expect(popular.length).toBeLessThanOrEqual(5)
     })
 
-    it('should sort by count descending', async () => {
+    it('should follow getAllSeries order', async () => {
       const popular = await getPopularSeries(10)
+      const all = await getAllSeries()
 
-      for (let i = 0; i < popular.length - 1; i++) {
-        expect(popular[i].count).toBeGreaterThanOrEqual(popular[i + 1].count)
-      }
+      expect(popular.map((s) => s.slug)).toEqual(
+        all.slice(0, 10).map((s) => s.slug)
+      )
     })
 
     it('should use default limit of 5', async () => {
@@ -675,5 +679,37 @@ describe('series', () => {
 
       expect(recent.length).toBe(allSeries.length)
     })
+  })
+})
+
+afterEach(() => vi.unstubAllEnvs())
+
+describe('seriesSlug', () => {
+  it('uses seriesSlug for the series slug and keeps the Korean name', async () => {
+    const s = await getSeriesInfo('slugged-series')
+    expect(s?.name).toBe('슬러그 픽스처 시리즈')
+    expect(s?.slug).toBe('slugged-series')
+    expect(s?.posts.map((p) => p.slug)).toEqual(['slugged-series-1', 'slugged-series-2'])
+  })
+  it('finds the same series by display name', async () => {
+    expect((await getSeriesInfo('슬러그 픽스처 시리즈'))?.slug).toBe('slugged-series')
+  })
+  it('falls back to seriesToSlug when no seriesSlug', async () => {
+    expect((await getSeriesInfo('Sample Series'))?.slug).toBe('sample-series')
+  })
+  it('throws when one series has conflicting seriesSlug values', async () => {
+    vi.stubEnv('INCLUDE_DRAFTS', '1')
+    vi.stubEnv('DRAFTS_DIR', path.resolve(__dirname, '../fixtures/series-conflict/mismatch'))
+    await expect(getAllSeries()).rejects.toThrow(/conflicting seriesSlug/)
+  })
+  it('throws when two series resolve to the same slug', async () => {
+    vi.stubEnv('INCLUDE_DRAFTS', '1')
+    vi.stubEnv('DRAFTS_DIR', path.resolve(__dirname, '../fixtures/series-conflict/duplicate'))
+    await expect(getAllSeries()).rejects.toThrow(/duplicate series slug "sample-series"/)
+  })
+  it('prefers an exact slug match over a name match from another series', async () => {
+    vi.stubEnv('INCLUDE_DRAFTS', '1')
+    vi.stubEnv('DRAFTS_DIR', path.resolve(__dirname, '../fixtures/series-conflict/cross'))
+    expect((await getSeriesInfo('hub'))?.name).toBe('Harness')
   })
 })

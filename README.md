@@ -40,7 +40,17 @@ tags: ["nextjs", "blog"]
 ```
 
 - 필수: `title`, `description`(150자 이내), `date`(`"YYYY-MM-DD"` — 따옴표로 문자열), `tags`(배열)
-- 선택: `series`, `seriesOrder`(숫자), `coverImage`, `draft`(기본 false)
+- 선택: `series`, `seriesOrder`(숫자), `seriesSlug`(영문 소문자·숫자·하이픈, 같은 시리즈 글은 같은 값), `coverImage`, `draft`(기본 false)
+
+## 초안 미리보기
+
+1. 초안 정본은 볼트 `~/Documents/obsidian/jh.vault/projects/blog/drafts/`다. 저장소에는 심링크만 둔다(`/content/drafts`는 `.gitignore` — 심링크라 끝 슬래시를 붙이지 않는다).
+   ```bash
+   mkdir -p content && ln -s "$HOME/Documents/obsidian/jh.vault/projects/blog/drafts" content/drafts
+   ```
+2. 초안 파일은 `draft: true`를 달고, `npm run dev`에서만 보인다. 운영 빌드는 `content/drafts/`를 읽지 않고 `draft: true` 글은 주소·sitemap·RSS에서도 뺀다. `INCLUDE_DRAFTS=1`은 개발 모드 밖에서 초안을 강제로 포함하는 명시 플래그다 — CI·배포 환경에 두지 않는다.
+3. `content/posts/`와 `content/drafts/`에 같은 파일명이 있으면 개발 서버가 오류를 낸다. 게시할 때는 파일을 **옮긴다**(사본 금지).
+4. `seriesSlug`(선택, 영문 소문자·숫자·하이픈): 시리즈 주소 `/series/<seriesSlug>/`. 같은 시리즈 글은 같은 값을 쓴다. 없으면 시리즈 이름에서 만든다.
 
 ## 배포
 

@@ -14,7 +14,10 @@ export function seriesToSlug(series: string): string {
  */
 export async function getAllSeries(): Promise<SeriesInfo[]> {
   const allPosts = await getAllPosts()
-  const seriesMap = new Map<string, { originalName: string; posts: Post[] }>()
+  const seriesMap = new Map<
+    string,
+    { originalName: string; posts: Post[]; slugs: Set<string> }
+  >()
 
   // 시리즈가 있는 포스트만 필터링
   for (const post of allPosts) {
@@ -26,16 +29,28 @@ export async function getAllSeries(): Promise<SeriesInfo[]> {
         seriesMap.set(key, {
           originalName: post.series.trim(), // 원본 이름 유지
           posts: [],
+          slugs: new Set(),
         })
       }
 
-      seriesMap.get(key)!.posts.push(post)
+      const entry = seriesMap.get(key)!
+      entry.posts.push(post)
+      if (post.seriesSlug) {
+        entry.slugs.add(post.seriesSlug)
+      }
     }
   }
 
   // SeriesInfo 배열 생성
   const series: SeriesInfo[] = Array.from(seriesMap.entries()).map(
-    ([_key, { originalName, posts }]) => {
+    ([_key, { originalName, posts, slugs }]) => {
+      // 같은 시리즈의 seriesSlug는 하나여야 한다
+      if (slugs.size > 1) {
+        throw new Error(
+          `[series] "${originalName}" has conflicting seriesSlug: ${[...slugs].join(', ')}`
+        )
+      }
+
       // 시리즈 순서대로 정렬
       const sortedPosts = posts.sort((a, b) => {
         const orderA = a.seriesOrder ?? Number.MAX_SAFE_INTEGER
@@ -54,7 +69,7 @@ export async function getAllSeries(): Promise<SeriesInfo[]> {
 
       return {
         name: originalName, // 원본 이름 사용
-        slug: seriesToSlug(originalName),
+        slug: slugs.size === 1 ? [...slugs][0] : seriesToSlug(originalName),
         count: sortedPosts.length,
         posts: sortedPosts,
         totalReadingTime,
@@ -62,6 +77,18 @@ export async function getAllSeries(): Promise<SeriesInfo[]> {
       }
     }
   )
+
+  // 서로 다른 시리즈가 같은 주소로 모이면 안 된다
+  const slugOwners = new Map<string, string>()
+  for (const item of series) {
+    const owner = slugOwners.get(item.slug)
+    if (owner !== undefined) {
+      throw new Error(
+        `[series] duplicate series slug "${item.slug}": ${owner}, ${item.name}`
+      )
+    }
+    slugOwners.set(item.slug, item.name)
+  }
 
   // 마지막 업데이트 날짜(시리즈의 마지막 포스트 게시 일자) 기준 내림차순 정렬
   series.sort((a, b) => +new Date(b.posts[b.posts.length - 1].date) - +new Date(a.posts[a.posts.length - 1].date))
@@ -79,12 +106,15 @@ export async function getSeriesInfo(
   const normalizedName = series.toLowerCase().trim()
   const normalizedSlug = seriesToSlug(series)
 
+  // 주소(slug) 일치가 우선 — 다른 시리즈의 이름과 겹쳐도 주소가 이긴다
   return (
+    allSeries.find((s) => s.slug === series) ||
     allSeries.find(
       (s) =>
         s.name.toLowerCase().trim() === normalizedName ||
         s.slug === normalizedSlug
-    ) || null
+    ) ||
+    null
   )
 }
 

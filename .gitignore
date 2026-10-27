@@ -13,6 +13,9 @@
 /.next/
 /out/
 
+# 초안 미리보기 (볼트 심링크)
+/content/drafts
+
 # production
 /build
 
