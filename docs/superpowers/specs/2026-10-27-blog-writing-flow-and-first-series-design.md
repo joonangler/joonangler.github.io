@@ -2,7 +2,7 @@
 
 - 날짜: 2026-10-27
 - 결정자: jhlee (브레인스토밍 2026-10-26 15:30~10-27 00:30, 허브 jh-vault-2e)
-- 상태: 초안 (검토자 확인 뒤 사용자 승인 대기)
+- 상태: 승인 (2026-10-27 jhlee, 세션 jh-vault-2e)
 - 관련: jhq Inbox 초안 「joonangler.github.io 운영 방향에 대한 논의하기」 · jhq#164(점검) · jhq#165(채널 계정) · 볼트 `projects/blog/README.md`
 
 ## 1. 의도와 이유
