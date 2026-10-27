@@ -44,7 +44,7 @@ export function SeriesNavTop({ navigation }: SeriesNavProps) {
             <p className="text-sm text-gray-600 dark:text-gray-400">Series</p>
             <h3 className="mt-1 text-lg font-semibold text-gray-900 dark:text-gray-100">
               <Link
-                href={`/series/${encodeURIComponent(series.name)}`}
+                href={`/series/${series.slug}`}
                 className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
                 >
                 {series.name}

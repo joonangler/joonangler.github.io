@@ -1,4 +1,5 @@
-import { describe, it, expect } from 'vitest'
+import path from 'path'
+import { describe, it, expect, afterEach, vi } from 'vitest'
 import {
   seriesToSlug,
   getAllSeries,
@@ -678,5 +679,32 @@ describe('series', () => {
 
       expect(recent.length).toBe(allSeries.length)
     })
+  })
+})
+
+afterEach(() => vi.unstubAllEnvs())
+
+describe('seriesSlug', () => {
+  it('uses seriesSlug for the series slug and keeps the Korean name', async () => {
+    const s = await getSeriesInfo('slugged-series')
+    expect(s?.name).toBe('슬러그 픽스처 시리즈')
+    expect(s?.slug).toBe('slugged-series')
+    expect(s?.posts.map((p) => p.slug)).toEqual(['slugged-series-1', 'slugged-series-2'])
+  })
+  it('finds the same series by display name', async () => {
+    expect((await getSeriesInfo('슬러그 픽스처 시리즈'))?.slug).toBe('slugged-series')
+  })
+  it('falls back to seriesToSlug when no seriesSlug', async () => {
+    expect((await getSeriesInfo('Sample Series'))?.slug).toBe('sample-series')
+  })
+  it('throws when one series has conflicting seriesSlug values', async () => {
+    vi.stubEnv('INCLUDE_DRAFTS', '1')
+    vi.stubEnv('DRAFTS_DIR', path.resolve(__dirname, '../fixtures/series-conflict/mismatch'))
+    await expect(getAllSeries()).rejects.toThrow(/conflicting seriesSlug/)
+  })
+  it('throws when two series resolve to the same slug', async () => {
+    vi.stubEnv('INCLUDE_DRAFTS', '1')
+    vi.stubEnv('DRAFTS_DIR', path.resolve(__dirname, '../fixtures/series-conflict/duplicate'))
+    await expect(getAllSeries()).rejects.toThrow(/duplicate series slug "sample-series"/)
   })
 })
