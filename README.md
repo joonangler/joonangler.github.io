@@ -44,7 +44,7 @@ tags: ["nextjs", "blog"]
 
 ## 초안 미리보기
 
-1. 초안 정본은 볼트 `~/Documents/obsidian/jh.vault/projects/blog/drafts/`다. 저장소에는 심링크만 둔다(`/content/drafts/`는 `.gitignore`).
+1. 초안 정본은 볼트 `~/Documents/obsidian/jh.vault/projects/blog/drafts/`다. 저장소에는 심링크만 둔다(`/content/drafts`는 `.gitignore` — 심링크라 끝 슬래시를 붙이지 않는다).
    ```bash
    mkdir -p content && ln -s "$HOME/Documents/obsidian/jh.vault/projects/blog/drafts" content/drafts
    ```
