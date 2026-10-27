@@ -303,7 +303,7 @@ export function getPostPaths(): Array<{ slug: string[] }> {
   return files
     .filter((file) => {
       if (includeDrafts) return true
-      return matter(fs.readFileSync(file, 'utf-8')).data.draft !== true
+      return !matter(fs.readFileSync(file, 'utf-8')).data.draft
     })
     .map((file) => ({
       slug: [path.basename(file, '.mdx')],

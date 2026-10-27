@@ -707,4 +707,9 @@ describe('seriesSlug', () => {
     vi.stubEnv('DRAFTS_DIR', path.resolve(__dirname, '../fixtures/series-conflict/duplicate'))
     await expect(getAllSeries()).rejects.toThrow(/duplicate series slug "sample-series"/)
   })
+  it('prefers an exact slug match over a name match from another series', async () => {
+    vi.stubEnv('INCLUDE_DRAFTS', '1')
+    vi.stubEnv('DRAFTS_DIR', path.resolve(__dirname, '../fixtures/series-conflict/cross'))
+    expect((await getSeriesInfo('hub'))?.name).toBe('Harness')
+  })
 })

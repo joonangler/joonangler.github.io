@@ -106,12 +106,15 @@ export async function getSeriesInfo(
   const normalizedName = series.toLowerCase().trim()
   const normalizedSlug = seriesToSlug(series)
 
+  // 주소(slug) 일치가 우선 — 다른 시리즈의 이름과 겹쳐도 주소가 이긴다
   return (
+    allSeries.find((s) => s.slug === series) ||
     allSeries.find(
       (s) =>
         s.name.toLowerCase().trim() === normalizedName ||
         s.slug === normalizedSlug
-    ) || null
+    ) ||
+    null
   )
 }
 

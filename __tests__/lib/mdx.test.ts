@@ -350,4 +350,7 @@ describe('seriesSlug', () => {
     expect(post).not.toBeNull()
     expect(post?.seriesSlug).toBeUndefined()
   })
+  it('getPostPaths treats a string draft flag as a draft', () => {
+    expect(getPostPaths()).not.toContainEqual({ slug: ['string-draft-post'] })
+  })
 })
