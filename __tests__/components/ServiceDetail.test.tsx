@@ -16,7 +16,17 @@ const beta = getServiceBySlug('beta')!
 const works = getAllWork().filter((w) => alpha.related.includes(w.slug))
 const href = (el: HTMLElement) => el.getAttribute('href')!
 
-afterEach(() => vi.unstubAllEnvs())
+// 시험이 만든 빈 폴더는 끝나면 지운다
+const temps: string[] = []
+const emptyDir = (prefix: string) => {
+  const d = fs.mkdtempSync(path.join(os.tmpdir(), prefix))
+  temps.push(d)
+  return d
+}
+afterEach(() => {
+  vi.unstubAllEnvs()
+  for (const d of temps.splice(0)) fs.rmSync(d, { recursive: true, force: true })
+})
 
 describe('PriceList', () => {
   it('lists prices as rows with days and won', () => {
@@ -106,7 +116,7 @@ describe('page', () => {
     expect(await generateStaticParams()).toEqual([{ slug: 'alpha' }, { slug: 'beta' }])
   })
   it('stops the build when there is no service at all', async () => {
-    vi.stubEnv('SERVICES_DIR', fs.mkdtempSync(path.join(os.tmpdir(), 'no-services-')))
+    vi.stubEnv('SERVICES_DIR', emptyDir('no-services-'))
     await expect(generateStaticParams()).rejects.toThrow('content/services에 서비스가 하나도 없다')
   })
   it('takes title and description from the service', async () => {

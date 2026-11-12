@@ -1576,8 +1576,7 @@
   .home-more:focus-visible,
   .log-row:focus-visible,
   .email-copy__address:focus-visible,
-  .contact-line__channels a:focus-visible,
-  .price-list li:focus-visible {
+  .contact-line__channels a:focus-visible {
     outline: 2px solid var(--ink);
     outline-offset: 3px;
   }
