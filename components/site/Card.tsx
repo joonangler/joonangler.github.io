@@ -38,10 +38,17 @@ export function WorkCard({ work, href, wide, label }: { work: Work; href?: strin
 /** 서비스 카드. 서비스별 페이지로 가고, 판에 「…원부터」와 이름이 놓인다. */
 export function ServiceCard({ service }: { service: Service }) {
   return (
-    <Link href={`/services/${service.slug}/`} className="card svc-card">
+    // 화면 순서는 가격이 먼저지만 링크 이름은 서비스 이름으로 시작해야 한다 — aria-labelledby로 이름을 앞세운다
+    <Link
+      href={`/services/${service.slug}/`}
+      className="card svc-card"
+      aria-labelledby={`svc-${service.slug}-title svc-${service.slug}-from`}
+    >
       <div className="card-panel">
-        <span className="svc-from">{formatWon(fromPrice(service))}부터</span>
-        <h3>{service.title}</h3>
+        <span id={`svc-${service.slug}-from`} className="svc-from">
+          {formatWon(fromPrice(service))}부터
+        </span>
+        <h3 id={`svc-${service.slug}-title`}>{service.title}</h3>
       </div>
       <div className="card-meta">
         <p>{service.summary}</p>

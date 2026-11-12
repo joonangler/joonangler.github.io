@@ -30,6 +30,13 @@ describe('ServicesPage', () => {
     expect(cards).toEqual(['/services/alpha', '/services/beta'])
   })
 
+  it('each service card link is named by the service, not by the price', () => {
+    render(<ServicesPage />)
+    const alpha = screen.getByRole('link', { name: /^알파 서비스/ })
+    expect(alpha).toBeTruthy()
+    expect(screen.getByRole('link', { name: /^베타 서비스/ })).toBeTruthy()
+  })
+
   it('writes four working principles as an unnumbered list', () => {
     render(<ServicesPage />)
     const heading = screen.getByRole('heading', { name: '일하는 방식' })
