@@ -78,8 +78,9 @@ export function TagCloud({ tags, className }: TagCloudProps) {
             key={tag.slug}
             href={`/tags/${encodeURIComponent(tag.slug)}`}
             className={cn(
-              'group relative inline-block transition-colors duration-200',
+              'group relative inline-block rounded-sm transition-[color,scale] duration-200',
               'hover:scale-110',
+              'focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
               colorClass,
               fontWeight
             )}

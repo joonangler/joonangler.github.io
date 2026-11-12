@@ -71,13 +71,13 @@ export function Pagination({
       {currentPage > 1 ? (
         <Link
           href={getPageUrl(currentPage - 1)}
-          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition-colors hover:bg-foreground/10"
+          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition-colors hover:bg-foreground/10 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           aria-label="Previous page"
         >
           <ChevronLeft className="h-4 w-4" />
         </Link>
       ) : (
-        <div className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-ink-3">
+        <div className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-transparent text-ink-3">
           <ChevronLeft className="h-4 w-4" />
         </div>
       )}
@@ -104,8 +104,8 @@ export function Pagination({
             className={cn(
               'inline-flex h-9 w-9 items-center justify-center rounded-full border font-medium transition-colors',
               isCurrentPage
-                ? 'border-primary bg-primary text-primary-foreground'
-                : 'border-border bg-card text-muted-foreground hover:bg-foreground/10'
+                ? 'border-primary bg-primary text-primary-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background'
+                : 'border-border bg-card text-muted-foreground hover:bg-foreground/10 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background'
             )}
             aria-label={isCurrentPage ? `Current page ${page}` : `Go to page ${page}`}
             aria-current={isCurrentPage ? 'page' : undefined}
@@ -119,13 +119,13 @@ export function Pagination({
       {currentPage < totalPages ? (
         <Link
           href={getPageUrl(currentPage + 1)}
-          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition-colors hover:bg-foreground/10"
+          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition-colors hover:bg-foreground/10 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           aria-label="Next page"
         >
           <ChevronRight className="h-4 w-4" />
         </Link>
       ) : (
-        <div className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-ink-3">
+        <div className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-transparent text-ink-3">
           <ChevronRight className="h-4 w-4" />
         </div>
       )}

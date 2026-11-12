@@ -76,7 +76,7 @@ export function PostHeader({ post }: PostHeaderProps) {
               href={`/tags/${encodeURIComponent(tag)}`}
               className="focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-full"
             >
-              <Badge variant="secondary" className="hover:bg-secondary/80">
+              <Badge variant="secondary">
                 #{tag}
               </Badge>
             </Link>

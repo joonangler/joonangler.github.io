@@ -62,6 +62,7 @@ export default async function TagsPage() {
             <Link
               key={tag.slug}
               href={`/tags/${encodeURIComponent(tag.slug)}`}
+              className="rounded-full focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               <Badge variant="secondary" className="text-base">
                 #{tag.name}

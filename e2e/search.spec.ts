@@ -43,11 +43,12 @@ test.describe('Search Functionality', () => {
     expect(narrow).toBeLessThan(broad)
   })
 
-  test('should handle empty search', async ({ page }) => {
-    await page.goto('/search')
+  test('an empty query shows the search tips and no results', async ({ page }) => {
+    await openSearch(page)
+    await input(page).fill('글')
+    await expect(page.getByText('개의 검색 결과')).toBeVisible()
     await input(page).fill('')
-    await page.waitForTimeout(500)
-    const pageContent = await page.textContent('body')
-    expect(pageContent).toBeTruthy()
+    await expect(page.getByRole('heading', { name: '검색 팁' })).toBeVisible()
+    await expect(page.getByText('개의 검색 결과')).toHaveCount(0)
   })
 })

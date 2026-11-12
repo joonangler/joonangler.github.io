@@ -88,7 +88,7 @@ export function SearchResultCard({
           </div>
 
           {/* Title with Highlighting */}
-          <h2 className="mb-2 line-clamp-2 text-xl font-bold leading-tight transition-colors group-hover:text-primary">
+          <h2 className="mb-2 line-clamp-2 text-xl font-bold leading-tight underline-offset-4 decoration-ink-3 group-hover:underline">
             <Highlight text={result.title} query={query} />
           </h2>
 
