@@ -5,6 +5,15 @@
 /* v4의 hover는 @media (hover: hover)에서만 적용된다. 터치 기기에서도 v3처럼 탭하면 hover 스타일이 걸리게 한다. */
 @custom-variant hover (&:hover);
 
+/* 새 사이트 화면의 올림 효과는 마우스처럼 올릴 수 있는 기기에서만 건다. 기존 hover 변형은 그대로 둔다. */
+@custom-variant hover-fine {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @slot;
+    }
+  }
+}
+
 @theme {
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
@@ -146,6 +155,29 @@
 
 @utility text-balance {
   text-wrap: balance;
+}
+
+@layer base {
+  /* 사이트 틀 토큰 (설계 §12-1). 강조색 없음. --ring-shadow는 기존 --ring(hsl 채널)과 이름이 겹쳐 바꿨다. */
+  :root {
+    --bg: #000;
+    --ink: #fff;
+    --ink-2: rgb(255 255 255 / 0.64);
+    --ink-3: rgb(255 255 255 / 0.5);
+    --line: rgb(255 255 255 / 0.12);
+    --surface: rgb(255 255 255 / 0.06);
+    --ring-shadow: 0 0 0 1px rgb(255 255 255 / 0.09);
+    --ring-shadow-hover: 0 0 0 1px rgb(255 255 255 / 0.2);
+    --img-outline: rgb(255 255 255 / 0.1);
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --pad: clamp(20px, 5vw, 64px);
+    --max: 1320px;
+  }
+
+  html {
+    color-scheme: dark;
+  }
 }
 
 @layer base {

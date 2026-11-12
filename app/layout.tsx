@@ -3,7 +3,6 @@ import { Inter } from 'next/font/google'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import 'katex/dist/katex.min.css'
 import './globals.css'
-import { Providers } from './providers'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { getBaseMetadata } from '@/lib/seo'
@@ -24,8 +23,13 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="ko" suppressHydrationWarning className={inter.variable}>
+    <html lang="ko" suppressHydrationWarning className={`dark ${inter.variable}`}>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "document.documentElement.classList.add('js')",
+          }}
+        />
         <link
           rel="alternate"
           type="application/rss+xml"
@@ -47,13 +51,11 @@ export default function RootLayout({
         <JsonLd data={generateWebSiteSchema()} />
       </head>
       <body className="flex min-h-screen flex-col bg-background font-sans antialiased">
-        <Providers>
-          <Header />
-          <main id="main-content" className="flex-1" tabIndex={-1}>
-            {children}
-          </main>
-          <Footer />
-        </Providers>
+        <Header />
+        <main id="main-content" className="flex-1" tabIndex={-1}>
+          {children}
+        </main>
+        <Footer />
         {process.env.NEXT_PUBLIC_GA_ID && (
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
         )}

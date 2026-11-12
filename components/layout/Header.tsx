@@ -4,7 +4,6 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 import { Container } from './Container'
-import { ThemeToggle } from '../ui/ThemeToggle'
 import { cn } from '@/lib/utils'
 import { SITE_CONFIG } from '@/lib/constants'
 
@@ -66,12 +65,10 @@ export function Header() {
                 </Link>
               )
             })}
-            <ThemeToggle />
           </div>
 
           {/* Mobile Menu Button */}
           <div className="flex items-center gap-4 md:hidden">
-            <ThemeToggle />
             <button
               type="button"
               className="inline-flex h-9 w-9 items-center justify-center rounded-lg text-foreground transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
