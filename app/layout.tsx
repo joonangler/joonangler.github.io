@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import 'katex/dist/katex.min.css'
 import './globals.css'
@@ -9,12 +8,6 @@ import { getBaseMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { generateWebSiteSchema } from '@/lib/json-ld'
 
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-inter',
-})
-
 export const metadata: Metadata = getBaseMetadata()
 
 export default function RootLayout({
@@ -23,8 +16,12 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="ko" suppressHydrationWarning className={`dark ${inter.variable}`}>
+    <html lang="ko" suppressHydrationWarning className="dark">
       <head>
+        <link
+          rel="stylesheet"
+          href="/fonts/pretendard/pretendardvariable-dynamic-subset.css"
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: "document.documentElement.classList.add('js')",

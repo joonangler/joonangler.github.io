@@ -124,7 +124,7 @@
   --color-purple-950: #3b0764;
 
   /* v4.3 기본 sans 스택(-apple-system, Segoe UI, Roboto…)은 v3와 달라 macOS 밖에서 글꼴이 바뀐다. v3 값으로 되돌린다. */
-  --font-sans: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-sans: 'Pretendard Variable', Pretendard, system-ui, -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
 }
 
 /*
@@ -230,7 +230,9 @@
   body {
     color: var(--foreground);
     background: var(--background);
-    font-family: var(--font-geist-sans);
+    font-family: var(--font-sans);
+    word-break: keep-all;
+    -webkit-font-smoothing: antialiased;
   }
 }
 
