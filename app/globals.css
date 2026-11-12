@@ -1049,3 +1049,169 @@
     }
   }
 }
+
+/* ===== 단추, 낮은 띠, 서비스 목록 (계획 부록 C) ===== */
+@layer components {
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    padding: 0 22px;
+    border-radius: 999px;
+    font-size: 16px;
+    font-weight: 550;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    transition:
+      transform 160ms var(--ease-out),
+      background-color 150ms,
+      box-shadow 150ms;
+  }
+  .btn:active {
+    transform: scale(0.97);
+  }
+  .btn-primary {
+    background: var(--ink);
+    color: var(--bg);
+  }
+  .btn-quiet {
+    background: var(--surface);
+    color: var(--ink);
+    box-shadow: var(--ring-shadow);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .btn-primary:hover {
+      background: color-mix(in srgb, var(--ink) 86%, var(--bg));
+    }
+    .btn-quiet:hover {
+      box-shadow: var(--ring-shadow-hover);
+    }
+  }
+
+  /* 낮은 띠: 화면 높이의 40%쯤, 280px 이상 */
+  .page-band {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    min-height: max(40svh, 280px);
+    overflow: clip;
+  }
+  .page-band__inner {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    padding-top: 112px;
+    padding-bottom: clamp(36px, 6vh, 64px);
+  }
+  .page-band h1 {
+    margin: 0;
+    font-size: clamp(40px, 6vw, 80px);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+  }
+  .page-band p {
+    margin: 20px 0 0;
+    max-width: 30em;
+    font-size: clamp(17px, 1.5vw, 20px);
+    line-height: 1.6;
+    letter-spacing: -0.01em;
+    color: var(--ink-2);
+    text-wrap: pretty;
+  }
+
+  .services-cards {
+    padding-top: clamp(40px, 6vw, 72px);
+  }
+  .services-cards .rise-in {
+    height: 100%;
+  }
+
+  /* 일하는 방식: 번호 없는 목록(순서가 아니라 원칙) */
+  .principles,
+  .not-done {
+    list-style: none;
+    margin: clamp(28px, 4vw, 48px) 0 0;
+    padding: 0;
+  }
+  .principles {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 56px;
+  }
+  .principles li {
+    padding: 24px 0 26px;
+    border-top: 1px solid var(--line);
+  }
+  .principles h3 {
+    margin: 0;
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .principles p {
+    margin: 6px 0 0;
+    color: var(--ink-2);
+    font-size: 16px;
+  }
+  .not-done {
+    border-bottom: 1px solid var(--line);
+  }
+  .not-done li {
+    padding: 22px 0;
+    border-top: 1px solid var(--line);
+    font-size: 19px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  @media (max-width: 760px) {
+    .principles {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* 문의 한 줄 */
+  .contact-line {
+    padding-bottom: 0;
+  }
+  .contact-line h2 {
+    margin: 0;
+    max-width: 13em;
+    font-size: clamp(32px, 4.6vw, 64px);
+    font-weight: 600;
+    line-height: 1.1;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  .contact-line__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 22px;
+    margin-top: 36px;
+  }
+  .contact-line__channels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 18px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: var(--ink-2);
+    font-size: 16px;
+  }
+  .contact-line__channels a {
+    text-decoration: underline;
+    text-decoration-color: var(--line);
+    text-underline-offset: 4px;
+    transition: color 150ms;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .contact-line__channels a:hover {
+      color: var(--ink);
+    }
+  }
+}
