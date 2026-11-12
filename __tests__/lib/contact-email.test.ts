@@ -19,6 +19,11 @@ describe('getContactEmail', () => {
     vi.stubEnv('NEXT_PUBLIC_AUTHOR_EMAIL', '')
     expect(getContactEmail()).toBe('')
   })
+  it('example.com appears only on the address line — the release check greps for it, so no comment may carry the word', async () => {
+    const fs = await import('fs')
+    const lines = fs.readFileSync('.env.production', 'utf8').split('\n').filter((l) => l.includes('example.com'))
+    expect(lines).toEqual(['NEXT_PUBLIC_AUTHOR_EMAIL=someone@example.com'])
+  })
   it('the committed production env holds the placeholder address, never a real one', async () => {
     const fs = await import('fs')
     const env = fs.readFileSync('.env.production', 'utf8')

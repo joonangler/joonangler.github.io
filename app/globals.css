@@ -1150,6 +1150,12 @@
     text-wrap: pretty;
   }
 
+  @media (max-width: 860px) {
+    .page-band__inner {
+      padding-bottom: 84px;
+    }
+  }
+
   .services-cards {
     padding-top: clamp(40px, 6vw, 72px);
   }

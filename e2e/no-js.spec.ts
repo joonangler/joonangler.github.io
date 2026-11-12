@@ -27,14 +27,29 @@ test.describe('with javascript', () => {
   })
 })
 
-test.describe('home sections without javascript', () => {
+test.describe('new screens without javascript', () => {
   test.use({ javaScriptEnabled: false })
 
-  test('sections are visible without javascript', async ({ page }) => {
-    await page.goto('/')
-    const h2 = page.getByRole('heading', { name: '맡는 일' })
-    expect(await h2.evaluate((el) => getComputedStyle(el).clipPath)).toBe('none')
-    const card = page.getByRole('link', { name: /막힌 웹·앱/ })
-    expect(await card.evaluate((el) => getComputedStyle(el).opacity)).toBe('1')
-  })
+  // 숨김은 카드 자신이 아니라 바깥 래퍼(.rise-in)·제목(.reveal)이 쥔다 — 조상까지 올라가며 실제로 보이는지 잰다.
+  for (const path of ['/', '/services/', '/services/web-app-fix/', '/contact/']) {
+    test(`${path}: nothing in main is hidden by the reveal styles`, async ({ page }) => {
+      await page.goto(path)
+      const hidden = await page.evaluate(() => {
+        const out: string[] = []
+        for (const el of document.querySelectorAll<HTMLElement>('main *')) {
+          if (!el.textContent?.trim() || el.closest('.sr-only')) continue // sr-only는 일부러 화면에서만 숨긴다
+          let opacity = 1
+          let clipped = false
+          for (let n: HTMLElement | null = el; n && n !== document.body; n = n.parentElement) {
+            const cs = getComputedStyle(n)
+            opacity *= parseFloat(cs.opacity)
+            if (cs.clipPath !== 'none') clipped = true
+          }
+          if (opacity < 1 || clipped) out.push(`${el.tagName.toLowerCase()}.${el.className}`)
+        }
+        return out
+      })
+      expect(hidden).toEqual([])
+    })
+  }
 })
