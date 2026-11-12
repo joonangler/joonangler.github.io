@@ -28,6 +28,7 @@ function validateProductionEnv(): string {
 export const SITE_CONFIG = {
   url: validateProductionEnv(),
   name: process.env.NEXT_PUBLIC_SITE_NAME || 'My Blog',
+  blogName: process.env.NEXT_PUBLIC_BLOG_NAME || 'Joonangler.log',
   description: process.env.NEXT_PUBLIC_SITE_DESCRIPTION || 'A Next.js blog',
   locale: 'ko_KR',
   author: {
