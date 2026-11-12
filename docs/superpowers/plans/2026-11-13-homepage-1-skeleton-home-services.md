@@ -364,7 +364,7 @@ test.describe('without javascript', () => {
 **첫 묶음의 실제 내용**(전부 `provisional: true`):
 - `content/services/web-app-fix.mdx`: title 「막힌 웹·앱 수리와 배포」, summary 「AI 도구로 만들다 멈춘 앱과 사이트의 오류를 고치고 배포합니다」, headline `['만들다 막힌 웹·앱,', '고치고 배포까지 마무리합니다']`, sub 「AI 도구로 만들다 멈춘 앱과 사이트가 대상입니다. 범위와 금액은 결제 전에 글로 정합니다.」, pricesLead 「진단은 비용을 받지 않습니다. 무엇을 며칠에 얼마에 고칠 수 있는지 먼저 알려 드립니다.」, prices `오류 1건 / 오류 1건 진단·수정, 변경 내역 문서 / 2 / 59000` · `오류 3건과 배포 / 오류 3건 수정, 배포 1회, 확인 방법 문서 / 3 / 180000` · `완성·배포·인계 / 오류 10건, 화면 15개 이내 마무리, 배포, 인계 문서 / 7 / 440000`, pricesNote 「페이지나 기능을 더하는 일은 범위를 보고 따로 정합니다.」, steps 넷(부록 B), prepare `['증상 화면', '오류 메시지', '소스', '쓴 도구', '배포할 곳']`, after·faq 비움, related `['ondobeach']`, contactLine 「어디서 막혔는지 알려 주세요」. **본문(이런 일을 합니다)은 문안이 확정되지 않아 비운다.**
 - `content/work/ondobeach.mdx`: title 「온도비치」, summary 「해수욕장과 해양 관측소의 수온을 지도 한 장에 모은 서비스」, kind `own`, order 1, cover `/work/ondobeach/home.jpg`, coverAlt 「온도비치 첫 화면」, url `https://ondobeach.com`. 본문 비움(묶음 2).
-- `public/work/ondobeach/home.jpg`: 1440×900 PNG 원본(브리프가 넘긴다)을 `sips -s format jpeg -s formatOptions 82 <원본> --out public/work/ondobeach/home.jpg`로. `stat -f%z` ≤ 256000.
+- `public/work/ondobeach/home.jpg`: 1440×900 PNG 원본(브리프가 넘긴다)을 `sips -s format jpeg -s formatOptions 82 <원본> --out public/work/ondobeach/home.jpg`로. `stat -f%z` ≤ 340000(처음 256000, 품질 82에서 329,111B라 올림 — 허브 2026-11-13: 글자·지도 선이 든 캡처라 품질과 폭을 지킨다).
 - `SERVICES_PAGE`: intro 「맡는 일과 가격, 일하는 방식입니다.」(자리 문안), principles 넷 — 결제 전에 진단 / 범위와 금액은 글로 / 복사본에서 작업 / 문서와 권한 반납, 본문은 부록 B의 진행 순서 문장을 자리 문안으로, notDone `['소스를 받을 수 없는 서비스의 수정', '허락 없는 접근']`, contactLine 「하려는 일이 있으면 문의로 알려 주세요」(자리 문안).
 - `CONTACT_PAGE`: hints `['증상 화면', '오류 메시지', '소스', '쓴 도구', '배포할 곳']`, consult 「먼저 상담으로 할 일과 금액을 정합니다. 진행과 결제 방법은 상담에서 안내합니다.」
 
