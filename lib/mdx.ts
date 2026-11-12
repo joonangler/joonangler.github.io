@@ -23,10 +23,8 @@ const POSTS_PATH =
  * Shiki 코드 하이라이팅 설정
  */
 const rehypePrettyCodeOptions = {
-  theme: {
-    dark: 'github-dark-dimmed',
-    light: 'github-light',
-  },
+  // 어두운 테마 한 벌 — 글자색 11가지가 코드 면 위에서 모두 4.5:1 이상이다(__tests__/lib/code-theme.test.ts)
+  theme: 'github-dark-dimmed',
   keepBackground: false,
   onVisitLine(node: Element) {
     // 빈 줄 높이 유지

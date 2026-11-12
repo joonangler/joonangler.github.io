@@ -30,6 +30,18 @@ test('table, quote, rule and callouts use line and surface only', async ({ page 
   expect(new Set(callouts)).toEqual(new Set(['rgba(255, 255, 255, 0.06)']))
 })
 
+test('code blocks are one dark theme on a surface with a ring', async ({ page }) => {
+  await page.goto('/posts/kitchen-sink/')
+  const block = '[role="region"]'
+  expect(await css(page, block, 'background-color')).toBe('rgba(255, 255, 255, 0.06)')
+  expect(await css(page, block, 'box-shadow')).toContain('rgba(255, 255, 255, 0.09)')
+  expect(await css(page, '.highlighted', 'border-left-color')).toBe('rgba(255, 255, 255, 0.5)')
+  // 테마가 하나면 Shiki가 글자색을 바로 단다 — 두 벌 변수(--shiki-light)가 없다
+  const style = await page.locator('pre code span[style]').first().getAttribute('style')
+  expect(style).toContain('color:')
+  expect(style).not.toContain('--shiki-light')
+})
+
 test.describe('without javascript', () => {
   test.use({ javaScriptEnabled: false })
   test('an h1 reached by #anchor sits below the floating nav', async ({ page }) => {

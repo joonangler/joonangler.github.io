@@ -142,7 +142,7 @@ export const mdxComponents: MDXComponents = {
     if (dataLanguage) {
       return (
         <div
-          className="relative my-6 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800"
+          className="relative my-6 overflow-hidden rounded-2xl bg-card shadow-[var(--ring-shadow)]"
           role="region"
           aria-label={`${language} code snippet`}
         >
@@ -297,7 +297,7 @@ export const mdxComponents: MDXComponents = {
 
         return (
           <div
-            className="relative my-6 overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800"
+            className="relative my-6 overflow-hidden rounded-2xl bg-card shadow-[var(--ring-shadow)]"
             role="region"
             aria-label={`${language} code snippet`}
           >
