@@ -7,6 +7,8 @@ import { SiteFooter } from '@/components/site/SiteFooter'
 import { getBaseMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { generateWebSiteSchema } from '@/lib/json-ld'
+import { JS_GUARD_SCRIPT } from '@/lib/js-guard'
+import { HydrationMark } from '@/components/site/HydrationMark'
 
 export const metadata: Metadata = getBaseMetadata()
 
@@ -24,7 +26,7 @@ export default function RootLayout({
         />
         <script
           dangerouslySetInnerHTML={{
-            __html: "document.documentElement.classList.add('js')",
+            __html: JS_GUARD_SCRIPT,
           }}
         />
         <link
@@ -58,6 +60,7 @@ export default function RootLayout({
           {children}
         </main>
         <SiteFooter />
+        <HydrationMark />
         {process.env.NEXT_PUBLIC_GA_ID && (
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
         )}

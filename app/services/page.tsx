@@ -46,7 +46,7 @@ export default function ServicesPage() {
             <Reveal kind="title" as="h2">
               일하는 방식
             </Reveal>
-            <ul className="principles">
+            <ul role="list" className="principles">
               {SERVICES_PAGE.principles.map((p, i) => (
                 <Reveal key={p.title} kind="rise" index={i + 1} as="li">
                   <h3>{p.title}</h3>
@@ -62,7 +62,7 @@ export default function ServicesPage() {
             <Reveal kind="title" as="h2">
               하지 않는 일
             </Reveal>
-            <ul className="not-done">
+            <ul role="list" className="not-done">
               {SERVICES_PAGE.notDone.map((t, i) => (
                 <Reveal key={t} kind="rise" index={i + 1} as="li">
                   {t}

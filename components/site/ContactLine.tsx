@@ -17,7 +17,7 @@ export function ContactLine({ text }: { text: string }) {
               문의하기
             </Link>
             {channels.length > 0 && (
-              <ul className="contact-line__channels">
+              <ul role="list" className="contact-line__channels">
                 {channels.map((c) => (
                   <li key={c.id}>
                     <a href={c.href} target="_blank" rel="noopener noreferrer">

@@ -10,7 +10,7 @@ export function PriceList({ prices, lead, note }: { prices: ServicePrice[]; lead
           {lead}
         </Reveal>
       )}
-      <ul id="prices" className="price-list">
+      <ul role="list" id="prices" className="price-list">
         {prices.map((p, i) => (
           <Reveal key={p.name} kind="rise" index={i + 1} as="li">
             <span className="price-name">{p.name}</span>

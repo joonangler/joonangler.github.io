@@ -904,6 +904,12 @@
     margin: 0;
     font-weight: 600;
   }
+  .card-tag {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--ink-2);
+    font-size: 14px;
+  }
   @media (hover: hover) and (pointer: fine) {
     a.card:hover {
       box-shadow: var(--ring-shadow-hover);
@@ -1073,6 +1079,17 @@
       transition-delay: 0ms;
     }
     .work-card img {
+      transition: none;
+    }
+  }
+
+  /* 인쇄: 스크롤로 아직 안 본 구역도 종이에는 나와야 한다 */
+  @media print {
+    .js .reveal,
+    .js .rise-in {
+      opacity: 1;
+      transform: none;
+      clip-path: none;
       transition: none;
     }
   }
@@ -1488,6 +1505,13 @@
       text-decoration-color: var(--ink-2);
     }
   }
+  /* 복사는 스크립트가 있어야 동작한다 — 숨김 안전 장치가 js를 떼도 같이 감춰진다 */
+  .email-copy .btn {
+    display: none;
+  }
+  .js .email-copy .btn {
+    display: inline-flex;
+  }
   .email-copy__status {
     flex-basis: 100%;
     min-height: 1.6em;
@@ -1552,8 +1576,7 @@
   .home-more:focus-visible,
   .log-row:focus-visible,
   .email-copy__address:focus-visible,
-  .contact-line__channels a:focus-visible,
-  .price-list li:focus-visible {
+  .contact-line__channels a:focus-visible {
     outline: 2px solid var(--ink);
     outline-offset: 3px;
   }

@@ -8,12 +8,22 @@ import Home from '@/app/page'
 // 첫 화면은 캔버스를 쓰므로 여기서는 자리만. 이 시험이 보는 것은 아래 구역이다.
 vi.mock('@/components/home/HomeHero', () => ({ HomeHero: () => <h1>hero</h1> }))
 
-afterEach(() => vi.unstubAllEnvs())
+// 시험이 만든 빈 폴더는 끝나면 지운다
+const temps: string[] = []
+const emptyDir = (prefix: string) => {
+  const d = fs.mkdtempSync(path.join(os.tmpdir(), prefix))
+  temps.push(d)
+  return d
+}
+afterEach(() => {
+  vi.unstubAllEnvs()
+  for (const d of temps.splice(0)) fs.rmSync(d, { recursive: true, force: true })
+})
 
 describe('home page sections', () => {
   it('has no 기록 section while no post is published', async () => {
     // lib/mdx가 글 폴더를 모듈이 읽힐 때 정하므로, 환경값을 바꾼 뒤 모듈을 새로 읽는다
-    vi.stubEnv('POSTS_DIR', fs.mkdtempSync(path.join(os.tmpdir(), 'no-posts-')))
+    vi.stubEnv('POSTS_DIR', emptyDir('no-posts-'))
     vi.resetModules()
     const { default: EmptyHome } = await import('@/app/page')
     render(await EmptyHome())

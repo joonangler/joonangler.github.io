@@ -86,7 +86,6 @@ async function generateRSSFeed() {
     const siteDescription =
       process.env.NEXT_PUBLIC_SITE_DESCRIPTION || 'A Next.js blog'
     const authorName = process.env.NEXT_PUBLIC_AUTHOR_NAME || 'Anonymous'
-    const authorEmail = process.env.NEXT_PUBLIC_AUTHOR_EMAIL || undefined
 
     console.log('🔨 Generating RSS feed...')
 
@@ -108,7 +107,6 @@ async function generateRSSFeed() {
       },
       author: {
         name: authorName,
-        ...(authorEmail && { email: authorEmail }),
         link: siteUrl,
       },
     })
@@ -140,7 +138,6 @@ async function generateRSSFeed() {
         author: [
           {
             name: post.author || authorName,
-            ...(authorEmail && { email: authorEmail }),
             link: siteUrl,
           },
         ],

@@ -16,6 +16,11 @@ describe('HomeWork', () => {
     expect(screen.getByRole('heading', { name: '직접 만들어 운영하는 것' })).toBeTruthy()
   })
 
+  it('adds no 직접 운영 label — the section title already says it', () => {
+    render(<HomeWork works={works} />)
+    expect(screen.queryByText('직접 운영')).toBeNull()
+  })
+
   it('draws nothing without work', () => {
     const { container } = render(<HomeWork works={[]} />)
     expect(container.innerHTML).toBe('')

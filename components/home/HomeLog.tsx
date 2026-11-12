@@ -12,7 +12,7 @@ export function HomeLog({ posts }: { posts: Post[] }) {
         <Reveal kind="title" as="h2">
           기록
         </Reveal>
-        <ul className="home-body log-list">
+        <ul role="list" className="home-body log-list">
           {posts.slice(0, 3).map((post, i) => (
             <Reveal key={post.slug} kind="rise" index={i + 1} as="li">
               <Link href={`/posts/${post.slug}/`} className="log-row">

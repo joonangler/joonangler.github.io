@@ -46,5 +46,7 @@ export default defineConfig({
     url: 'http://localhost:3000',
     reuseExistingServer: !process.env.CI,
     timeout: 120 * 1000,
+    // 개발 서버는 .env.production을 읽지 않는다 — 문의 화면의 주소 칸이 그려지도록 자리 주소를 준다
+    env: { NEXT_PUBLIC_AUTHOR_EMAIL: 'someone@example.com' },
   },
 })

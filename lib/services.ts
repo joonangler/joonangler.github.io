@@ -57,12 +57,32 @@ function parseService(file: string, raw: string, workSlugs: Set<string>): Servic
     return Array.isArray(v) ? (v as T[]) : fail(`'${key}'는 목록입니다`)
   }
 
-  const headline = list<string>('headline')
+  const nonEmpty = (v: unknown): v is string => typeof v === 'string' && v.trim() !== ''
+  const strings = (key: string): string[] => {
+    const items = list<unknown>(key)
+    items.forEach((v, i) => {
+      if (!nonEmpty(v)) fail(`${key}[${i}]는 글자여야 합니다`)
+    })
+    return items as string[]
+  }
+  /** 목록의 각 항목이 주어진 글자 칸을 모두 가진 객체인지 본다 */
+  const records = <K extends string>(key: string, fields: readonly K[]): Record<K, string>[] => {
+    const items = list<unknown>(key)
+    items.forEach((v, i) => {
+      if (typeof v !== 'object' || v === null || Array.isArray(v)) return fail(`${key}[${i}]는 ${fields.join('·')}를 가진 항목입니다`)
+      for (const f of fields) if (!nonEmpty((v as Record<string, unknown>)[f])) fail(`${key}[${i}].${f}는 글자여야 합니다`)
+    })
+    return items as Record<K, string>[]
+  }
+
+  const headline = strings('headline')
   if (headline.length === 0) fail(`'headline' 값이 없습니다`)
 
   const prices = list<ServicePrice>('prices')
   if (prices.length === 0) fail(`'prices'가 비었습니다`)
   prices.forEach((p, i) => {
+    if (!nonEmpty(p?.name)) fail(`prices[${i}].name은 글자여야 합니다`)
+    if (!nonEmpty(p?.scope)) fail(`prices[${i}].scope는 글자여야 합니다`)
     if (!isPositiveInt(p?.won)) fail(`prices[${i}].won은 양의 정수입니다`)
     if (!isPositiveInt(p?.days)) fail(`prices[${i}].days는 양의 정수입니다`)
   })
@@ -82,10 +102,10 @@ function parseService(file: string, raw: string, workSlugs: Set<string>): Servic
     prices,
     pricesLead: optStr('pricesLead'),
     pricesNote: optStr('pricesNote'),
-    steps: list('steps'),
-    prepare: list('prepare'),
-    after: list('after'),
-    faq: list('faq'),
+    steps: records('steps', ['title', 'body'] as const),
+    prepare: strings('prepare'),
+    after: strings('after'),
+    faq: records('faq', ['q', 'a'] as const),
     related,
     contactLine: str('contactLine'),
     provisional: data.provisional === true,
