@@ -1425,3 +1425,57 @@
     }
   }
 }
+
+/* ===== 문의 (설계 §10) ===== */
+@layer components {
+  .contact-main {
+    padding-top: clamp(48px, 7vw, 88px);
+  }
+  .email-copy {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 20px;
+  }
+  .email-copy__address {
+    font-size: clamp(24px, 3.4vw, 44px);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1.15;
+    color: var(--ink);
+    overflow-wrap: anywhere;
+    text-decoration: underline;
+    text-decoration-color: var(--line);
+    text-underline-offset: 6px;
+    transition: text-decoration-color 150ms;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .email-copy__address:hover {
+      text-decoration-color: var(--ink-2);
+    }
+  }
+  .email-copy__status {
+    flex-basis: 100%;
+    min-height: 1.6em;
+    color: var(--ink-2);
+    font-size: 16px;
+  }
+  .contact-hints {
+    margin-top: clamp(56px, 8vw, 96px);
+  }
+  .contact-hints h2 {
+    margin: 0 0 clamp(20px, 3vw, 32px);
+    font-size: clamp(22px, 2.4vw, 30px);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+  .contact-main > .site-wrap > p {
+    margin: 32px 0 0;
+    max-width: 32em;
+    color: var(--ink-2);
+  }
+  .contact-main__channels {
+    margin-top: 28px;
+  }
+}

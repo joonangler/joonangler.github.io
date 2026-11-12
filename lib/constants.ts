@@ -46,6 +46,19 @@ export const SITE_CONFIG = {
 } as const
 
 /**
+ * 문의 메일 주소. `NEXT_PUBLIC_AUTHOR_EMAIL`에서만 읽는다.
+ * 운영 빌드에서 비어 있으면 멈춘다(주소 없는 문의 화면이 나가지 않게). 개발·시험에서는 빈 값을 허용한다.
+ * NEXT_PUBLIC_*는 `process.env.NEXT_PUBLIC_X`로 직접 써야 빌드에 박히므로 환경 객체를 넘기지 않는다.
+ */
+export function getContactEmail(): string {
+  const email = process.env.NEXT_PUBLIC_AUTHOR_EMAIL || ''
+  if (process.env.NODE_ENV === 'production' && !email) {
+    throw new Error('NEXT_PUBLIC_AUTHOR_EMAIL must be set')
+  }
+  return email
+}
+
+/**
  * 헤더의 높이 (픽셀) — 떠 있는 내비 위 16 + 높이 52 + 여유 20
  * - 스크롤 네비게이션 시 오프셋 계산에 사용
  * - IntersectionObserver의 rootMargin 계산에 사용
