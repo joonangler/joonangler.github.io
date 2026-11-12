@@ -71,13 +71,13 @@ export function Pagination({
       {currentPage > 1 ? (
         <Link
           href={getPageUrl(currentPage - 1)}
-          className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-gray-300 bg-white text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800"
+          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition-colors hover:bg-foreground/10 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           aria-label="Previous page"
         >
           <ChevronLeft className="h-4 w-4" />
         </Link>
       ) : (
-        <div className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-gray-200 bg-gray-100 text-gray-400 dark:border-gray-800 dark:bg-gray-950">
+        <div className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-transparent text-ink-3">
           <ChevronLeft className="h-4 w-4" />
         </div>
       )}
@@ -88,7 +88,7 @@ export function Pagination({
           return (
             <span
               key={`ellipsis-${index}`}
-              className="inline-flex h-9 w-9 items-center justify-center text-gray-500 dark:text-gray-400"
+              className="inline-flex h-9 w-9 items-center justify-center text-muted-foreground"
             >
               ...
             </span>
@@ -102,10 +102,10 @@ export function Pagination({
             key={page}
             href={getPageUrl(page)}
             className={cn(
-              'inline-flex h-9 w-9 items-center justify-center rounded-md border font-medium transition-colors',
+              'inline-flex h-9 w-9 items-center justify-center rounded-full border font-medium transition-colors',
               isCurrentPage
-                ? 'border-blue-500 bg-blue-500 text-white dark:border-blue-600 dark:bg-blue-600'
-                : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800'
+                ? 'border-primary bg-primary text-primary-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background'
+                : 'border-border bg-card text-muted-foreground hover:bg-foreground/10 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background'
             )}
             aria-label={isCurrentPage ? `Current page ${page}` : `Go to page ${page}`}
             aria-current={isCurrentPage ? 'page' : undefined}
@@ -119,13 +119,13 @@ export function Pagination({
       {currentPage < totalPages ? (
         <Link
           href={getPageUrl(currentPage + 1)}
-          className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-gray-300 bg-white text-gray-700 transition-colors hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800"
+          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition-colors hover:bg-foreground/10 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           aria-label="Next page"
         >
           <ChevronRight className="h-4 w-4" />
         </Link>
       ) : (
-        <div className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-gray-200 bg-gray-100 text-gray-400 dark:border-gray-800 dark:bg-gray-950">
+        <div className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-transparent text-ink-3">
           <ChevronRight className="h-4 w-4" />
         </div>
       )}

@@ -17,7 +17,7 @@ export function MDXLink({ href, children, className, ...props }: MDXLinkProps) {
   if (!isSafeUrl(href)) {
     console.warn(`[MDX Link] Unsafe URL blocked: ${href}`)
     return (
-      <span className={cn('text-red-600 dark:text-red-400', className)}>
+      <span className={cn('text-muted-foreground', className)}>
         {children} (unsafe link removed)
       </span>
     )
@@ -29,7 +29,7 @@ export function MDXLink({ href, children, className, ...props }: MDXLinkProps) {
 
   // 공통 스타일
   const linkClassName = cn(
-    'font-medium text-blue-600 underline-offset-4 hover:underline dark:text-blue-400',
+    'font-medium text-foreground underline decoration-ink-3 decoration-1 underline-offset-4 hover:decoration-foreground',
     className
   )
 

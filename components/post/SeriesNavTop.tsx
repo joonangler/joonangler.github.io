@@ -24,7 +24,7 @@ interface SeriesNavProps {
  * 진행률, 전체 포스트 목록을 제공합니다.
  *
  * @example
- * <SeriesNav navigation={seriesNavigation} />
+ * <SeriesNavTop navigation={seriesNavigation} />
  */
 export function SeriesNavTop({ navigation }: SeriesNavProps) {
   const [isExpanded, setIsExpanded] = useState(false)
@@ -36,23 +36,23 @@ export function SeriesNavTop({ navigation }: SeriesNavProps) {
   const totalPosts = series.count
 
   return (
-    <div className="my-8 rounded-lg border border-gray-200 bg-gray-50 dark:border-gray-800 dark:bg-gray-900">
+    <div className="my-8 rounded-lg border border-border bg-card">
       {/* 헤더 */}
-      <div className="border-b border-gray-200 bg-white px-6 py-4 dark:border-gray-800 dark:bg-gray-950">
+      <div className="border-b border-border px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex-1">
-            <p className="text-sm text-gray-600 dark:text-gray-400">Series</p>
-            <h3 className="mt-1 text-lg font-semibold text-gray-900 dark:text-gray-100">
+            <p className="text-sm text-muted-foreground">Series</p>
+            <h3 className="mt-1 text-lg font-semibold text-foreground">
               <Link
                 href={`/series/${series.slug}`}
-                className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                className="underline-offset-4 transition-colors hover:underline"
                 >
                 {series.name}
               </Link>
             </h3>
           </div>
           <div className="text-right">
-            <p className="mt-1 text-lg font-semibold text-gray-900 dark:text-gray-100">
+            <p className="mt-1 text-lg font-semibold text-foreground">
               Part {currentNumber} / {totalPosts}
             </p>
           </div>
@@ -60,20 +60,20 @@ export function SeriesNavTop({ navigation }: SeriesNavProps) {
       </div>
 
       {/* 전체 목록 토글 */}
-      <div className="border-t border-gray-200 dark:border-gray-800">
+      <div className="border-t border-border">
         <button
           onClick={() => setIsExpanded(!isExpanded)}
-          className="flex w-full items-center justify-between px-6 py-4 text-left transition-colors hover:bg-white dark:hover:bg-gray-950"
+          className="flex w-full items-center justify-between px-6 py-4 text-left transition-colors hover:bg-foreground/10"
           aria-expanded={isExpanded}
           aria-controls="series-posts-list"
         >
-          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+          <span className="text-sm font-medium text-muted-foreground">
             View all posts in this series
           </span>
           {isExpanded ? (
-            <ChevronUp className="h-4 w-4 text-gray-400" />
+            <ChevronUp className="h-4 w-4 text-ink-3" />
           ) : (
-            <ChevronDown className="h-4 w-4 text-gray-400" />
+            <ChevronDown className="h-4 w-4 text-ink-3" />
           )}
         </button>
 
@@ -81,23 +81,23 @@ export function SeriesNavTop({ navigation }: SeriesNavProps) {
         {isExpanded && (
           <div
             id="series-posts-list"
-            className="border-t border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-950"
+            className="border-t border-border"
           >
-            <ul className="divide-y divide-gray-200 dark:divide-gray-800">
+            <ul className="divide-y divide-border">
               {series.posts.map((post) => {
                 const isCurrent = post.slug === current.slug
                 return (
                   <li key={post.slug}>
                     {isCurrent ? (
-                      <div className="flex items-center gap-4 bg-blue-50 px-6 py-3 dark:bg-blue-950/20">
-                        <span className="shrink-0 text-sm font-semibold text-blue-600 dark:text-blue-400">
+                      <div className="flex items-center gap-4 bg-foreground/5 px-6 py-3">
+                        <span className="shrink-0 text-sm font-semibold text-foreground">
                           {post.seriesOrder || '?'}
                         </span>
                         <div className="flex-1">
-                          <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                          <p className="text-sm font-medium text-foreground">
                             {post.title}
                           </p>
-                          <p className="mt-0.5 text-xs text-blue-600 dark:text-blue-400">
+                          <p className="mt-0.5 text-xs text-muted-foreground">
                             Current post
                           </p>
                         </div>
@@ -107,14 +107,14 @@ export function SeriesNavTop({ navigation }: SeriesNavProps) {
                         href={`/posts/${post.slug}`}
                         className={cn(
                           'flex items-center gap-4 px-6 py-3 transition-colors',
-                          'hover:bg-gray-50 dark:hover:bg-gray-900'
+                          'hover:bg-foreground/10'
                         )}
                       >
-                        <span className="shrink-0 text-sm font-medium text-gray-500 dark:text-gray-400">
+                        <span className="shrink-0 text-sm font-medium text-muted-foreground">
                           {post.seriesOrder || '?'}
                         </span>
                         <div className="flex-1">
-                          <p className="text-sm text-gray-700 hover:text-gray-900 dark:text-gray-300 dark:hover:text-gray-100">
+                          <p className="text-sm text-muted-foreground hover:text-foreground">
                             {post.title}
                           </p>
                         </div>

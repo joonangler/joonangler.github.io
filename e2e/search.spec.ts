@@ -1,64 +1,54 @@
-import { test, expect } from '@playwright/test'
+import { test, expect, type Page } from '@playwright/test'
+
+const input = (page: Page) => page.getByPlaceholder('검색어를 입력하세요...')
+
+// 하이드레이션 전에 채우면 입력 칸에는 글자가 있어도 검색 상태는 비어 있다 — 켜진 뒤에 연다
+async function openSearch(page: Page) {
+  await page.goto('/search/')
+  await page.waitForLoadState('networkidle')
+}
 
 test.describe('Search Functionality', () => {
   test('should have search interface', async ({ page }) => {
     await page.goto('/search')
-
-    // 검색 입력 필드 확인
-    const searchInput = page.locator('input[type="search"], input[type="text"][placeholder*="검색"], input[type="text"][placeholder*="Search"]')
-    await expect(searchInput.first()).toBeVisible()
+    await expect(input(page)).toBeVisible()
   })
 
-  test('should perform search', async ({ page }) => {
-    await page.goto('/search')
-
-    const searchInput = page.locator('input[type="search"], input[type="text"][placeholder*="검색"], input[type="text"][placeholder*="Search"]').first()
-
-    // 검색어 입력
-    await searchInput.fill('Next')
-
-    // 결과 대기
-    await page.waitForTimeout(500) // Debounce 대기
-
-    // 결과 확인 (결과가 있거나 "검색 결과 없음" 메시지가 있어야 함)
-    const hasResults = await page.locator('article, [data-testid="search-result"]').count() > 0
-    const hasNoResultsMessage = await page.locator('text=/결과.*없|No results|검색.*결과가.*없/i').count() > 0
-
-    expect(hasResults || hasNoResultsMessage).toBe(true)
+  test('finds a post by its title', async ({ page }) => {
+    await openSearch(page)
+    await input(page).fill('모든 요소')
+    await expect(page.getByRole('heading', { name: /모든 요소를 담은 글/ })).toBeVisible()
   })
 
-  test('should handle empty search', async ({ page }) => {
-    await page.goto('/search')
-
-    const searchInput = page.locator('input[type="search"], input[type="text"][placeholder*="검색"], input[type="text"][placeholder*="Search"]').first()
-
-    // 빈 검색
-    await searchInput.fill('')
-    await page.waitForTimeout(500)
-
-    // 결과가 없거나 안내 메시지가 표시되어야 함
-    const pageContent = await page.textContent('body')
-    expect(pageContent).toBeTruthy()
+  test('says so when nothing matches', async ({ page }) => {
+    await openSearch(page)
+    await input(page).fill('없는낱말')
+    await expect(page.getByText('"없는낱말"에 대한 검색 결과가 없습니다')).toBeVisible()
   })
 
-  test('should filter results as typing', async ({ page }) => {
-    await page.goto('/search')
+  test('a longer query narrows the results', async ({ page }) => {
+    // 구역 머리의 「글」 링크(/posts/)는 세지 않는다
+    const results = page.locator('main a[href^="/posts/"]:not([href="/posts/"])')
+    // 결과 줄(「N개의 검색 결과 - "검색어"」)이 그 검색어로 바뀐 뒤에 센다 — 대기 중 뼈대 화면의 0을 세지 않게
+    const summary = page.getByText('개의 검색 결과')
+    await openSearch(page)
+    await input(page).fill('글')
+    await expect(summary).toContainText('- "글"')
+    const broad = await results.count()
+    expect(broad).toBeGreaterThan(1)
+    await input(page).fill('채움 글 01')
+    await expect(summary).toContainText('- "채움 글 01"')
+    const narrow = await results.count()
+    expect(narrow).toBeGreaterThan(0)
+    expect(narrow).toBeLessThan(broad)
+  })
 
-    const searchInput = page.locator('input[type="search"], input[type="text"][placeholder*="검색"], input[type="text"][placeholder*="Search"]').first()
-
-    // 'N' 입력
-    await searchInput.fill('N')
-    await page.waitForTimeout(500)
-
-    const resultsAfterN = await page.locator('article, [data-testid="search-result"]').count()
-
-    // 'Next' 입력
-    await searchInput.fill('Next')
-    await page.waitForTimeout(500)
-
-    const resultsAfterNext = await page.locator('article, [data-testid="search-result"]').count()
-
-    // 더 구체적인 검색어는 결과가 같거나 적어야 함
-    expect(resultsAfterNext).toBeLessThanOrEqual(resultsAfterN)
+  test('an empty query shows the search tips and no results', async ({ page }) => {
+    await openSearch(page)
+    await input(page).fill('글')
+    await expect(page.getByText('개의 검색 결과')).toBeVisible()
+    await input(page).fill('')
+    await expect(page.getByRole('heading', { name: '검색 팁' })).toBeVisible()
+    await expect(page.getByText('개의 검색 결과')).toHaveCount(0)
   })
 })

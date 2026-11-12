@@ -20,7 +20,7 @@ interface TagCloudProps {
 export function TagCloud({ tags, className }: TagCloudProps) {
   if (tags.length === 0) {
     return (
-      <div className="text-center text-gray-500 dark:text-gray-400">
+      <div className="text-center text-muted-foreground">
         <p>No tags yet</p>
       </div>
     )
@@ -54,22 +54,9 @@ export function TagCloud({ tags, className }: TagCloudProps) {
     // 폰트 크기 (1: 1rem ~ 5: 3rem)
     const fontSize = 1 + (weight - 1) * 0.5
 
-    // 색상 강도 (가중치가 높을수록 진한 색)
-    const colorClass = (() => {
-      if (weight >= 4.5) {
-        return 'text-blue-700 dark:text-blue-300 hover:text-blue-900 dark:hover:text-blue-100'
-      }
-      if (weight >= 3.5) {
-        return 'text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200'
-      }
-      if (weight >= 2.5) {
-        return 'text-blue-500 dark:text-blue-500 hover:text-blue-700 dark:hover:text-blue-300'
-      }
-      if (weight >= 1.5) {
-        return 'text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400'
-      }
-      return 'text-gray-500 dark:text-gray-500 hover:text-blue-600 dark:hover:text-blue-400'
-    })()
+    // 색은 무게 4·5만 본문 글자색, 나머지는 보조 글자색 — 크기와 굵기가 무게를 그대로 말한다
+    const colorClass =
+      weight >= 3.5 ? 'text-foreground hover:text-foreground' : 'text-muted-foreground hover:text-foreground'
 
     // 폰트 굵기
     const fontWeight = weight >= 4 ? 'font-bold' : weight >= 3 ? 'font-semibold' : 'font-medium'
@@ -91,8 +78,9 @@ export function TagCloud({ tags, className }: TagCloudProps) {
             key={tag.slug}
             href={`/tags/${encodeURIComponent(tag.slug)}`}
             className={cn(
-              'group relative inline-block transition-all duration-200',
+              'group relative inline-block rounded-sm transition-[color,scale] duration-200',
               'hover:scale-110',
+              'focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
               colorClass,
               fontWeight
             )}
@@ -102,7 +90,7 @@ export function TagCloud({ tags, className }: TagCloudProps) {
             {tag.name}
 
             {/* 툴팁 */}
-            <span className="pointer-events-none absolute left-1/2 top-full z-10 mt-2 -translate-x-1/2 whitespace-nowrap rounded-sm bg-gray-900 px-2 py-1 text-xs font-normal text-white opacity-0 transition-opacity group-hover:opacity-100 dark:bg-gray-100 dark:text-gray-900">
+            <span className="pointer-events-none absolute left-1/2 top-full z-10 mt-2 -translate-x-1/2 whitespace-nowrap rounded-sm bg-primary px-2 py-1 text-xs font-normal text-primary-foreground opacity-0 transition-opacity group-hover:opacity-100">
               {tag.count} post{tag.count !== 1 ? 's' : ''}
             </span>
           </Link>

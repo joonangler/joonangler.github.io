@@ -15,7 +15,7 @@ interface PostContentProps {
  */
 export async function PostContent({ content }: PostContentProps) {
   return (
-    <article className="prose prose-neutral dark:prose-invert max-w-none mt-20">
+    <article className="prose max-w-none mt-20">
       <MDXRemote source={content} components={mdxComponents} options={mdxOptions} />
     </article>
   )

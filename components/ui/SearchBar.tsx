@@ -150,7 +150,7 @@ export function SearchBar({
           'w-full rounded-lg border border-input bg-background',
           'px-4 py-2 text-sm',
           'placeholder:text-muted-foreground',
-          'focus:border-primary focus:outline-hidden focus:ring-2 focus:ring-primary focus:ring-offset-2',
+          'focus:border-primary focus:outline-hidden focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background',
           'disabled:cursor-not-allowed disabled:opacity-50',
           'transition-colors',
           showIcon && 'pl-10',
@@ -176,7 +176,7 @@ export function SearchBar({
               'rounded-sm p-1',
               'text-muted-foreground hover:text-foreground',
               'transition-colors',
-              'focus:outline-hidden focus:ring-2 focus:ring-primary focus:ring-offset-2'
+              'focus:outline-hidden focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background'
             )}
             aria-label="Clear search"
           >

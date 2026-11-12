@@ -21,13 +21,13 @@ export const Badge = forwardRef<HTMLSpanElement, BadgeProps>(
           {
             'bg-primary text-primary-foreground hover:bg-primary/80':
               variant === 'default',
-            'bg-secondary text-secondary-foreground hover:bg-secondary/80':
+            'bg-secondary text-secondary-foreground hover:bg-foreground/10':
               variant === 'secondary',
             'border border-border bg-background hover:bg-accent':
               variant === 'outline',
-            'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400':
+            'bg-muted text-foreground':
               variant === 'success',
-            'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400':
+            'border border-border bg-muted text-foreground':
               variant === 'warning',
           },
           className

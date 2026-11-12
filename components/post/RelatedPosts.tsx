@@ -25,7 +25,7 @@ export function RelatedPosts({ posts }: RelatedPostsProps) {
   }
 
   return (
-    <section className="my-12 border-t border-gray-200 pt-12 dark:border-gray-800">
+    <section className="my-12 border-t border-border pt-12">
       <h2 className="mb-6 text-2xl font-bold text-foreground">Related Posts</h2>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -34,7 +34,7 @@ export function RelatedPosts({ posts }: RelatedPostsProps) {
             <Card hover className="h-full overflow-hidden">
               {/* 커버 이미지 */}
               {post.coverImage && (
-                <div className="relative aspect-video w-full overflow-hidden bg-gray-200 dark:bg-gray-800">
+                <div className="relative aspect-video w-full overflow-hidden bg-muted">
                   <Image
                     src={post.coverImage}
                     alt={post.title}

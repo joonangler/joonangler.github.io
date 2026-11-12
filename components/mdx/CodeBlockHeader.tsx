@@ -67,15 +67,15 @@ export function CodeBlockHeader({ code, language, title }: CodeBlockHeaderProps)
   }
 
   return (
-    <div className="flex items-center justify-between bg-gray-50 px-4 py-2 dark:bg-gray-900">
+    <div className="flex items-center justify-between border-b border-border px-4 py-2">
       <div className="flex items-center gap-2">
         {title && (
-          <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+          <span className="text-sm font-medium text-foreground">
             {title}
           </span>
         )}
         {!title && language && (
-          <span className="text-xs font-mono text-gray-600 dark:text-gray-400">
+          <span className="text-xs font-mono text-ink-3">
             {language}
           </span>
         )}
@@ -87,18 +87,17 @@ export function CodeBlockHeader({ code, language, title }: CodeBlockHeaderProps)
         onClick={handleCopy}
         className={cn(
           'flex items-center gap-1.5 rounded-sm px-2.5 py-1.5 text-xs font-medium',
-          'transition-all duration-200',
-          'focus:outline-hidden focus:ring-2 focus:ring-blue-500 focus:ring-offset-2',
+          'transition-colors duration-200',
+          'focus:outline-hidden focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background',
           {
             // idle 상태: 인터랙션 가능
-            'hover:bg-gray-200 dark:hover:bg-gray-800 active:scale-95 cursor-pointer':
+            'hover:bg-foreground/10 active:scale-95 cursor-pointer':
               copyState === 'idle',
             // disabled 상태: 시각적으로 비활성화 표시
             'cursor-not-allowed opacity-75': copyState !== 'idle',
             // 상태별 색상
-            'text-green-600 dark:text-green-400': copyState === 'copied',
-            'text-red-600 dark:text-red-400': copyState === 'error',
-            'text-gray-600 dark:text-gray-400': copyState === 'idle',
+            'text-foreground': copyState === 'copied' || copyState === 'error',
+            'text-muted-foreground': copyState === 'idle',
           }
         )}
         title={copyState === 'idle' ? 'Copy code to clipboard' : undefined}
