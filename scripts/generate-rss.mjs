@@ -81,7 +81,8 @@ function getPostFromFile(filePath) {
 async function generateRSSFeed() {
   try {
     const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'
-    const siteName = process.env.NEXT_PUBLIC_SITE_NAME || 'My Blog'
+    // 피드는 블로그의 피드다 — 사이트 이름이 아니라 블로그 이름(lib/constants.ts의 blogName과 같은 값)
+    const blogName = process.env.NEXT_PUBLIC_BLOG_NAME || 'Joonangler.log'
     const siteDescription =
       process.env.NEXT_PUBLIC_SITE_DESCRIPTION || 'A Next.js blog'
     const authorName = process.env.NEXT_PUBLIC_AUTHOR_NAME || 'Anonymous'
@@ -91,7 +92,7 @@ async function generateRSSFeed() {
 
     // Feed 객체 생성
     const feed = new Feed({
-      title: siteName,
+      title: blogName,
       description: siteDescription,
       id: siteUrl,
       link: siteUrl,

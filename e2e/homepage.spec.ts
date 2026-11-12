@@ -26,6 +26,13 @@ test.describe('Homepage', () => {
     expect(h1Box!.y).toBeGreaterThan(navBox!.y + navBox!.height)
   })
 
+  test('is titled with the site name and offers the three ready tabs', async ({ page }) => {
+    await page.goto('/')
+    await expect(page).toHaveTitle(/Joonangler/)
+    const tabs = page.locator('#site-nav-tabs').getByRole('link')
+    await expect(tabs).toHaveCount(3)
+  })
+
   test('should have footer', async ({ page }) => {
     await page.goto('/')
     await expect(page.locator('footer')).toBeVisible()
