@@ -15,33 +15,36 @@
 }
 
 @theme {
-  --color-background: hsl(var(--background));
-  --color-foreground: hsl(var(--foreground));
+  --color-background: var(--bg);
+  --color-foreground: var(--ink);
 
-  --color-card: hsl(var(--card));
-  --color-card-foreground: hsl(var(--card-foreground));
+  --color-card: var(--surface);
+  --color-card-foreground: var(--ink);
 
-  --color-popover: hsl(var(--popover));
-  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-popover: var(--surface);
+  --color-popover-foreground: var(--ink);
 
-  --color-primary: hsl(var(--primary));
-  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-primary: var(--ink);
+  --color-primary-foreground: var(--bg);
 
-  --color-secondary: hsl(var(--secondary));
-  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-secondary: var(--surface);
+  --color-secondary-foreground: var(--ink);
 
-  --color-muted: hsl(var(--muted));
-  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-muted: var(--surface);
+  --color-muted-foreground: var(--ink-2);
 
-  --color-accent: hsl(var(--accent));
-  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-accent: var(--surface);
+  --color-accent-foreground: var(--ink);
 
-  --color-destructive: hsl(var(--destructive));
-  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-destructive: var(--ink);
+  --color-destructive-foreground: var(--bg);
 
-  --color-border: hsl(var(--border));
-  --color-input: hsl(var(--input));
-  --color-ring: hsl(var(--ring));
+  --color-border: var(--line);
+  --color-input: var(--line);
+  --color-ring: var(--ink);
+
+  /* 셋째 글자(번호·아이콘·꺾쇠·인용 막대·링크 밑줄). 옛 변수에는 셋째 단계가 없다 */
+  --color-ink-3: var(--ink-3);
 
   /* v4 기본 팔레트는 oklch라 v3와 색이 다르다. 같은 화면을 위해 v3 hex로 되돌린다. */
   /* 출처: tailwindcss@3.4.19 lib/public/colors.js, 쓰는 계열만 */
@@ -141,7 +144,7 @@
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
+    border-color: var(--line);
   }
 }
 
@@ -180,56 +183,10 @@
   }
 }
 
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 4%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 4%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 4%;
-    --primary: 221 83% 53%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 210 40% 96%;
-    --secondary-foreground: 222 47% 11%;
-    --muted: 210 40% 96%;
-    --muted-foreground: 215 16% 47%;
-    --accent: 210 40% 96%;
-    --accent-foreground: 222 47% 11%;
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 214 32% 91%;
-    --input: 214 32% 91%;
-    --ring: 221 83% 53%;
-  }
-
-  .dark {
-    --background: 0 0% 4%;
-    --foreground: 0 0% 93%;
-    --card: 0 0% 7%;
-    --card-foreground: 0 0% 93%;
-    --popover: 0 0% 7%;
-    --popover-foreground: 0 0% 93%;
-    --primary: 217 91% 60%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 217 33% 17%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217 33% 17%;
-    --muted-foreground: 215 20% 65%;
-    --accent: 217 33% 17%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 63% 31%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 217 33% 17%;
-    --input: 217 33% 17%;
-    --ring: 217 91% 60%;
-  }
-}
-
 @layer utilities {
   body {
-    color: var(--foreground);
-    background: var(--background);
+    color: var(--ink);
+    background: var(--bg);
     font-family: var(--font-sans);
     word-break: keep-all;
     -webkit-font-smoothing: antialiased;
