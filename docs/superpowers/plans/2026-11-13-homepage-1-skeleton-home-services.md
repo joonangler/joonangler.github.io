@@ -752,7 +752,7 @@ it('throws in production without an address', () => { vi.stubEnv('NODE_ENV', 'pr
 - **묶음 2 — 작업 목록과 사례 페이지** (`/work/`, `/work/<slug>/`, 「이 홈페이지」 사례 캡처, `isNavReady('work')` 켬). 의존: Task 5·7·11·12.
 - **묶음 3 — 소개** (`/about/`, 채널마다 한 줄, `isNavReady('about')` 켬). 의존: Task 5·12. 소개 문안 확정.
 - **묶음 4 — 블로그 구역 맞춤** (블로그 색 변수 값을 새 체계로, 본문 링크 밑줄, 단추·배지, 코드 색에서 밝은 쪽 걷기, 수식, 영어 문구, `post`·`search`·`responsive` e2e). 의존: Task 3·4·6. 탭 사이 전환은 이 묶음 뒤에 정한다.
-- **공개** — `release/homepage → main` PR. 의존: 묶음 1과 4(공개의 최소, 확정). 확인: `grep -rn "provisional: true" content/`가 빈 것, `.env.production`의 이름·메일 값(스레드 주소는 계정이 정해졌을 때만), 설정 파일에 example.com이 남아 있지 않다(`grep -rn "example.com" .env.production`이 빈 것 — 메일은 공개 직전에 실제 주소로 바꾼다), 게시된 글이 0편이면 그 사실을 확인했는지, `npm run check:routes` diff 없음.
+- **공개** — `release/homepage → main` PR. 의존: 묶음 1과 4(공개의 최소, 확정). 확인: `grep -rn "provisional: true" content/`가 빈 것, `.env.production`의 이름·메일 값(스레드 주소는 계정이 정해졌을 때만), 설정 파일에 example.com이 남아 있지 않다(`grep -rn "example.com" .env.production`이 빈 것 — 메일은 공개 직전에 실제 주소로 바꾸고, 자리 주소를 단정하는 `__tests__/lib/contact-email.test.ts`의 두 시험도 함께 고친다), 게시된 글이 0편이면 그 사실을 확인했는지, `npm run check:routes` diff 없음.
 
 ---
 
