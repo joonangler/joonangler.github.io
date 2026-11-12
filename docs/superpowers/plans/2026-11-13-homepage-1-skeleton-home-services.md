@@ -27,7 +27,7 @@
 
 - 1b의 Task 7(내용 자료)은 1b의 나머지와 독립이라 1c 앞쪽으로 옮겨도 된다. 1b와 1c가 함께 고치는 파일은 `app/page.tsx` 하나다(1b는 첫 화면만, 1c가 아래 구역을 더한다).
 - 2·3·4는 1이 모으는 브랜치에 합쳐진 뒤 서로 독립으로 돌 수 있다.
-- **공개**는 모으는 브랜치를 `main`으로 합치는 PR 하나다. 설계 §14는 넷이 다 되지 않아도 된다고 하지만, **공개의 최소는 1과 4를 권한다** — 1이 서체와 색과 헤더를 사이트 전체에서 바꾸므로, 4 없이 공개하면 블로그 화면이 옛 색 변수(파란 강조색)를 새 검정 위에 그린 채 나간다.
+- **공개**는 모으는 브랜치를 `main`으로 합치는 PR 하나다. 설계 §14는 넷이 다 되지 않아도 된다고 하지만, **공개의 최소는 1과 4다**(확정, 2026-11-13) — 1이 서체와 색과 헤더를 사이트 전체에서 바꾸므로, 4 없이 공개하면 블로그 화면이 옛 색 변수(파란 강조색)를 새 검정 위에 그린 채 나간다.
 
 ### 범위 조정 (확정, 허브 2026-11-13)
 
@@ -505,9 +505,10 @@ it('canvas is decorative', () => { renderField(); expect(document.querySelector(
 it('renders the hero sentence in three lines with shrinking delays', () => {
   render(<HomeHero />)
   const h1 = screen.getByRole('heading', { level: 1 })
-  expect(h1.textContent!.replace(/\s+/g, ' ').trim()).toBe('만들고, 내놓고, 수익까지')
+  expect(h1.textContent!.replace(/\s+/g, ' ').trim()).toBe('만들고, 내놓고, 수익까지 도전합니다')
+  expect(h1.textContent).not.toMatch(/\.\s*$/) // 끝에 마침표 없음
   const ds = [...h1.querySelectorAll<HTMLElement>('.hero-word')].map((w) => w.style.getPropertyValue('--d'))
-  expect(ds).toEqual(['0', '90', '170'])
+  expect(ds).toEqual(['0', '90', '170', '240'])
   expect(screen.getByText('AI와 함께 답을 찾아가며, 그 과정을 기록으로 남깁니다.')).toBeTruthy()
 })
 ```
@@ -751,7 +752,7 @@ it('throws in production without an address', () => { vi.stubEnv('NODE_ENV', 'pr
 - **묶음 2 — 작업 목록과 사례 페이지** (`/work/`, `/work/<slug>/`, 「이 홈페이지」 사례 캡처, `isNavReady('work')` 켬). 의존: Task 5·7·11·12.
 - **묶음 3 — 소개** (`/about/`, 채널마다 한 줄, `isNavReady('about')` 켬). 의존: Task 5·12. 소개 문안 확정.
 - **묶음 4 — 블로그 구역 맞춤** (블로그 색 변수 값을 새 체계로, 본문 링크 밑줄, 단추·배지, 코드 색에서 밝은 쪽 걷기, 수식, 영어 문구, `post`·`search`·`responsive` e2e). 의존: Task 3·4·6. 탭 사이 전환은 이 묶음 뒤에 정한다.
-- **공개** — `release/homepage → main` PR. 의존: 묶음 1과 4(권장). 확인: `grep -rn "provisional: true" content/`가 빈 것, `.env.production`의 이름·메일 값(스레드 주소는 계정이 정해졌을 때만), 게시된 글이 0편이면 그 사실을 확인했는지, `npm run check:routes` diff 없음.
+- **공개** — `release/homepage → main` PR. 의존: 묶음 1과 4(공개의 최소, 확정). 확인: `grep -rn "provisional: true" content/`가 빈 것, `.env.production`의 이름·메일 값(스레드 주소는 계정이 정해졌을 때만), 게시된 글이 0편이면 그 사실을 확인했는지, `npm run check:routes` diff 없음.
 
 ---
 
@@ -924,7 +925,8 @@ function shapeToon(b) {
 - 모이는 자리: 오른쪽 칸의 `slot` 상자(첫 화면 기준 좌표). `aspect-ratio: 1 / 0.86; max-height: 62svh`, 860px 아래 `4 / 3; 38svh`.
 
 **첫 화면 문안과 등장**
-- `HOME_HERO.lines = [['만들고,'], ['내놓고,'], ['수익까지']]`(끝에 마침표 없음), `sub = 'AI와 함께 답을 찾아가며, 그 과정을 기록으로 남깁니다.'`
+- `HOME_HERO.lines = [['만들고,'], ['내놓고,'], ['수익까지', '도전합니다']]`(끝에 마침표 없음), `sub = 'AI와 함께 답을 찾아가며, 그 과정을 기록으로 남깁니다.'`
+- 셋째 줄은 넓은 화면에서 왼쪽 칸보다 길어 「수익까지」와 「도전합니다」 두 줄로 넘어간다. 시안에서 보고 고른 모양이라 그대로 둔다 — `white-space: nowrap`이나 글자 크기 줄이기로 막지 않는다.
 - `WORD_DELAYS = [0, 90, 170, 240, 300, 350, 390]` — 낱말 k번째는 `WORD_DELAYS[min(k, 6)]`ms(서비스 첫 화면의 낱말 수가 더 많을 때를 위해 일곱까지).
 
 **진행 순서(임시 서비스)와 「일하는 방식」의 자리 문안**
