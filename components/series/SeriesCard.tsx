@@ -30,7 +30,7 @@ export function SeriesCard({ series }: SeriesCardProps) {
       <Card hover className="h-full overflow-hidden">
         {/* 커버 이미지 */}
         {series.coverImage ? (
-          <div className="relative aspect-video w-full overflow-hidden bg-gray-200 dark:bg-gray-800">
+          <div className="relative aspect-video w-full overflow-hidden bg-muted">
             <Image
               src={series.coverImage}
               alt={series.name}
@@ -80,12 +80,10 @@ export function SeriesCard({ series }: SeriesCardProps) {
               <span>Progress</span>
               <span>{series.count} posts</span>
             </div>
-            <div className="h-1.5 overflow-hidden rounded-full bg-gray-200 dark:bg-gray-800">
+            <div className="h-1.5 overflow-hidden rounded-full bg-muted">
               <div
-                className={`h-full transition-all duration-300 ${
-                  isCompleted
-                    ? 'bg-green-500'
-                    : 'bg-linear-to-r/srgb from-blue-500 to-purple-500'
+                className={`h-full transition-[width] duration-300 ${
+                  isCompleted ? 'bg-foreground' : 'bg-ink-3'
                 }`}
                 style={{ width: isCompleted ? '100%' : '75%' }}
               />
@@ -93,7 +91,7 @@ export function SeriesCard({ series }: SeriesCardProps) {
           </div> */}
 
           {/* 날짜 정보 */}
-          <div className="border-t border-gray-200 pt-4 text-xs text-muted-foreground dark:border-gray-800">
+          <div className="border-t border-border pt-4 text-xs text-muted-foreground">
             <div className="flex items-center justify-between">
               <div>
                 <p className="mb-1">Started</p>

@@ -226,27 +226,23 @@
   }
 
   pre::-webkit-scrollbar-track {
-    @apply bg-gray-100 dark:bg-gray-800;
+    background: transparent;
     border-radius: 4px;
   }
 
   pre::-webkit-scrollbar-thumb {
-    @apply bg-gray-300 dark:bg-gray-600;
+    background: var(--line);
     border-radius: 4px;
   }
 
   pre::-webkit-scrollbar-thumb:hover {
-    @apply bg-gray-400 dark:bg-gray-500;
+    background: var(--ink-3);
   }
 
-  /* Firefox scrollbar */
+  /* Firefox scrollbar — 막대는 선 색, 길은 투명 */
   pre {
     scrollbar-width: thin;
-    scrollbar-color: var(--color-gray-300) var(--color-gray-100);
-  }
-
-  .dark pre {
-    scrollbar-color: var(--color-gray-600) var(--color-gray-800);
+    scrollbar-color: var(--line) transparent;
   }
 
   /* Code line highlighting (Shiki) */
@@ -295,28 +291,24 @@
   }
 
   .toc-scrollbar::-webkit-scrollbar-track {
-    @apply bg-gray-100 dark:bg-gray-800;
+    background: transparent;
     border-radius: 3px;
   }
 
   .toc-scrollbar::-webkit-scrollbar-thumb {
-    @apply bg-gray-300 dark:bg-gray-600;
+    background: var(--line);
     border-radius: 3px;
     min-height: 40px; /* 최소 높이로 항상 보이게 */
   }
 
   .toc-scrollbar::-webkit-scrollbar-thumb:hover {
-    @apply bg-gray-400 dark:bg-gray-500;
+    background: var(--ink-3);
   }
 
   /* Firefox scrollbar for TOC */
   .toc-scrollbar {
     scrollbar-width: thin;
-    scrollbar-color: var(--color-gray-300) var(--color-gray-100);
-  }
-
-  .dark .toc-scrollbar {
-    scrollbar-color: var(--color-gray-600) var(--color-gray-800);
+    scrollbar-color: var(--line) transparent;
   }
 
   /* Prose styles for MDX content */
@@ -361,12 +353,12 @@
   }
 
   .prose code {
-    @apply rounded-sm bg-gray-100 px-1.5 py-0.5 text-sm
+    @apply rounded-sm bg-muted px-1.5 py-0.5 text-sm text-foreground shadow-[inset_0_0_0_1px_var(--line)];
   }
 
   /* Shiki inline styles를 보존하기 위해 text-inherit 제거 */
   .prose pre code {
-    @apply bg-transparent p-0;
+    @apply bg-transparent p-0 shadow-none;
   }
 
   .prose img {
@@ -374,7 +366,7 @@
   }
 
   .prose blockquote {
-    @apply border-l-4 border-gray-300 pl-4 italic text-gray-700 dark:border-gray-700 dark:text-gray-300;
+    @apply border-l-2 border-ink-3 pl-4 text-muted-foreground;
   }
 }
 

@@ -91,7 +91,7 @@ export function Highlight({ text, query, className }: HighlightProps) {
           <mark
             key={i}
             className={cn(
-              'bg-yellow-200 text-gray-900 dark:bg-yellow-900/50 dark:text-yellow-100',
+              'bg-foreground/20 text-foreground',
               'font-semibold rounded-sm px-0.5',
               'not-italic', // Override any italic styles
               className
