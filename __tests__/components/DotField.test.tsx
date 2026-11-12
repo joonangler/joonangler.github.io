@@ -141,3 +141,60 @@ describe('DotField', () => {
     expect(mm.listeners).toHaveLength(0)
   })
 })
+
+/* 낮은 띠(plain·band)와 서비스 첫 화면(plain·service) — 모양 없이 배경의 점만 그리는 경로 */
+describe('DotField plain (no shapes)', () => {
+  const renderPlain = (mask: 'band' | 'service' = 'band') => render(<DotField mode="plain" mask={mask} />)
+
+  it('carries its mask in the class name', () => {
+    renderPlain('band')
+    expect(document.querySelector('canvas')!.className).toContain('dot-mask-band')
+  })
+  it('the service mask is its own class', () => {
+    renderPlain('service')
+    expect(document.querySelector('canvas')!.className).toContain('dot-mask-service')
+  })
+  it('draws background dots and runs only while visible', () => {
+    renderPlain()
+    expect(raf).not.toHaveBeenCalled()
+    io.trigger(true)
+    expect(raf).toHaveBeenCalledTimes(1)
+    expect(ctx.arc).toHaveBeenCalled()
+    io.trigger(false)
+    expect(caf).toHaveBeenCalled()
+  })
+  it('reduced motion draws one still frame and never asks for a frame', () => {
+    mm.reduce = true
+    renderPlain()
+    io.trigger(true)
+    expect(raf).not.toHaveBeenCalled()
+    expect(ctx.arc).toHaveBeenCalled()
+  })
+  it('reduced motion turned on mid-session stops the loop', () => {
+    renderPlain()
+    io.trigger(true)
+    caf.mockClear()
+    mm.setReduce(true)
+    expect(caf).toHaveBeenCalled()
+  })
+  it('has a pause button that stops the loop', () => {
+    renderPlain()
+    io.trigger(true)
+    fireEvent.click(screen.getByRole('button', { name: '배경 멈춤' }))
+    expect(screen.getByRole('button', { name: '배경 재생' }).getAttribute('aria-pressed')).toBe('true')
+    expect(caf).toHaveBeenCalled()
+  })
+  it('survives a resize without shapes (width and height-only)', () => {
+    renderPlain()
+    io.trigger(true)
+    const rect = HTMLElement.prototype.getBoundingClientRect as unknown as ReturnType<typeof vi.fn>
+    rect.mockImplementation(
+      () => ({ left: 0, top: 0, width: 800, height: 700, right: 800, bottom: 700, x: 0, y: 0, toJSON: () => ({}) }) as DOMRect
+    )
+    expect(() => act(() => void window.dispatchEvent(new Event('resize')))).not.toThrow()
+    rect.mockImplementation(
+      () => ({ left: 0, top: 0, width: 500, height: 700, right: 500, bottom: 700, x: 0, y: 0, toJSON: () => ({}) }) as DOMRect
+    )
+    expect(() => act(() => void window.dispatchEvent(new Event('resize')))).not.toThrow()
+  })
+})

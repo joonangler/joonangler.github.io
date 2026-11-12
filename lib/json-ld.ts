@@ -117,7 +117,7 @@ export function generateBlogSchema() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Blog',
-    name: SITE_CONFIG.name,
+    name: SITE_CONFIG.blogName,
     description: SITE_CONFIG.description,
     url: getAbsoluteUrl('/posts'),
     inLanguage: 'ko-KR',

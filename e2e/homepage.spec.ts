@@ -26,6 +26,14 @@ test.describe('Homepage', () => {
     expect(h1Box!.y).toBeGreaterThan(navBox!.y + navBox!.height)
   })
 
+  test('is branded Joonangler and offers the three ready tabs', async ({ page }) => {
+    await page.goto('/')
+    // 문서 제목은 NEXT_PUBLIC_SITE_NAME(.env.production)에서 오는데 개발 서버는 이 파일을 읽지 않는다 — 운영 빌드의 out/index.html로 따로 본다
+    await expect(page.locator('.site-nav__name')).toHaveText('Joonangler')
+    const tabs = page.locator('#site-nav-tabs').getByRole('link')
+    await expect(tabs).toHaveCount(3)
+  })
+
   test('should have footer', async ({ page }) => {
     await page.goto('/')
     await expect(page.locator('footer')).toBeVisible()

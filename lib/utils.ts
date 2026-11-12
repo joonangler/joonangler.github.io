@@ -25,6 +25,16 @@ export function formatDate(date: string | Date): string {
 }
 
 /**
+ * 점으로 쓴 날짜 — `'2026-11-03'` → `'2026.11.03'`.
+ * `formatDate`처럼 UTC로 읽어 시간대와 무관하게 같은 날이 나온다.
+ */
+export function formatDotDate(date: string): string {
+  const d = new Date(date)
+  const pad = (n: number) => String(n).padStart(2, '0')
+  return `${d.getUTCFullYear()}.${pad(d.getUTCMonth() + 1)}.${pad(d.getUTCDate())}`
+}
+
+/**
  * 슬러그 생성
  */
 export function generateSlug(title: string): string {
