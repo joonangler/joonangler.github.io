@@ -470,10 +470,19 @@
     gap: 4px;
     padding: 6px;
     border-radius: 999px;
+    animation: site-fade 500ms ease backwards;
+  }
+  /* 배경·블러·고리는 ::before에 둔다. .site-nav 자신이 backdrop-filter를 가지면 backdrop root가 되어
+     안쪽 탭 패널(좁은 화면)의 블러가 먹지 않는다. */
+  .site-nav::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
     background: color-mix(in srgb, var(--bg) 72%, transparent);
     backdrop-filter: blur(14px);
     box-shadow: var(--ring-shadow);
-    animation: site-fade 500ms ease both;
   }
   .site-nav__name {
     padding: 0 14px;
