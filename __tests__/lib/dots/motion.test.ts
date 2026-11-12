@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { PHASE_MS, advance, createTimeline, cycleMs, easeInOutCubic, freeze, pointProgress } from '@/lib/dots/motion'
+import { PHASE_MS, advance, createTimeline, cycleMs, easeInOutCubic, freeze, pointProgress, stillShape } from '@/lib/dots/motion'
 
 describe('dot motion timeline', () => {
   it('uses the mockup phase lengths', () => {
@@ -42,6 +42,19 @@ describe('dot motion timeline', () => {
     const f = freeze(t, 0)
     expect(f).toMatchObject({ phase: 'hold', shape: 0, still: true })
     expect(advance(f, 1e6).go).toBeUndefined()
+  })
+  it('reduced motion turned on mid-session stops at the current shape, not the first', () => {
+    let t = createTimeline({ shapeCount: 7, reduced: false })
+    expect(stillShape(t)).toBe(0) // 아직 모이기 전(기다림)은 첫 모양
+    t = advance(t, 700).timeline // 0으로 가는 중
+    t = advance(t, 2400).timeline // 0에 머묾
+    t = advance(t, 4200).timeline // 1로 가는 중
+    t = advance(t, 1000).timeline
+    expect(t).toMatchObject({ phase: 'move', shape: 1 })
+    expect(stillShape(t)).toBe(1) // 가던 모양이 모인 모습으로
+    for (let i = 0; i < 6 * 2; i++) t = advance(t, 4200).timeline
+    expect(t.shape).toBe(-1) // 흩어짐·떠돎
+    expect(stillShape(t)).toBe(0)
   })
   it('a point waits for its delay share, then eases to 1', () => {
     expect(pointProgress(0, 0, 0.5)).toBe(0)

@@ -80,6 +80,14 @@ export function freeze(t: Timeline, shape: number): Timeline {
   return { ...t, phase: 'hold', shape, elapsed: 0, duration: PHASE_MS.hold, still: true }
 }
 
+/**
+ * 보는 도중 모션 줄이기를 켰을 때 멈출 모양: 지금 모양(가는 중이면 가던 모양), 흩어진 때는 첫 모양.
+ * 그림이 한 번 더 바뀌지 않게(허브 2026-11-13, 시안 `still(Math.max(si, 0))`과 같다).
+ */
+export function stillShape(t: Timeline): number {
+  return Math.max(t.shape, 0)
+}
+
 /** 움직임 진행(0..1). 머묾·떠돎·기다림은 1(도착한 상태). */
 export function moveProgress(t: Timeline): number {
   return t.phase === 'move' ? Math.min(1, t.elapsed / t.duration) : 1
