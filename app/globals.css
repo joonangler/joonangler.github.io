@@ -1494,6 +1494,13 @@
       text-decoration-color: var(--ink-2);
     }
   }
+  /* 복사는 스크립트가 있어야 동작한다 — 숨김 안전 장치가 js를 떼도 같이 감춰진다 */
+  .email-copy .btn {
+    display: none;
+  }
+  .js .email-copy .btn {
+    display: inline-flex;
+  }
   .email-copy__status {
     flex-basis: 100%;
     min-height: 1.6em;

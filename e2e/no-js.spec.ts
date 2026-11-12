@@ -53,3 +53,20 @@ test.describe('new screens without javascript', () => {
     })
   }
 })
+
+test.describe('copy button', () => {
+  test.describe('without javascript', () => {
+    test.use({ javaScriptEnabled: false })
+    test('is not shown — it cannot work, the address stays as text and a link', async ({ page }) => {
+      await page.goto('/contact/')
+      await expect(page.locator('.email-copy__address')).toBeVisible()
+      await expect(page.getByRole('button', { name: '복사' })).toBeHidden()
+    })
+  })
+  test.describe('with javascript', () => {
+    test('is shown', async ({ page }) => {
+      await page.goto('/contact/')
+      await expect(page.getByRole('button', { name: '복사' })).toBeVisible()
+    })
+  })
+})
