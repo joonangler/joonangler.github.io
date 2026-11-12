@@ -81,7 +81,7 @@
 ## Review Focus
 
 1. **자바스크립트를 끈 좁은 화면** — 「메뉴」 단추가 아무 일도 하지 않으므로, 탭이 접힌 채면 사이트를 돌아다닐 수 없다. 탭은 `html.js`일 때만 접힌다. → Task 5의 e2e 「no-js 390px에서 탭이 다 보인다」.
-2. **보는 도중 「모션 줄이기」를 켬** — 다음 프레임부터 멈추고 정지 화면 한 장(홈은 첫 모양)으로 바뀐다. → Task 9 「reduced motion turned on mid-session」.
+2. **보는 도중 「모션 줄이기」를 켬** — 다음 프레임부터 멈추고 **지금 모양**(옮겨 가는 중이면 가던 모양, 흩어진 때는 첫 모양)이 모인 정지 화면 한 장으로 바뀐다. 첫 모양으로 돌아가지 않는다(그림이 한 번 더 바뀌지 않게, 허브 2026-11-13). 처음부터 켜진 기기는 첫 모양이 모인 한 장이다. → Task 9 「reduced motion turned on mid-session」, Task 8 `stillShape`.
 3. **클립보드를 쓸 수 없는 브라우저**(`navigator.clipboard` 없음, 또는 `writeText`가 거절) — 복사 단추가 조용히 실패하면 안 된다. 주소 글자를 선택하고 「주소를 선택했습니다. 복사해 주세요」를 알린다. → Task 14 두 시험.
 4. **옮겨 가는 중에 화면 회전·창 크기 변경** — 폭이 바뀌면 점을 새로 깔되, 높이만 바뀌면(휴대폰 주소창) 점은 그대로 두고 목표 자리만 다시 잰다. 어느 쪽이든 지금 그려진 자리에서 출발해 튀지 않는다. → Task 8 `resizeAction`·`restartFrom` 시험.
 5. **서비스 자료의 잘못된 값** — 가격이 숫자가 아니거나, `related`에 없는 작업 이름이 있으면 빌드가 파일 이름과 함께 멈춘다. 조용히 빈 카드가 나가지 않는다. → Task 7 「rejects」 시험 셋.
@@ -464,7 +464,7 @@ expect(resizeAction({ w: 390, h: 700 }, { w: 390, h: 700 })).toBe('none')
 - Produces: `DotField(props: { mode: 'shapes' | 'plain'; mask: 'home' | 'service' | 'band'; slotRef?: React.RefObject<HTMLElement | null> })` — 부모를 채우는 `<canvas aria-hidden="true">`와 오른쪽 아래 `PauseButton`. `mode: 'shapes'`이면 `slotRef` 자리에 모양을 모은다.
 - Produces: `PauseButton({ paused, onToggle })` — `aria-pressed`, 글자 「배경 멈춤」/「배경 재생」, 높이 40px(좁은 화면 44px).
 
-돌리는 조건은 `보임 && !멈춤 && !모션줄이기 && document.visibilityState === 'visible'`(부록 B). 모션 줄이기면 정지 화면 한 장(홈은 첫 모양이 모인 모습)만 그린다. 포인터는 `pointerType === 'touch'`이면 무시. `devicePixelRatio`는 2까지. 크기 변경은 `resizeAction`을 따른다. 프레임 상태는 `useRef`에.
+돌리는 조건은 `보임 && !멈춤 && !모션줄이기 && document.visibilityState === 'visible'`(부록 B). 모션 줄이기가 처음부터 켜져 있으면 정지 화면 한 장(홈은 첫 모양이 모인 모습)만 그린다. 보는 도중에 켜면 지금 모양(가던 모양)에서 멈춘다(Review Focus 2). 포인터는 `pointerType === 'touch'`이면 무시. `devicePixelRatio`는 2까지. 크기 변경은 `resizeAction`을 따른다. 프레임 상태는 `useRef`에.
 
 - [ ] **Step 1: 실패하는 테스트** — `HTMLCanvasElement.prototype.getContext`를 가짜 문맥(`clearRect`, `beginPath`, `arc`, `fill`, `setTransform`, `fillStyle`)으로, `IntersectionObserver`·`matchMedia`·`requestAnimationFrame`·`cancelAnimationFrame`을 `vi.fn`으로 바꾼다.
 
