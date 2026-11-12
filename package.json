@@ -12,6 +12,7 @@
     "postbuild": "next-sitemap --config next-sitemap.config.mjs && node scripts/generate-rss.mjs",
     "analyze": "ANALYZE=true npm run build",
     "build:production": "NODE_ENV=production npm run build",
+    "check:routes": "POSTS_DIR=__tests__/fixtures/posts npm run build:production && node scripts/route-snapshot.mjs out | diff __tests__/fixtures/blog-routes.txt -",
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:run": "vitest run",

@@ -113,7 +113,9 @@ async function generateRSSFeed() {
     })
 
     // 포스트 디렉토리에서 모든 MDX 파일 읽기
-    const postsDir = path.join(__dirname, '..', 'content', 'posts')
+    const postsDir = process.env.POSTS_DIR
+      ? path.resolve(process.env.POSTS_DIR)
+      : path.join(__dirname, '..', 'content', 'posts')
     const mdxFiles = getMDXFiles(postsDir)
 
     // 각 파일에서 포스트 데이터 추출
