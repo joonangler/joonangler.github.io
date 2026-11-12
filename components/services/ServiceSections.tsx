@@ -23,7 +23,7 @@ function Block({ title, children }: { title: string; children: ReactNode }) {
 
 function TextList({ items }: { items: string[] }) {
   return (
-    <ul className="plain-list">
+    <ul role="list" className="plain-list">
       {items.map((t, i) => (
         <Reveal key={t} kind="rise" index={i + 1} as="li">
           {t}

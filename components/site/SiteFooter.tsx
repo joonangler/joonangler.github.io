@@ -13,7 +13,7 @@ export function SiteFooter() {
             <span className="site-footer__name">{SITE_TITLE}</span>
             <span className="site-footer__copy">© {year} {SITE_TITLE}</span>
           </p>
-          <ul className="site-footer__links">
+          <ul role="list" className="site-footer__links">
             {getNavItems().map((item) => (
               <li key={item.id}>
                 <Link href={item.href}>{item.label}</Link>

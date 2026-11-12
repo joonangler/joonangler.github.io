@@ -30,7 +30,7 @@ export default function ContactPage() {
               <Reveal kind="title" as="h2">
                 보낼 때 적으면 좋은 것
               </Reveal>
-              <ul className="plain-list">
+              <ul role="list" className="plain-list">
                 {CONTACT_PAGE.hints.map((h, i) => (
                   <Reveal key={h} kind="rise" index={i + 1} as="li">
                     {h}
@@ -42,7 +42,7 @@ export default function ContactPage() {
               <span className="contact-consult">{CONTACT_PAGE.consult}</span>
             </Reveal>
             {channels.length > 0 && (
-              <ul className="contact-line__channels contact-main__channels">
+              <ul role="list" className="contact-line__channels contact-main__channels">
                 {channels.map((c) => (
                   <li key={c.id}>
                     <a href={c.href} target="_blank" rel="noopener noreferrer">
