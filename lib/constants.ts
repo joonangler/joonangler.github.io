@@ -33,7 +33,6 @@ export const SITE_CONFIG = {
   locale: 'ko_KR',
   author: {
     name: process.env.NEXT_PUBLIC_AUTHOR_NAME || 'Blog Author',
-    email: process.env.NEXT_PUBLIC_AUTHOR_EMAIL || undefined,
     image: process.env.NEXT_PUBLIC_AUTHOR_IMAGE || '/favicon.svg'
   },
   social: {
