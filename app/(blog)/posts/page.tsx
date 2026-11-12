@@ -7,14 +7,14 @@ import { Suspense } from 'react'
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://yourblog.com'
 
 export const metadata: Metadata = {
-  title: 'All Posts',
-  description: 'Browse all blog posts',
+  title: '글',
+  description: '블로그의 모든 글',
   alternates: {
     canonical: `${siteUrl}/posts`,
   },
   openGraph: {
-    title: 'All Posts',
-    description: 'Browse all blog posts',
+    title: '글',
+    description: '블로그의 모든 글',
     url: `${siteUrl}/posts`,
   },
 }
@@ -26,9 +26,9 @@ export default async function PostsPage() {
     <Container className="py-12">
       {/* 헤더 */}
       <div className="mb-8">
-        <h1 className="mb-4 text-4xl font-bold text-foreground">All Posts</h1>
+        <h1 className="mb-4 text-4xl font-bold text-foreground">글</h1>
         <p className="text-lg text-muted-foreground">
-          {allPosts.length} {allPosts.length === 1 ? 'post' : 'posts'} published
+          글 {allPosts.length}편
         </p>
       </div>
 

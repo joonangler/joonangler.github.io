@@ -15,7 +15,7 @@ interface PostListProps {
  */
 export function PostList({
   posts,
-  emptyMessage = 'No posts found.',
+  emptyMessage = '아직 올린 글이 없습니다',
 }: PostListProps) {
   if (posts.length === 0) {
     return <EmptyState message={emptyMessage} />

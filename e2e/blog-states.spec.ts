@@ -11,7 +11,7 @@ test('keyboard focus on page numbers and tag links is a white ring with a black 
   await page.setViewportSize({ width: 1440, height: 900 })
   await page.goto('/posts/')
   await page.waitForLoadState('networkidle')
-  const pageLink = 'nav[aria-label="Pagination"] a'
+  const pageLink = 'nav[aria-label="페이지 이동"] a'
   expect(await page.locator(pageLink).count()).toBeGreaterThan(0)
   for (let i = 0; i < (await page.locator(pageLink).count()); i++) {
     const s = await ringShadow(page, `${pageLink} >> nth=${i}`)
@@ -66,9 +66,9 @@ test('tag cloud links ease their scale on hover instead of snapping', async ({ p
 test('a disabled previous arrow looks different from an enabled next arrow', async ({ page }) => {
   await page.goto('/posts/')
   await page.waitForLoadState('networkidle')
-  const nav = page.locator('nav[aria-label="Pagination"]')
+  const nav = page.locator('nav[aria-label="페이지 이동"]')
   const disabled = nav.locator('div').first()
-  const enabled = nav.locator('a[aria-label="Next page"]')
+  const enabled = nav.locator('a[aria-label="다음 페이지"]')
   const face = (l: typeof disabled) => l.evaluate((el) => { const c = getComputedStyle(el); return `${c.backgroundColor}|${c.borderTopColor}` })
   expect(await face(disabled)).not.toBe(await face(enabled))
 })

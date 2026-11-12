@@ -18,7 +18,7 @@ export function MDXLink({ href, children, className, ...props }: MDXLinkProps) {
     console.warn(`[MDX Link] Unsafe URL blocked: ${href}`)
     return (
       <span className={cn('text-muted-foreground', className)}>
-        {children} (unsafe link removed)
+        {children} (안전하지 않은 주소라 링크를 뺐습니다)
       </span>
     )
   }

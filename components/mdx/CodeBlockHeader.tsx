@@ -58,11 +58,11 @@ export function CodeBlockHeader({ code, language, title }: CodeBlockHeaderProps)
   const getCopyText = () => {
     switch (copyState) {
       case 'copied':
-        return 'Copied!'
+        return '복사했습니다'
       case 'error':
-        return 'Failed'
+        return '복사하지 못했습니다'
       default:
-        return 'Copy'
+        return '복사'
     }
   }
 
@@ -100,8 +100,8 @@ export function CodeBlockHeader({ code, language, title }: CodeBlockHeaderProps)
             'text-muted-foreground': copyState === 'idle',
           }
         )}
-        title={copyState === 'idle' ? 'Copy code to clipboard' : undefined}
-        aria-label={`Copy ${language || 'code'} to clipboard`}
+        title={copyState === 'idle' ? '코드 복사' : undefined}
+        aria-label={`${language ? `${language} ` : ''}코드 복사`}
         aria-live="polite"
         disabled={copyState !== 'idle'}
       >

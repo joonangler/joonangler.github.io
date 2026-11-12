@@ -156,9 +156,8 @@ export function TableOfContents({
             'focus:outline-hidden focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background',
             'list-none [&::-webkit-details-marker]:hidden'
           )}
-          aria-label="Toggle table of contents"
         >
-          <span>On This Page</span>
+          <span>목차</span>
           <svg
             className={cn(
               'h-4 w-4 transition-transform duration-200',
@@ -178,7 +177,7 @@ export function TableOfContents({
         </summary>
         <nav
           className="px-4 pb-4"
-          aria-label="Table of contents"
+          aria-label="목차"
           role="navigation"
         >
           {tocList}
@@ -194,11 +193,11 @@ export function TableOfContents({
         'p-4',
         className
       )}
-      aria-label="Table of contents"
+      aria-label="목차"
       role="navigation"
     >
       <h2 className="mb-4 text-sm font-semibold uppercase tracking-wide text-card-foreground">
-        On This Page
+        목차
       </h2>
       {tocList}
     </nav>

@@ -62,7 +62,7 @@ export function PostHeader({ post }: PostHeaderProps) {
         {post.author && (
           <>
             <span>·</span>
-            <span>by {post.author}</span>
+            <span>글쓴이 {post.author}</span>
           </>
         )}
       </div>

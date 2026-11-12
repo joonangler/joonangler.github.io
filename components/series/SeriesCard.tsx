@@ -65,12 +65,12 @@ export function SeriesCard({ series }: SeriesCardProps) {
             <div className="flex items-center gap-1.5">
               <FileText className="h-4 w-4" />
               <span>
-                {series.count} part{series.count !== 1 ? 's' : ''}
+                {series.count}편
               </span>
             </div>
             <div className="flex items-center gap-1.5">
               <Clock className="h-4 w-4" />
-              <span>{totalMinutes} min read</span>
+              <span>읽는 데 {totalMinutes}분</span>
             </div>
           </div>
 
@@ -94,13 +94,13 @@ export function SeriesCard({ series }: SeriesCardProps) {
           <div className="border-t border-border pt-4 text-xs text-muted-foreground">
             <div className="flex items-center justify-between">
               <div>
-                <p className="mb-1">Started</p>
+                <p className="mb-1">시작</p>
                 <p className="font-medium text-foreground">
                   {formatDate(firstPost.date)}
                 </p>
               </div>
               <div className="text-right">
-                <p className="mb-1">Updated</p>
+                <p className="mb-1">최근</p>
                 <p className="font-medium text-foreground">
                   {formatDate(lastPost.date)}
                 </p>

@@ -224,7 +224,7 @@ export async function getPostBySlug(slug: string): Promise<Post | null> {
       tags: data.tags || [],
       content: content, // 원본 MDX 문자열 저장 (PostContent에서 MDXRemote로 렌더링)
       readingTime: {
-        text: readingTimeResult.text,
+        text: `읽는 데 ${Math.max(1, Math.ceil(readingTimeResult.minutes))}분`,
         minutes: Math.ceil(readingTimeResult.minutes),
         time: readingTimeResult.time,
         words: readingTimeResult.words,
@@ -354,7 +354,7 @@ export function getPostFrontmatter(slug: string): PostFrontmatter | null {
       author: data.author,
       draft: data.draft || false,
       readingTime: {
-        text: readingTimeResult.text,
+        text: `읽는 데 ${Math.max(1, Math.ceil(readingTimeResult.minutes))}분`,
         minutes: Math.ceil(readingTimeResult.minutes),
         time: readingTimeResult.time,
         words: readingTimeResult.words,

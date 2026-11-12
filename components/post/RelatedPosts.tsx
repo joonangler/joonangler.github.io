@@ -26,7 +26,7 @@ export function RelatedPosts({ posts }: RelatedPostsProps) {
 
   return (
     <section className="my-12 border-t border-border pt-12">
-      <h2 className="mb-6 text-2xl font-bold text-foreground">Related Posts</h2>
+      <h2 className="mb-6 text-2xl font-bold text-foreground">관련 글</h2>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {posts.map((post) => (

@@ -136,7 +136,7 @@ export function SearchInterface({ posts }: SearchInterfaceProps) {
               눌러 빠르게 검색창에 포커스할 수 있습니다
             </li>
             <li>
-              • <kbd className="rounded-sm bg-background px-2 py-1 text-xs">ESC</kbd>를
+              • <kbd className="rounded-sm bg-background px-2 py-1 text-xs">Esc</kbd>를
               눌러 검색어를 지울 수 있습니다
             </li>
             <li>

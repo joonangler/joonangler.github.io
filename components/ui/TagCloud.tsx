@@ -21,7 +21,7 @@ export function TagCloud({ tags, className }: TagCloudProps) {
   if (tags.length === 0) {
     return (
       <div className="text-center text-muted-foreground">
-        <p>No tags yet</p>
+        <p>아직 태그가 없습니다</p>
       </div>
     )
   }
@@ -85,13 +85,13 @@ export function TagCloud({ tags, className }: TagCloudProps) {
               fontWeight
             )}
             style={{ fontSize }}
-            title={`${tag.count} post${tag.count !== 1 ? 's' : ''}`}
+            title={`글 ${tag.count}편`}
           >
             {tag.name}
 
             {/* 툴팁 */}
             <span className="pointer-events-none absolute left-1/2 top-full z-10 mt-2 -translate-x-1/2 whitespace-nowrap rounded-sm bg-primary px-2 py-1 text-xs font-normal text-primary-foreground opacity-0 transition-opacity group-hover:opacity-100">
-              {tag.count} post{tag.count !== 1 ? 's' : ''}
+              글 {tag.count}편
             </span>
           </Link>
         )
