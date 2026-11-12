@@ -7,8 +7,13 @@ import { describe, it, expect } from 'vitest'
  * Tailwind 팔레트 색 이름(gray·blue·yellow …)과 흰색·검정 직접 클래스는 다시 들어오지 못하게 막는다.
  * 넷째 묶음 작업 3~5가 차례로 대상을 넓힌다 — 아직 정리하지 않은 폴더·파일은 NOT_YET에 둔다.
  */
-// globals.css는 본문 링크(작업 4)·코드 강조 줄(작업 5)이 남아 작업 5에서 푼다
-export const NOT_YET: string[] = ['components/mdx/', 'app/globals.css']
+// 작업 5에서 푼다 — 코드 블록 감싸개(MDXComponents)와 코드 강조 줄(globals.css)이 코드 블록 작업의 몫이다
+export const NOT_YET: string[] = [
+  'components/mdx/CodeBlock.tsx',
+  'components/mdx/CodeBlockHeader.tsx',
+  'components/mdx/MDXComponents.tsx',
+  'app/globals.css',
+]
 
 const NAMED =
   /\b(bg|text|border|ring|from|to|via|fill|stroke|outline|divide|placeholder|decoration|shadow)-(gray|slate|zinc|neutral|stone|red|orange|amber|yellow|lime|green|emerald|teal|cyan|sky|blue|indigo|violet|purple|fuchsia|pink|rose)-\d{2,3}\b|\b(bg|text|border)-(white|black)\b/

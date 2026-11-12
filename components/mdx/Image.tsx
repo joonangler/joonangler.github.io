@@ -31,7 +31,7 @@ export function MDXImage({
     <figure className="my-8">
       <div
         className={cn(
-          'relative overflow-hidden rounded-lg border border-gray-200 dark:border-gray-800',
+          'relative overflow-hidden rounded-lg border border-border',
           className
         )}
       >
@@ -45,7 +45,7 @@ export function MDXImage({
         />
       </div>
       {caption && (
-        <figcaption className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
+        <figcaption className="mt-2 text-center text-sm text-muted-foreground">
           {caption}
         </figcaption>
       )}

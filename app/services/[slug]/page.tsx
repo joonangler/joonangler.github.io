@@ -37,7 +37,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
 
   const works = getAllWork().filter((w) => service.related.includes(w.slug))
   const body = service.body.trim() ? (
-    <article className="prose prose-neutral dark:prose-invert max-w-none">
+    <article className="prose max-w-none">
       <MDXRemote source={service.body} components={mdxComponents} options={mdxOptions} />
     </article>
   ) : null

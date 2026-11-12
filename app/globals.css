@@ -348,10 +348,6 @@
     @apply mb-2;
   }
 
-  .prose a {
-    @apply text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300;
-  }
-
   .prose code {
     @apply rounded-sm bg-muted px-1.5 py-0.5 text-sm text-foreground shadow-[inset_0_0_0_1px_var(--line)];
   }
@@ -363,6 +359,13 @@
 
   .prose img {
     @apply rounded-lg;
+  }
+
+  /* 블록 수식이 넘치면 쪽 전체가 아니라 제 칸에서 가로로 민다. 위아래 여백은 위첨자가 잘리지 않을 만큼만 */
+  .katex-display {
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-block: 2px;
   }
 
   .prose blockquote {

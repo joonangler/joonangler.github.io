@@ -39,7 +39,10 @@ export const mdxComponents: MDXComponents = {
     const text = getTextContent(children)
     const id = text ? generateHeadingId(text) : undefined
     return (
-      <h1 id={id} className="mt-8 mb-4 text-4xl font-bold tracking-tight">
+      <h1
+        id={id}
+        className="mt-8 mb-4 scroll-mt-[88px] text-4xl font-bold tracking-tight"
+      >
         {children}
       </h1>
     )
@@ -50,7 +53,7 @@ export const mdxComponents: MDXComponents = {
     return (
       <h2
         id={id}
-        className="mt-8 mb-4 scroll-mt-20 text-3xl font-bold tracking-tight"
+        className="mt-8 mb-4 scroll-mt-[88px] text-3xl font-bold tracking-tight"
       >
         {children}
       </h2>
@@ -62,7 +65,7 @@ export const mdxComponents: MDXComponents = {
     return (
       <h3
         id={id}
-        className="mt-6 mb-3 scroll-mt-20 text-2xl font-semibold tracking-tight"
+        className="mt-6 mb-3 scroll-mt-[88px] text-2xl font-semibold tracking-tight"
       >
         {children}
       </h3>
@@ -74,7 +77,7 @@ export const mdxComponents: MDXComponents = {
     return (
       <h4
         id={id}
-        className="mt-6 mb-3 scroll-mt-20 text-xl font-semibold tracking-tight"
+        className="mt-6 mb-3 scroll-mt-[88px] text-xl font-semibold tracking-tight"
       >
         {children}
       </h4>
@@ -86,7 +89,7 @@ export const mdxComponents: MDXComponents = {
     return (
       <h5
         id={id}
-        className="mt-4 mb-2 scroll-mt-20 text-lg font-semibold tracking-tight"
+        className="mt-4 mb-2 scroll-mt-[88px] text-lg font-semibold tracking-tight"
       >
         {children}
       </h5>
@@ -98,7 +101,7 @@ export const mdxComponents: MDXComponents = {
     return (
       <h6
         id={id}
-        className="mt-4 mb-2 scroll-mt-20 text-base font-semibold tracking-tight"
+        className="mt-4 mb-2 scroll-mt-[88px] text-base font-semibold tracking-tight"
       >
         {children}
       </h6>
@@ -177,7 +180,7 @@ export const mdxComponents: MDXComponents = {
 
     // 인라인 코드
     return (
-      <code className="relative rounded-sm bg-gray-100 px-1.5 py-0.5 font-mono text-sm text-gray-900 dark:bg-gray-800 dark:text-gray-100">
+      <code className="relative rounded-sm bg-muted px-1.5 py-0.5 font-mono text-sm text-foreground shadow-[inset_0_0_0_1px_var(--line)]">
         {children}
       </code>
     )
@@ -200,7 +203,7 @@ export const mdxComponents: MDXComponents = {
 
   // 인용구
   blockquote: ({ children }) => (
-    <blockquote className="my-6 border-l-4 border-gray-300 pl-6 italic text-gray-700 dark:border-gray-700 dark:text-gray-300">
+    <blockquote className="my-6 border-l-2 border-ink-3 pl-6 text-muted-foreground">
       {children}
     </blockquote>
   ),
@@ -208,40 +211,40 @@ export const mdxComponents: MDXComponents = {
   // 테이블
   table: ({ children }) => (
     <div className="my-6 w-full overflow-x-auto">
-      <table className="w-full border-collapse border border-gray-300 dark:border-gray-700">
+      <table className="w-full border-collapse border border-border">
         {children}
       </table>
     </div>
   ),
   thead: ({ children }) => (
-    <thead className="bg-gray-100 dark:bg-gray-800">
+    <thead className="bg-muted">
       {children}
     </thead>
   ),
   tbody: ({ children }) => (
-    <tbody className="divide-y divide-gray-300 dark:divide-gray-700">
+    <tbody className="divide-y divide-border">
       {children}
     </tbody>
   ),
   tr: ({ children }) => (
-    <tr className="border-t border-gray-300 dark:border-gray-700">
+    <tr className="border-t border-border">
       {children}
     </tr>
   ),
   th: ({ children }) => (
-    <th className="border border-gray-300 px-4 py-2 text-left font-semibold dark:border-gray-700">
+    <th className="border border-border px-4 py-2 text-left font-semibold text-foreground">
       {children}
     </th>
   ),
   td: ({ children }) => (
-    <td className="border border-gray-300 px-4 py-2 dark:border-gray-700">
+    <td className="border border-border px-4 py-2 text-foreground">
       {children}
     </td>
   ),
 
   // 수평선
   hr: () => (
-    <hr className="my-8 border-t border-gray-300 dark:border-gray-700" />
+    <hr className="my-8 border-t border-border" />
   ),
 
   // Figure (rehype-pretty-code의 title 지원)
