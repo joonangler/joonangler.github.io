@@ -420,3 +420,181 @@
     @apply border-l-4 border-gray-300 pl-4 italic text-gray-700 dark:border-gray-700 dark:text-gray-300;
   }
 }
+
+/* ===== 사이트 틀: 떠 있는 내비와 한 줄 바닥 (계획 부록 C) ===== */
+@keyframes site-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@layer components {
+  .site-wrap {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 var(--pad);
+  }
+
+  .skip-link {
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    z-index: 30;
+    padding: 10px 16px;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--bg);
+    transform: translateY(-200%);
+  }
+  .skip-link:focus {
+    transform: none;
+  }
+
+  .site-nav a:focus-visible,
+  .site-nav button:focus-visible,
+  .site-footer a:focus-visible,
+  .skip-link:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  .site-nav {
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    translate: -50% 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--bg) 72%, transparent);
+    backdrop-filter: blur(14px);
+    box-shadow: var(--ring-shadow);
+    animation: site-fade 500ms ease both;
+  }
+  .site-nav__name {
+    padding: 0 14px;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .site-nav__tabs {
+    display: flex;
+    gap: 4px;
+  }
+  .site-nav__tab {
+    display: inline-flex;
+    align-items: center;
+    height: 40px;
+    padding: 0 14px;
+    border-radius: 999px;
+    font-size: 15px;
+    color: var(--ink-2);
+    transition:
+      color 150ms,
+      background-color 150ms;
+  }
+  .site-nav__tab[aria-current='page'] {
+    color: var(--ink);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .site-nav__tab:hover {
+      color: var(--ink);
+      background: var(--surface);
+    }
+  }
+  .site-nav__menu {
+    display: none;
+  }
+
+  @media (max-width: 860px) {
+    .site-nav {
+      left: 16px;
+      right: 16px;
+      translate: none;
+      justify-content: space-between;
+    }
+    .site-nav__tabs {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      gap: 2px;
+      padding: 8px;
+      border-radius: 22px;
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--ring-shadow);
+    }
+    .site-nav__tab {
+      height: 48px;
+      font-size: 17px;
+    }
+    /* 접힘은 html.js 아래에서만 건다 — 자바스크립트가 꺼지면 탭이 펼쳐진 채 남는다. */
+    .js .site-nav__menu {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      height: 40px;
+      padding: 0 14px;
+      border-radius: 999px;
+      font-size: 15px;
+      color: var(--ink-2);
+    }
+    /* 누르는 자리를 44px 이상으로 */
+    .js .site-nav__menu::after {
+      content: '';
+      position: absolute;
+      inset: -2px 0;
+    }
+    .js .site-nav__tabs[data-open='false'] {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-nav {
+      animation: none;
+    }
+  }
+
+  .site-footer {
+    border-top: 1px solid var(--line);
+    padding: 32px 0 150px;
+    color: var(--ink-2);
+    font-size: 15px;
+  }
+  .site-footer__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 14px 32px;
+  }
+  .site-footer__name {
+    margin-right: 12px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .site-footer__copy {
+    font-size: 14px;
+    color: var(--ink-3);
+  }
+  .site-footer__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .site-footer a:hover {
+      color: var(--ink);
+    }
+  }
+}

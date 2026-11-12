@@ -2,8 +2,8 @@ import type { Metadata } from 'next'
 import { GoogleAnalytics } from '@next/third-parties/google'
 import 'katex/dist/katex.min.css'
 import './globals.css'
-import { Header } from '@/components/layout/Header'
-import { Footer } from '@/components/layout/Footer'
+import { SiteNav } from '@/components/site/SiteNav'
+import { SiteFooter } from '@/components/site/SiteFooter'
 import { getBaseMetadata } from '@/lib/seo'
 import { JsonLd } from '@/components/seo/JsonLd'
 import { generateWebSiteSchema } from '@/lib/json-ld'
@@ -48,11 +48,16 @@ export default function RootLayout({
         <JsonLd data={generateWebSiteSchema()} />
       </head>
       <body className="flex min-h-screen flex-col bg-background font-sans antialiased">
-        <Header />
+        <a href="#main-content" className="skip-link">
+          본문으로 건너뛰기
+        </a>
+        <header>
+          <SiteNav />
+        </header>
         <main id="main-content" className="flex-1" tabIndex={-1}>
           {children}
         </main>
-        <Footer />
+        <SiteFooter />
         {process.env.NEXT_PUBLIC_GA_ID && (
           <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
         )}
