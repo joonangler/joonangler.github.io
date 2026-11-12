@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, afterEach } from 'vitest'
 import React from 'react'
-import { cn, formatDate, generateSlug, toSlug, isSafeUrl, getTextContent, debounce } from '@/lib/utils'
+import { cn, formatDate, formatDotDate, generateSlug, toSlug, isSafeUrl, getTextContent, debounce } from '@/lib/utils'
 
 describe('utils', () => {
   describe('cn', () => {
@@ -299,6 +299,16 @@ describe('utils', () => {
       expect(mockFn).toHaveBeenCalledWith('arg1', 'arg2', 123)
 
       vi.useRealTimers()
+    })
+  })
+
+  describe('formatDotDate', () => {
+    it('formats YYYY-MM-DD with dots', () => {
+      expect(formatDotDate('2026-11-03')).toBe('2026.11.03')
+    })
+    it('reads the date in UTC so the day does not slip with the time zone', () => {
+      expect(formatDotDate('2026-01-01')).toBe('2026.01.01')
+      expect(formatDotDate('2026-12-31')).toBe('2026.12.31')
     })
   })
 })

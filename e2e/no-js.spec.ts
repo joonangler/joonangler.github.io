@@ -26,3 +26,15 @@ test.describe('with javascript', () => {
     expect((await tab.boundingBox())!.height).toBeGreaterThanOrEqual(44)
   })
 })
+
+test.describe('home sections without javascript', () => {
+  test.use({ javaScriptEnabled: false })
+
+  test('sections are visible without javascript', async ({ page }) => {
+    await page.goto('/')
+    const h2 = page.getByRole('heading', { name: '맡는 일' })
+    expect(await h2.evaluate((el) => getComputedStyle(el).clipPath)).toBe('none')
+    const card = page.getByRole('link', { name: /막힌 웹·앱/ })
+    expect(await card.evaluate((el) => getComputedStyle(el).opacity)).toBe('1')
+  })
+})

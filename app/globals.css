@@ -796,3 +796,256 @@
     }
   }
 }
+
+/* ===== 홈 아래 구역과 카드, 스크롤 등장 (계획 부록 C) ===== */
+@layer components {
+  /* 구역 전체의 아래 여백은 홈에만 건다(main 전체에 걸면 블로그 화면의 여백이 바뀐다) */
+  .home-sections {
+    padding-bottom: clamp(88px, 12vw, 150px);
+  }
+  .home-block {
+    padding: clamp(88px, 13vw, 168px) 0 0;
+  }
+  /* 제목 · 본문 · 「전체 보기」. 글 차례는 제목 → 본문 → 링크, 큰 화면에서는 링크가 제목 줄 오른쪽 끝에 놓인다 */
+  .home-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'title more'
+      'body body';
+    column-gap: 24px;
+    row-gap: clamp(28px, 4vw, 48px);
+    align-items: end;
+  }
+  .home-grid > h2 {
+    grid-area: title;
+    margin: 0;
+    font-size: clamp(28px, 3.4vw, 44px);
+    font-weight: 600;
+    letter-spacing: -0.035em;
+    line-height: 1.15;
+    color: var(--ink);
+    text-wrap: balance;
+  }
+  .home-grid > .home-body {
+    grid-area: body;
+  }
+  .home-grid > .rise-in {
+    grid-area: more;
+  }
+  .home-more {
+    color: var(--ink-2);
+    font-size: 16px;
+    text-decoration: underline;
+    text-decoration-color: var(--line);
+    text-underline-offset: 4px;
+    transition: color 150ms;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .home-more:hover {
+      color: var(--ink);
+    }
+  }
+
+  /* 스크롤 등장: 숨김은 html.js 아래에서만 — 스크립트가 꺼지면 처음부터 보인다. 움직이는 속성은 clip-path·opacity·transform뿐 */
+  .js .reveal {
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 620ms var(--ease-in-out);
+  }
+  .js .reveal.is-in {
+    clip-path: inset(0 0 0 0);
+  }
+  .js .rise-in {
+    opacity: 0;
+    transform: translateY(10px);
+    transition:
+      opacity 520ms var(--ease-out),
+      transform 520ms var(--ease-out);
+    transition-delay: calc(var(--i, 0) * 55ms + 120ms);
+  }
+  .js .rise-in.is-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* 카드: 바깥 24px, 안 16px. 서비스와 작업이 같은 틀. 올림은 포인터가 고울 때만 */
+  .card {
+    display: block;
+    height: 100%;
+    padding: 8px;
+    border-radius: 24px;
+    background: var(--surface);
+    box-shadow: var(--ring-shadow);
+    color: var(--ink);
+    transition: box-shadow 200ms;
+  }
+  .card-panel {
+    aspect-ratio: 16 / 10;
+    border-radius: 16px;
+    outline: 1px solid var(--img-outline);
+    outline-offset: -1px;
+    overflow: hidden;
+  }
+  .card-meta {
+    padding: 18px 12px 12px;
+  }
+  .card-meta p {
+    margin: 0;
+    color: var(--ink-2);
+    font-size: 16px;
+  }
+  .card h3 {
+    margin: 0;
+    font-weight: 600;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    a.card:hover {
+      box-shadow: var(--ring-shadow-hover);
+    }
+  }
+
+  /* 작업 카드 */
+  .works {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    gap: 20px;
+    align-items: start;
+  }
+  .works--single {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .work-card .card-panel {
+    background: #0d0d0d;
+  }
+  .work-card img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: left top;
+    transition: transform 500ms var(--ease-out);
+  }
+  .work-card h3 {
+    font-size: 21px;
+    letter-spacing: -0.025em;
+  }
+  .work-card .card-meta p {
+    margin-top: 4px;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    a.work-card:hover img {
+      transform: scale(1.03);
+    }
+  }
+
+  /* 서비스 카드 */
+  .svc-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    align-items: stretch;
+  }
+  .svc-card .card-panel {
+    background: var(--bg);
+    padding: clamp(18px, 2vw, 24px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .svc-from {
+    color: var(--ink-2);
+    font-size: 16px;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+  .svc-card h3 {
+    font-size: clamp(24px, 2.3vw, 31px);
+    letter-spacing: -0.035em;
+    line-height: 1.18;
+    text-wrap: balance;
+  }
+
+  /* 기록 줄 */
+  .log-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .log-row {
+    display: grid;
+    grid-template-columns: 7.5em minmax(0, 1fr) auto;
+    gap: 20px;
+    align-items: baseline;
+    padding: 22px 14px;
+    margin: 0 -14px;
+    border-top: 1px solid var(--line);
+    color: var(--ink);
+  }
+  .log-row time {
+    color: var(--ink-3);
+    font-size: 15px;
+    font-variant-numeric: tabular-nums;
+  }
+  .log-title {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+  .log-series {
+    color: var(--ink-2);
+    font-size: 15px;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .log-row {
+      transition: background-color 120ms;
+    }
+    .log-row:hover {
+      background: var(--surface);
+    }
+  }
+
+  @media (max-width: 860px) {
+    .works,
+    .svc-grid {
+      grid-template-columns: 1fr;
+    }
+    .log-row {
+      grid-template-columns: 1fr auto;
+      gap: 4px 16px;
+    }
+    .log-title {
+      grid-column: 1 / -1;
+      grid-row: 2;
+    }
+  }
+  /* 좁은 화면: 「전체 보기」는 본문 아래로 내려 제목이 한 줄로 길게 쓰이게 한다 */
+  @media (max-width: 640px) {
+    .home-grid {
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-areas:
+        'title'
+        'body'
+        'more';
+    }
+    .home-grid > .rise-in {
+      margin-top: calc(24px - clamp(28px, 4vw, 48px));
+      justify-self: start;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .js .reveal {
+      clip-path: none;
+      transition: none;
+    }
+    .js .rise-in {
+      transform: none;
+      transition: opacity 250ms;
+      transition-delay: 0ms;
+    }
+    .work-card img {
+      transition: none;
+    }
+  }
+}
