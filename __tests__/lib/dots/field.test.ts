@@ -7,6 +7,7 @@ import {
   pointerOffset,
   resizeAction,
   restartFrom,
+  updateTargets,
 } from '@/lib/dots/field'
 
 const seq = (...xs: number[]) => {
@@ -57,6 +58,16 @@ describe('dot field', () => {
     p.ca = 0.4
     restartFrom([p])
     expect(p).toMatchObject({ sx: 10, sy: 20, sr: 2, sa: 0.4 })
+  })
+  it('height-only change moves targets but keeps each point delay (no jump mid-move)', () => {
+    const pts = createFormPoints(3, 800, 600, seq(0.3))
+    const shape = [0, 1].map((i) => ({ x: i, y: i, a: 0.9, r: 1 }))
+    assignTargets(pts, shape, seq(0.7))
+    const before = pts.map((p) => p.delay)
+    updateTargets(pts, shape.map((q) => ({ ...q, y: q.y + 50 })))
+    expect(pts.map((p) => p.delay)).toEqual(before)
+    expect(pts.map((p) => p.ty)).toEqual([50, 51, pts[2].ty])
+    expect(pts.map((p) => p.has)).toEqual([true, true, false])
   })
   it('rebuilds on width change, retargets on height-only change', () => {
     expect(resizeAction({ w: 390, h: 700 }, { w: 390, h: 760 })).toBe('retarget')

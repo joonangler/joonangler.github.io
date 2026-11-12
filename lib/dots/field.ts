@@ -111,6 +111,21 @@ export function assignTargets(points: FormPoint[], shape: ShapePoint[], rng: Rng
   })
 }
 
+/**
+ * 높이만 바뀌었을 때: 같은 모양의 새 자리로 목표만 옮긴다. 늦음(delay)은 그대로 —
+ * 다시 뽑으면 옮겨 가던 점의 진행이 바뀌어 튄다.
+ */
+export function updateTargets(points: FormPoint[], shape: ShapePoint[]): void {
+  points.forEach((p, i) => {
+    const q = shape[i]
+    if (!p.has || !q) return
+    p.tx = q.x
+    p.ty = q.y
+    p.ta = q.a
+    p.tr = q.r
+  })
+}
+
 /** 지금 그려진 자리에서 출발한다 — 가던 중이어도 끊고 새로 간다(튀지 않는다) */
 export function restartFrom(points: FormPoint[]): void {
   for (const p of points) {

@@ -15,6 +15,7 @@ import {
   restartFrom,
   twinkle,
   type BackgroundPoint,
+  updateTargets,
   type FormPoint,
 } from '@/lib/dots/field'
 import { PauseButton } from './PauseButton'
@@ -199,7 +200,7 @@ export function DotField({ mode, mask, slotRef }: DotFieldProps) {
       } else if (action === 'retarget') {
         // 높이만 바뀜(휴대폰 주소창): 점은 그대로, 목표 자리만 다시 잰다
         measureShapes()
-        if (timeline.shape >= 0 && shapes.length) target(timeline.shape)
+        if (timeline.shape >= 0 && shapes.length) updateTargets(fp, shapes[timeline.shape])
       }
       draw(0)
     }
