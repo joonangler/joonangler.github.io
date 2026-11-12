@@ -904,6 +904,12 @@
     margin: 0;
     font-weight: 600;
   }
+  .card-tag {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--ink-2);
+    font-size: 14px;
+  }
   @media (hover: hover) and (pointer: fine) {
     a.card:hover {
       box-shadow: var(--ring-shadow-hover);

@@ -87,6 +87,20 @@ describe('ServiceSections', () => {
   })
 })
 
+describe('related work label', () => {
+  it('own work cards on a service page say 직접 운영', () => {
+    render(<ServiceSections service={alpha} body={null} works={works} />)
+    expect(works[0].kind).toBe('own')
+    expect(screen.getByText('직접 운영')).toBeTruthy()
+  })
+  it('a client work is never labelled 직접 운영', () => {
+    const client = getAllWork().filter((w) => w.kind === 'client')
+    expect(client.length).toBeGreaterThan(0)
+    render(<ServiceSections service={alpha} body={null} works={client} />)
+    expect(screen.queryByText('직접 운영')).toBeNull()
+  })
+})
+
 describe('page', () => {
   it('builds a page per fixture service', async () => {
     expect(await generateStaticParams()).toEqual([{ slug: 'alpha' }, { slug: 'beta' }])

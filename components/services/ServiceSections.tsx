@@ -6,7 +6,7 @@ import { PriceList } from '@/components/services/PriceList'
 import { StepList } from '@/components/services/StepList'
 import { isNavReady } from '@/lib/site'
 import type { Service } from '@/lib/services'
-import type { Work } from '@/lib/work'
+import { workKindLabel, type Work } from '@/lib/work'
 
 function Block({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -77,7 +77,7 @@ export function ServiceSections({ service, body, works }: { service: Service; bo
           <div className={works.length === 1 ? 'works works--single' : 'works'}>
             {works.map((w, i) => (
               <Reveal key={w.slug} kind="rise" index={i + 1}>
-                <WorkCard work={w} href={workReady ? `/work/${w.slug}/` : undefined} wide={works.length === 1} />
+                <WorkCard work={w} href={workReady ? `/work/${w.slug}/` : undefined} wide={works.length === 1} label={workKindLabel(w.kind)} />
               </Reveal>
             ))}
           </div>
