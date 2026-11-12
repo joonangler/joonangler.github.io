@@ -1082,6 +1082,17 @@
       transition: none;
     }
   }
+
+  /* 인쇄: 스크롤로 아직 안 본 구역도 종이에는 나와야 한다 */
+  @media print {
+    .js .reveal,
+    .js .rise-in {
+      opacity: 1;
+      transform: none;
+      clip-path: none;
+      transition: none;
+    }
+  }
 }
 
 /* ===== 단추, 낮은 띠, 서비스 목록 (계획 부록 C) ===== */
