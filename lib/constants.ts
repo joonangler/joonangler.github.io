@@ -28,6 +28,7 @@ function validateProductionEnv(): string {
 export const SITE_CONFIG = {
   url: validateProductionEnv(),
   name: process.env.NEXT_PUBLIC_SITE_NAME || 'My Blog',
+  blogName: process.env.NEXT_PUBLIC_BLOG_NAME || 'Joonangler.log',
   description: process.env.NEXT_PUBLIC_SITE_DESCRIPTION || 'A Next.js blog',
   locale: 'ko_KR',
   author: {
@@ -45,11 +46,11 @@ export const SITE_CONFIG = {
 } as const
 
 /**
- * 헤더의 높이 (픽셀)
+ * 헤더의 높이 (픽셀) — 떠 있는 내비 위 16 + 높이 52 + 여유 20
  * - 스크롤 네비게이션 시 오프셋 계산에 사용
  * - IntersectionObserver의 rootMargin 계산에 사용
  */
-export const HEADER_HEIGHT = 80 as const
+export const HEADER_HEIGHT = 88 as const
 
 /**
  * 스크롤 스파이 IntersectionObserver의 rootMargin

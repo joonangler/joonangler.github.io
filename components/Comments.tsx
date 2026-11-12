@@ -1,15 +1,12 @@
 'use client'
 
 import Giscus from '@giscus/react'
-import { useTheme } from 'next-themes'
 
 /**
  * Giscus 댓글 컴포넌트
  * GitHub Discussions 기반 댓글 시스템
  */
 export function Comments() {
-  const { resolvedTheme } = useTheme()
-
   // 환경변수 확인
   const repo = process.env.NEXT_PUBLIC_GISCUS_REPO
   const repoId = process.env.NEXT_PUBLIC_GISCUS_REPO_ID
@@ -34,7 +31,7 @@ export function Comments() {
         reactionsEnabled="1"
         emitMetadata="0"
         inputPosition="top"
-        theme={resolvedTheme === 'dark' ? 'dark' : 'light'}
+        theme="dark"
         lang="ko"
         loading="lazy"
       />

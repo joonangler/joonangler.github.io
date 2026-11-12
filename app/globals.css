@@ -5,6 +5,15 @@
 /* v4의 hover는 @media (hover: hover)에서만 적용된다. 터치 기기에서도 v3처럼 탭하면 hover 스타일이 걸리게 한다. */
 @custom-variant hover (&:hover);
 
+/* 새 사이트 화면의 올림 효과는 마우스처럼 올릴 수 있는 기기에서만 건다. 기존 hover 변형은 그대로 둔다. */
+@custom-variant hover-fine {
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @slot;
+    }
+  }
+}
+
 @theme {
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
@@ -115,7 +124,7 @@
   --color-purple-950: #3b0764;
 
   /* v4.3 기본 sans 스택(-apple-system, Segoe UI, Roboto…)은 v3와 달라 macOS 밖에서 글꼴이 바뀐다. v3 값으로 되돌린다. */
-  --font-sans: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-sans: 'Pretendard Variable', Pretendard, system-ui, -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
 }
 
 /*
@@ -146,6 +155,29 @@
 
 @utility text-balance {
   text-wrap: balance;
+}
+
+@layer base {
+  /* 사이트 틀 토큰 (설계 §12-1). 강조색 없음. --ring-shadow는 기존 --ring(hsl 채널)과 이름이 겹쳐 바꿨다. */
+  :root {
+    --bg: #000;
+    --ink: #fff;
+    --ink-2: rgb(255 255 255 / 0.64);
+    --ink-3: rgb(255 255 255 / 0.5);
+    --line: rgb(255 255 255 / 0.12);
+    --surface: rgb(255 255 255 / 0.06);
+    --ring-shadow: 0 0 0 1px rgb(255 255 255 / 0.09);
+    --ring-shadow-hover: 0 0 0 1px rgb(255 255 255 / 0.2);
+    --img-outline: rgb(255 255 255 / 0.1);
+    --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+    --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
+    --pad: clamp(20px, 5vw, 64px);
+    --max: 1320px;
+  }
+
+  html {
+    color-scheme: dark;
+  }
 }
 
 @layer base {
@@ -198,7 +230,9 @@
   body {
     color: var(--foreground);
     background: var(--background);
-    font-family: var(--font-geist-sans);
+    font-family: var(--font-sans);
+    word-break: keep-all;
+    -webkit-font-smoothing: antialiased;
   }
 }
 
@@ -384,5 +418,192 @@
 
   .prose blockquote {
     @apply border-l-4 border-gray-300 pl-4 italic text-gray-700 dark:border-gray-700 dark:text-gray-300;
+  }
+}
+
+/* ===== 사이트 틀: 떠 있는 내비와 한 줄 바닥 (계획 부록 C) ===== */
+@keyframes site-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@layer components {
+  .site-wrap {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 0 var(--pad);
+  }
+
+  .skip-link {
+    position: absolute;
+    left: 16px;
+    top: 16px;
+    z-index: 30;
+    padding: 10px 16px;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--bg);
+    transform: translateY(-200%);
+  }
+  .skip-link:focus {
+    transform: none;
+  }
+
+  .site-nav a:focus-visible,
+  .site-nav button:focus-visible,
+  .site-footer a:focus-visible,
+  .skip-link:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  .site-nav {
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    translate: -50% 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px;
+    border-radius: 999px;
+    animation: site-fade 500ms ease backwards;
+  }
+  /* 배경·블러·고리는 ::before에 둔다. .site-nav 자신이 backdrop-filter를 가지면 backdrop root가 되어
+     안쪽 탭 패널(좁은 화면)의 블러가 먹지 않는다. */
+  .site-nav::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    background: color-mix(in srgb, var(--bg) 72%, transparent);
+    backdrop-filter: blur(14px);
+    box-shadow: var(--ring-shadow);
+  }
+  .site-nav__name {
+    padding: 0 14px;
+    font-weight: 650;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .site-nav__tabs {
+    display: flex;
+    gap: 4px;
+  }
+  .site-nav__tab {
+    display: inline-flex;
+    align-items: center;
+    height: 40px;
+    padding: 0 14px;
+    border-radius: 999px;
+    font-size: 15px;
+    color: var(--ink-2);
+    transition:
+      color 150ms,
+      background-color 150ms;
+  }
+  .site-nav__tab[aria-current='page'] {
+    color: var(--ink);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .site-nav__tab:hover {
+      color: var(--ink);
+      background: var(--surface);
+    }
+  }
+  .site-nav__menu {
+    display: none;
+  }
+
+  @media (max-width: 860px) {
+    .site-nav {
+      left: 16px;
+      right: 16px;
+      translate: none;
+      justify-content: space-between;
+    }
+    .site-nav__tabs {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      gap: 2px;
+      padding: 8px;
+      border-radius: 22px;
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(14px);
+      box-shadow: var(--ring-shadow);
+    }
+    .site-nav__tab {
+      height: 48px;
+      font-size: 17px;
+    }
+    /* 접힘은 html.js 아래에서만 건다 — 자바스크립트가 꺼지면 탭이 펼쳐진 채 남는다. */
+    .js .site-nav__menu {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      height: 40px;
+      padding: 0 14px;
+      border-radius: 999px;
+      font-size: 15px;
+      color: var(--ink-2);
+    }
+    /* 누르는 자리를 44px 이상으로 */
+    .js .site-nav__menu::after {
+      content: '';
+      position: absolute;
+      inset: -2px 0;
+    }
+    .js .site-nav__tabs[data-open='false'] {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-nav {
+      animation: none;
+    }
+  }
+
+  .site-footer {
+    border-top: 1px solid var(--line);
+    padding: 32px 0 150px;
+    color: var(--ink-2);
+    font-size: 15px;
+  }
+  .site-footer__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 14px 32px;
+  }
+  .site-footer__name {
+    margin-right: 12px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .site-footer__copy {
+    font-size: 14px;
+    color: var(--ink-3);
+  }
+  .site-footer__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 20px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .site-footer a:hover {
+      color: var(--ink);
+    }
   }
 }
