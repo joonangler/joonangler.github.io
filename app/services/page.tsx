@@ -30,10 +30,11 @@ export default function ServicesPage() {
             <div className="site-wrap">
               <h2 className="sr-only">서비스 목록</h2>
               <div className="svc-grid">
-                {services.map((s, i) => (
-                  <Reveal key={s.slug} kind="rise" index={i + 1}>
+                {/* 띠 바로 아래라 첫 화면 안이다 — 스크롤 등장을 걸지 않는다(하이드레이션 전에는 숨겨져 LCP가 늦어진다) */}
+                {services.map((s) => (
+                  <div key={s.slug} className="services-cards__item">
                     <ServiceCard service={s} />
-                  </Reveal>
+                  </div>
                 ))}
               </div>
             </div>

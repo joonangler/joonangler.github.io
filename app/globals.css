@@ -819,6 +819,8 @@
   }
   .home-grid > h2 {
     grid-area: title;
+  }
+  .home-block h2 {
     margin: 0;
     font-size: clamp(28px, 3.4vw, 44px);
     font-weight: 600;
@@ -829,6 +831,10 @@
   }
   .home-grid > .home-body {
     grid-area: body;
+  }
+  /* 홈이 아닌 구역(서비스별·서비스 목록·문의)의 제목과 본문 사이 */
+  .service-block__body {
+    margin-top: clamp(28px, 4vw, 48px);
   }
   .home-grid > .rise-in {
     grid-area: more;
@@ -924,6 +930,28 @@
     object-fit: cover;
     object-position: left top;
     transition: transform 500ms var(--ease-out);
+  }
+  /* 작업이 하나면 한 칸 전체. 판을 그대로 늘리면 높이가 800px에 이르므로, 판은 시안의 첫 카드 폭(1.5fr)으로 두고 이름과 설명을 오른쪽 아래에 놓는다 */
+  .work-card--wide {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    align-items: end;
+    column-gap: 8px;
+  }
+  .work-card--wide .card-meta {
+    padding: 18px 20px 12px;
+  }
+  .work-card--wide h3 {
+    font-size: clamp(24px, 2.3vw, 31px);
+    line-height: 1.18;
+  }
+  @media (max-width: 860px) {
+    .work-card--wide {
+      display: block;
+    }
+    .work-card--wide .card-meta {
+      padding: 18px 12px 12px;
+    }
   }
   .work-card h3 {
     font-size: 21px;
@@ -1125,7 +1153,7 @@
   .services-cards {
     padding-top: clamp(40px, 6vw, 72px);
   }
-  .services-cards .rise-in {
+  .services-cards__item {
     height: 100%;
   }
 
@@ -1508,5 +1536,50 @@
     max-width: 30em;
     color: var(--ink-2);
     font-size: clamp(17px, 1.5vw, 20px);
+  }
+}
+
+/* ===== 새 화면의 키보드 초점과 누르는 자리, 짧은 글의 줄바꿈 (다듬기 검토) ===== */
+@layer components {
+  .card:focus-visible,
+  .btn:focus-visible,
+  .home-more:focus-visible,
+  .log-row:focus-visible,
+  .email-copy__address:focus-visible,
+  .contact-line__channels a:focus-visible,
+  .price-list li:focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+  }
+  .log-row:focus-visible {
+    border-radius: 6px;
+  }
+  .home-more:focus-visible,
+  .email-copy__address:focus-visible,
+  .contact-line__channels a:focus-visible {
+    border-radius: 6px;
+  }
+
+  /* 글 링크는 줄 높이(≈26px)가 누르는 자리라 좁은 화면에서 44px에 못 미친다 — 보이는 크기는 두고 누르는 자리만 넓힌다 */
+  .home-more,
+  .contact-line__channels a {
+    display: inline-block;
+    padding-block: 10px;
+    margin-block: -10px;
+  }
+
+  .principles h3,
+  .step-list h3,
+  .card-meta h3,
+  .faq dt {
+    text-wrap: balance;
+  }
+  .principles p,
+  .step-list p,
+  .card-meta p,
+  .price-scope,
+  .faq dd,
+  .contact-consult {
+    text-wrap: pretty;
   }
 }

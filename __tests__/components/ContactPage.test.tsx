@@ -17,6 +17,12 @@ describe('ContactPage', () => {
     expect(screen.getByText(CONTACT_PAGE.consult)).toBeTruthy()
   })
 
+  it('does not hide the address behind the scroll reveal — it is the LCP on a phone', () => {
+    vi.stubEnv('NEXT_PUBLIC_AUTHOR_EMAIL', 'someone@example.com')
+    render(<ContactPage />)
+    expect(screen.getByRole('link', { name: 'someone@example.com' }).closest('.rise-in')).toBeNull()
+  })
+
   it('draws no address block when none is set (dev) — nothing is faked', () => {
     vi.stubEnv('NEXT_PUBLIC_AUTHOR_EMAIL', '')
     render(<ContactPage />)

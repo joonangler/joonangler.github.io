@@ -24,11 +24,8 @@ export default function ContactPage() {
       <div className="home-sections">
         <section className="contact-main">
           <div className="site-wrap">
-            {email && (
-              <Reveal kind="rise" index={1}>
-                <EmailCopy email={email} />
-              </Reveal>
-            )}
+            {/* 띠 바로 아래라 첫 화면 안이다 — 스크롤 등장을 걸지 않는다(하이드레이션 전에는 숨겨져 LCP가 늦어진다) */}
+            {email && <EmailCopy email={email} />}
             <div className="contact-hints">
               <Reveal kind="title" as="h2">
                 보낼 때 적으면 좋은 것

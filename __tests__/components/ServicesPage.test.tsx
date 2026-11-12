@@ -45,6 +45,12 @@ describe('ServicesPage', () => {
     expect(within(list as HTMLElement).getAllByRole('listitem')).toHaveLength(2)
   })
 
+  it('does not hide the first-screen cards behind the scroll reveal — they are the LCP on a phone', () => {
+    render(<ServicesPage />)
+    const card = screen.getAllByRole('link').find((a) => href(a).startsWith('/services/'))!
+    expect(card.closest('.rise-in')).toBeNull()
+  })
+
   it('has exactly one link to contact', () => {
     render(<ServicesPage />)
     expect(screen.getAllByRole('link').filter((a) => href(a) === '/contact')).toHaveLength(1)
