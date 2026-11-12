@@ -29,7 +29,7 @@ test.describe('Responsive Design', () => {
     })
     const page = await context.newPage()
 
-    await page.goto('/')
+    await page.goto('/posts/')
 
     await expect(page.locator('body')).toBeVisible()
 
@@ -51,9 +51,9 @@ test.describe('Responsive Design', () => {
 
     await expect(page.locator('body')).toBeVisible()
 
-    // 데스크톱 레이아웃 확인
-    const header = page.locator('header')
-    await expect(header).toBeVisible()
+    // 데스크톱 레이아웃 확인 — 내비는 떠 있어서(position: fixed) <header>의 상자 크기가 0이다
+    const nav = page.getByRole('navigation', { name: '사이트' })
+    await expect(nav).toBeVisible()
 
     await context.close()
   })
@@ -95,18 +95,18 @@ test.describe('Responsive Design', () => {
     })
     const page = await context.newPage()
 
-    await page.goto('/')
+    await page.goto('/posts/')
 
     // 포스트 카드 탭 테스트
-    const firstPost = page.locator('article, [data-testid="post-card"]').first()
+    const firstPost = page.locator('main a[href^="/posts/"]:has(article)').first()
     await firstPost.tap()
 
     // 포스트 상세 페이지로 이동 확인
     await page.waitForLoadState('networkidle')
 
-    // 콘텐츠 확인
-    const content = page.locator('main, article')
-    await expect(content).toBeVisible()
+    // 콘텐츠 확인 — 글 화면이다
+    await expect(page).toHaveURL(/\/posts\/.+\//)
+    await expect(page.getByRole('main')).toBeVisible()
 
     await context.close()
   })
