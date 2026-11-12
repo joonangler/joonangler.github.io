@@ -11,6 +11,8 @@ export default defineConfig({
     env: {
       POSTS_DIR: path.resolve(__dirname, '__tests__/fixtures/posts'),
       DRAFTS_DIR: path.resolve(__dirname, '__tests__/fixtures/drafts'),
+      SERVICES_DIR: path.resolve(__dirname, '__tests__/fixtures/services'),
+      WORK_DIR: path.resolve(__dirname, '__tests__/fixtures/work'),
     },
     coverage: {
       provider: 'v8',

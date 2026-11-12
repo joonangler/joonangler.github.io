@@ -81,7 +81,7 @@
 ## Review Focus
 
 1. **자바스크립트를 끈 좁은 화면** — 「메뉴」 단추가 아무 일도 하지 않으므로, 탭이 접힌 채면 사이트를 돌아다닐 수 없다. 탭은 `html.js`일 때만 접힌다. → Task 5의 e2e 「no-js 390px에서 탭이 다 보인다」.
-2. **보는 도중 「모션 줄이기」를 켬** — 다음 프레임부터 멈추고 정지 화면 한 장(홈은 첫 모양)으로 바뀐다. → Task 9 「reduced motion turned on mid-session」.
+2. **보는 도중 「모션 줄이기」를 켬** — 다음 프레임부터 멈추고 **지금 모양**(옮겨 가는 중이면 가던 모양, 흩어진 때는 첫 모양)이 모인 정지 화면 한 장으로 바뀐다. 첫 모양으로 돌아가지 않는다(그림이 한 번 더 바뀌지 않게, 허브 2026-11-13). 처음부터 켜진 기기는 첫 모양이 모인 한 장이다. → Task 9 「reduced motion turned on mid-session」, Task 8 `stillShape`.
 3. **클립보드를 쓸 수 없는 브라우저**(`navigator.clipboard` 없음, 또는 `writeText`가 거절) — 복사 단추가 조용히 실패하면 안 된다. 주소 글자를 선택하고 「주소를 선택했습니다. 복사해 주세요」를 알린다. → Task 14 두 시험.
 4. **옮겨 가는 중에 화면 회전·창 크기 변경** — 폭이 바뀌면 점을 새로 깔되, 높이만 바뀌면(휴대폰 주소창) 점은 그대로 두고 목표 자리만 다시 잰다. 어느 쪽이든 지금 그려진 자리에서 출발해 튀지 않는다. → Task 8 `resizeAction`·`restartFrom` 시험.
 5. **서비스 자료의 잘못된 값** — 가격이 숫자가 아니거나, `related`에 없는 작업 이름이 있으면 빌드가 파일 이름과 함께 멈춘다. 조용히 빈 카드가 나가지 않는다. → Task 7 「rejects」 시험 셋.
@@ -364,7 +364,7 @@ test.describe('without javascript', () => {
 **첫 묶음의 실제 내용**(전부 `provisional: true`):
 - `content/services/web-app-fix.mdx`: title 「막힌 웹·앱 수리와 배포」, summary 「AI 도구로 만들다 멈춘 앱과 사이트의 오류를 고치고 배포합니다」, headline `['만들다 막힌 웹·앱,', '고치고 배포까지 마무리합니다']`, sub 「AI 도구로 만들다 멈춘 앱과 사이트가 대상입니다. 범위와 금액은 결제 전에 글로 정합니다.」, pricesLead 「진단은 비용을 받지 않습니다. 무엇을 며칠에 얼마에 고칠 수 있는지 먼저 알려 드립니다.」, prices `오류 1건 / 오류 1건 진단·수정, 변경 내역 문서 / 2 / 59000` · `오류 3건과 배포 / 오류 3건 수정, 배포 1회, 확인 방법 문서 / 3 / 180000` · `완성·배포·인계 / 오류 10건, 화면 15개 이내 마무리, 배포, 인계 문서 / 7 / 440000`, pricesNote 「페이지나 기능을 더하는 일은 범위를 보고 따로 정합니다.」, steps 넷(부록 B), prepare `['증상 화면', '오류 메시지', '소스', '쓴 도구', '배포할 곳']`, after·faq 비움, related `['ondobeach']`, contactLine 「어디서 막혔는지 알려 주세요」. **본문(이런 일을 합니다)은 문안이 확정되지 않아 비운다.**
 - `content/work/ondobeach.mdx`: title 「온도비치」, summary 「해수욕장과 해양 관측소의 수온을 지도 한 장에 모은 서비스」, kind `own`, order 1, cover `/work/ondobeach/home.jpg`, coverAlt 「온도비치 첫 화면」, url `https://ondobeach.com`. 본문 비움(묶음 2).
-- `public/work/ondobeach/home.jpg`: 1440×900 PNG 원본(브리프가 넘긴다)을 `sips -s format jpeg -s formatOptions 82 <원본> --out public/work/ondobeach/home.jpg`로. `stat -f%z` ≤ 256000.
+- `public/work/ondobeach/home.jpg`: 1440×900 PNG 원본(브리프가 넘긴다)을 `sips -s format jpeg -s formatOptions 82 <원본> --out public/work/ondobeach/home.jpg`로. `stat -f%z` ≤ 340000(처음 256000, 품질 82에서 329,111B라 올림 — 허브 2026-11-13: 글자·지도 선이 든 캡처라 품질과 폭을 지킨다).
 - `SERVICES_PAGE`: intro 「맡는 일과 가격, 일하는 방식입니다.」(자리 문안), principles 넷 — 결제 전에 진단 / 범위와 금액은 글로 / 복사본에서 작업 / 문서와 권한 반납, 본문은 부록 B의 진행 순서 문장을 자리 문안으로, notDone `['소스를 받을 수 없는 서비스의 수정', '허락 없는 접근']`, contactLine 「하려는 일이 있으면 문의로 알려 주세요」(자리 문안).
 - `CONTACT_PAGE`: hints `['증상 화면', '오류 메시지', '소스', '쓴 도구', '배포할 곳']`, consult 「먼저 상담으로 할 일과 금액을 정합니다. 진행과 결제 방법은 상담에서 안내합니다.」
 
@@ -464,7 +464,7 @@ expect(resizeAction({ w: 390, h: 700 }, { w: 390, h: 700 })).toBe('none')
 - Produces: `DotField(props: { mode: 'shapes' | 'plain'; mask: 'home' | 'service' | 'band'; slotRef?: React.RefObject<HTMLElement | null> })` — 부모를 채우는 `<canvas aria-hidden="true">`와 오른쪽 아래 `PauseButton`. `mode: 'shapes'`이면 `slotRef` 자리에 모양을 모은다.
 - Produces: `PauseButton({ paused, onToggle })` — `aria-pressed`, 글자 「배경 멈춤」/「배경 재생」, 높이 40px(좁은 화면 44px).
 
-돌리는 조건은 `보임 && !멈춤 && !모션줄이기 && document.visibilityState === 'visible'`(부록 B). 모션 줄이기면 정지 화면 한 장(홈은 첫 모양이 모인 모습)만 그린다. 포인터는 `pointerType === 'touch'`이면 무시. `devicePixelRatio`는 2까지. 크기 변경은 `resizeAction`을 따른다. 프레임 상태는 `useRef`에.
+돌리는 조건은 `보임 && !멈춤 && !모션줄이기 && document.visibilityState === 'visible'`(부록 B). 모션 줄이기가 처음부터 켜져 있으면 정지 화면 한 장(홈은 첫 모양이 모인 모습)만 그린다. 보는 도중에 켜면 지금 모양(가던 모양)에서 멈춘다(Review Focus 2). 포인터는 `pointerType === 'touch'`이면 무시. `devicePixelRatio`는 2까지. 크기 변경은 `resizeAction`을 따른다. 프레임 상태는 `useRef`에.
 
 - [ ] **Step 1: 실패하는 테스트** — `HTMLCanvasElement.prototype.getContext`를 가짜 문맥(`clearRect`, `beginPath`, `arc`, `fill`, `setTransform`, `fillStyle`)으로, `IntersectionObserver`·`matchMedia`·`requestAnimationFrame`·`cancelAnimationFrame`을 `vi.fn`으로 바꾼다.
 
