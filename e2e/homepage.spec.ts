@@ -1,49 +1,33 @@
 import { test, expect } from '@playwright/test'
 
 test.describe('Homepage', () => {
-  test('should load homepage successfully', async ({ page }) => {
+  test('shows the hero sentence and its sub line', async ({ page }) => {
     await page.goto('/')
-
-    // 페이지 타이틀 확인
-    await expect(page).toHaveTitle(/Blog/)
-
-    // 헤더 확인
-    const header = page.locator('header')
-    await expect(header).toBeVisible()
-
-    // 메인 콘텐츠 확인
-    const main = page.locator('main')
-    await expect(main).toBeVisible()
+    const h1 = page.getByRole('heading', { level: 1 })
+    await expect(h1).toBeVisible()
+    expect((await h1.textContent())!.replace(/\s+/g, ' ').trim()).toBe('만들고, 내놓고, 수익까지 도전합니다')
+    await expect(page.getByText('AI와 함께 답을 찾아가며, 그 과정을 기록으로 남깁니다.')).toBeVisible()
   })
 
-  test('should display recent posts', async ({ page }) => {
+  test('has the site nav, a decorative canvas and a pause button', async ({ page }) => {
     await page.goto('/')
-
-    // 포스트 목록이 표시되는지 확인
-    const posts = page.locator('article, [data-testid="post-card"]')
-    await expect(posts.first()).toBeVisible()
-
-    // 포스트 개수 확인 (최소 1개 이상)
-    const count = await posts.count()
-    expect(count).toBeGreaterThan(0)
+    await expect(page.getByRole('navigation').first()).toBeVisible()
+    expect(await page.locator('canvas').first().getAttribute('aria-hidden')).toBe('true')
+    const pause = page.getByRole('button', { name: '배경 멈춤' })
+    await expect(pause).toBeVisible()
+    await pause.click()
+    await expect(page.getByRole('button', { name: '배경 재생' })).toHaveAttribute('aria-pressed', 'true')
   })
 
-  test('should have navigation menu', async ({ page }) => {
+  test('the hero is not hidden under the floating nav', async ({ page }) => {
     await page.goto('/')
-
-    // 네비게이션 링크 확인
-    const nav = page.locator('nav')
-    await expect(nav).toBeVisible()
-
-    // Posts 링크
-    const postsLink = page.getByRole('link', { name: /posts?/i })
-    await expect(postsLink).toBeVisible()
+    const navBox = await page.locator('.site-nav').boundingBox()
+    const h1Box = await page.getByRole('heading', { level: 1 }).boundingBox()
+    expect(h1Box!.y).toBeGreaterThan(navBox!.y + navBox!.height)
   })
 
   test('should have footer', async ({ page }) => {
     await page.goto('/')
-
-    const footer = page.locator('footer')
-    await expect(footer).toBeVisible()
+    await expect(page.locator('footer')).toBeVisible()
   })
 })
