@@ -9,7 +9,9 @@ import { useRef, useState } from 'react'
  */
 export function EmailCopy({ email }: { email: string }) {
   const textRef = useRef<HTMLAnchorElement>(null)
-  const [status, setStatus] = useState('')
+  // 같은 문구가 다시 나와도 보조 기술이 다시 읽도록, 결과마다 새 노드를 꽂는다(key가 바뀌면 React가 노드를 새로 만든다)
+  const [status, setStatus] = useState({ text: '', n: 0 })
+  const announce = (text: string) => setStatus((s) => ({ text, n: s.n + 1 }))
 
   function selectText() {
     const el = textRef.current
@@ -25,10 +27,10 @@ export function EmailCopy({ email }: { email: string }) {
     try {
       if (!navigator.clipboard?.writeText) throw new Error('no clipboard')
       await navigator.clipboard.writeText(email)
-      setStatus('복사했습니다')
+      announce('복사했습니다')
     } catch {
       selectText()
-      setStatus('주소를 선택했습니다. 복사해 주세요')
+      announce('주소를 선택했습니다. 복사해 주세요')
     }
   }
 
@@ -41,7 +43,7 @@ export function EmailCopy({ email }: { email: string }) {
         복사
       </button>
       <span role="status" aria-live="polite" className="email-copy__status">
-        {status}
+        <span key={status.n}>{status.text}</span>
       </span>
     </div>
   )

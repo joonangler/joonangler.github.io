@@ -41,4 +41,15 @@ describe('EmailCopy', () => {
     expect(status.getAttribute('aria-live')).toBe('polite')
     expect(status.textContent).toBe('')
   })
+
+  it('announces again when the same message repeats — each result is a freshly inserted node', async () => {
+    Object.assign(navigator, { clipboard: { writeText: vi.fn().mockResolvedValue(undefined) } })
+    render(<EmailCopy email={ADDRESS} />)
+    const press = () => fireEvent.click(screen.getByRole('button', { name: '복사' }))
+    press()
+    const first = await screen.findByText('복사했습니다')
+    press()
+    await waitFor(() => expect(screen.getByText('복사했습니다')).not.toBe(first))
+    expect(screen.getAllByText('복사했습니다')).toHaveLength(1)
+  })
 })
