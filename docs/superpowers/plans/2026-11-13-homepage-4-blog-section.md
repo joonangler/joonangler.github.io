@@ -150,16 +150,16 @@
 | 17 | 같은 파일 빈 상태 | No tags found. | 아직 태그가 없습니다 | |
 | 18 | `components/ui/TagCloud.tsx` 빈 상태 | No tags yet | 아직 태그가 없습니다 | |
 | 19 | 같은 파일 `title` | {n} post(s) | 글 {n}편 | |
-| 20 | `lib/mdx.ts` `readingTime.text`(글 카드·글 머리) | {n} min read | {n}분 | 읽는 데 {n}분 |
+| 20 | `lib/mdx.ts` `readingTime.text`(글 카드·글 머리) | {n} min read | 읽는 데 {n}분 | {n}분 |
 | 21 | `components/post/PostHeader.tsx` | by {author} | 글쓴이 {author} | {author} |
 | 22 | `components/series/SeriesCard.tsx` | {n} part(s) | {n}편 | |
-| 23 | 같은 파일 | {m} min read | {m}분 | 읽는 데 {m}분 |
+| 23 | 같은 파일 | {m} min read | 읽는 데 {m}분 | {m}분 |
 | 24 | 같은 파일 | Started | 시작 | 첫 글 |
 | 25 | 같은 파일 | Updated | 최근 | 마지막 글, 갱신 |
 | 26 | `components/post/SeriesNavTop.tsx` | Series | 시리즈 | |
 | 27 | 같은 파일 | Part {i} / {n} | {i} / {n}편 | {n}편 중 {i}번째 |
 | 28 | `SeriesNavTop`·`SeriesNavBottom` | View all posts in this series | 이 시리즈의 글 모두 보기 | |
-| 29 | `SeriesNavTop`·`SeriesNavBottom` | Current post | 지금 글 | 읽는 중 |
+| 29 | `SeriesNavTop`·`SeriesNavBottom` | Current post | 읽는 중 | 지금 글 |
 | 30 | `components/post/SeriesNavBottom.tsx` | Previous | 이전 글 | |
 | 31 | 같은 파일 | Next | 다음 글 | |
 | 32 | 같은 파일 | Part {n} | {n}편 | |
@@ -168,11 +168,11 @@
 | 35 | `components/post/TableOfContents.tsx`(둘) | On This Page | 목차 | |
 | 36 | 같은 파일 `summary`의 `aria-label` | Toggle table of contents | (지운다 — 보이는 글자 「목차」가 이름이 된다) | 목차 펼치기 |
 | 37 | 같은 파일 `<nav>`의 `aria-label`(둘) | Table of contents | 목차 | |
-| 38 | `components/ui/Pagination.tsx` `aria-label` | Pagination | 쪽 이동 | 페이지 |
-| 39 | 같은 파일 | Previous page | 이전 쪽 | 이전 페이지 |
-| 40 | 같은 파일 | Next page | 다음 쪽 | 다음 페이지 |
-| 41 | 같은 파일 | Current page {n} | {n}쪽, 지금 쪽 | |
-| 42 | 같은 파일 | Go to page {n} | {n}쪽으로 | |
+| 38 | `components/ui/Pagination.tsx` `aria-label` | Pagination | 페이지 이동 | 쪽 이동 |
+| 39 | 같은 파일 | Previous page | 이전 페이지 | 이전 쪽 |
+| 40 | 같은 파일 | Next page | 다음 페이지 | 다음 쪽 |
+| 41 | 같은 파일 | Current page {n} | {n}페이지, 현재 페이지 | |
+| 42 | 같은 파일 | Go to page {n} | {n}페이지로 이동 | |
 | 43 | `components/ui/SearchBar.tsx` 기본 `placeholder` | Search... | 검색 | |
 | 44 | 같은 파일 `aria-label` | Search | 검색어 | |
 | 45 | 같은 파일 화면 읽기 프로그램용 설명 | Press Cmd+K to focus search, Escape to clear | ⌘K 또는 Ctrl+K로 검색창에 갑니다. Esc로 검색어를 지웁니다 | |
@@ -517,12 +517,12 @@ it('every token color without its own background is 4.5:1 on the code surface', 
 ### Task 7: 영어 문구를 한국어로
 
 **Files:**
-- Modify: §1-6 표의 파일들, `__tests__/lib/mdx.test.ts:108`(`/\d+ min read/` → `/^\d+분$/`)
+- Modify: §1-6 표의 파일들, `__tests__/lib/mdx.test.ts:108`(`/\d+ min read/` → `/^읽는 데 \d+분$/`)
 - Create: `e2e/blog-copy.spec.ts`, `__tests__/components/CodeBlockHeader.test.tsx`, `__tests__/components/SeriesNav.test.tsx`(Top·Bottom), `__tests__/components/Pagination.test.tsx`, `__tests__/components/TableOfContents.test.tsx`
 
 **Interfaces:**
 - Consumes: Task 1 `BLOG_PAGES`(fixtures 내용이 한국어).
-- Produces: `readingTime.text` = `` `${Math.max(1, Math.ceil(minutes))}분` ``(`lib/mdx.ts`, `reading-time`의 영어 `text`를 쓰지 않는다).
+- Produces: `readingTime.text` = `` `읽는 데 ${Math.max(1, Math.ceil(minutes))}분` ``(`lib/mdx.ts`, `reading-time`의 영어 `text`를 쓰지 않는다).
 
 - [ ] **Step 1: 실패하는 시험**
 
@@ -557,7 +557,7 @@ it('says it could not copy when the clipboard refuses, then resets', async () =>
 })
 ```
 
-나머지 컴포넌트 시험은 §1-6 표의 「옮긴 문구」를 `getByText`·`getByRole(name)`으로 단정한다(예: `SeriesNavBottom`의 첫 글에서 「첫 글입니다」, `Pagination` `currentPage=2`에서 `getByRole('link', { name: '이전 쪽' })`과 `getByRole('link', { name: '2쪽, 지금 쪽' })`, `TableOfContents` `variant="collapsible"`의 `summary` 이름 「목차」).
+나머지 컴포넌트 시험은 §1-6 표의 「옮긴 문구」를 `getByText`·`getByRole(name)`으로 단정한다(예: `SeriesNavBottom`의 첫 글에서 「첫 글입니다」, `Pagination` `currentPage=2`에서 `getByRole('link', { name: '이전 페이지' })`과 `getByRole('link', { name: '2페이지, 현재 페이지' })`, `TableOfContents` `variant="collapsible"`의 `summary` 이름 「목차」).
 
 - [ ] **Step 2: 실패 확인** — `npx playwright test e2e/blog-copy.spec.ts --project=chromium` → `All`·`Posts`·`min`·`read`·`Copy`·`On`·`This`·`Page`·`Series`·`Part`… 로 FAIL. 새 vitest 시험들 FAIL.
 - [ ] **Step 3: 구현** — §1-6 표대로. 글자만 바꾸고 태그·클래스·짜임은 그대로.
