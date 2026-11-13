@@ -1,6 +1,7 @@
 import { type Metadata } from 'next'
 import { getAllPosts } from '@/lib/posts'
 import { Container } from '@/components/layout/Container'
+import { PostList } from '@/components/post/PostList'
 import { PostListWithPagination } from '@/components/post/PostListWithPagination'
 import { Suspense } from 'react'
 
@@ -33,15 +34,14 @@ export default async function PostsPage() {
       </div>
 
       {/* 페이지네이션이 포함된 포스트 목록 */}
+      {/* 대기 자리는 정적 HTML에 그대로 남는다 — 스크립트가 꺼진 기기도 첫 쪽 글 카드를 본다.
+          하이드레이션 뒤 첫 쪽과 같은 마크업이라 화면이 바뀌지 않는다. */}
       <Suspense
         fallback={
-          <div
-            className="py-16 text-center text-muted-foreground"
-            role="status"
-            aria-live="polite"
-          >
-            <p>Loading posts...</p>
-          </div>
+          <PostList
+            posts={allPosts.slice(0, 12)}
+            emptyMessage="아직 올린 글이 없습니다"
+          />
         }
       >
         <PostListWithPagination allPosts={allPosts} postsPerPage={12} />
