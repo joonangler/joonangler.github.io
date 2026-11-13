@@ -16,9 +16,9 @@ test('the post list shows its first page without scripts', async ({ page }) => {
 test('search says it needs scripts and offers tags and series', async ({ page }) => {
   test.skip(!process.env.E2E_STATIC, '운영 빌드(E2E_STATIC=1)에서만 의미가 있다')
   await page.goto('/search/')
-  // <noscript> 안의 안내다. Playwright의 스크립트 끄기는 Chromium 기본 스타일의 noscript{display:none}을 못 걷어
-  // 「보인다」는 잴 수 없다(실제로 스크립트를 끈 브라우저는 보인다) — DOM에 있는지와 링크 주소를 본다.
-  await expect(page.locator('noscript p', { hasText: '검색은 자바스크립트를 켜야 쓸 수 있습니다' })).toBeAttached()
+  // <noscript> 안의 안내다. getByText는 noscript 안을 건너뛰므로 noscript p로 잡는다(스크립트를 끈 화면 캡처에서 보임을 확인).
+  const note = page.locator('noscript p', { hasText: '검색은 자바스크립트를 켜야 쓸 수 있습니다' })
+  await expect(note).toBeVisible()
   await expect(page.getByText('로딩 중...')).toBeHidden()
   // 구역 내비에도 같은 이름의 링크가 있다 — 안내 문장 바로 아래 줄로 좁힌다
   const help = page.locator('noscript p', { hasText: '검색은 자바스크립트' }).locator('xpath=following-sibling::p[1]')
