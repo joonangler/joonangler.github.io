@@ -32,19 +32,19 @@ export default function RootLayout({
         <link
           rel="alternate"
           type="application/rss+xml"
-          title="RSS Feed"
+          title="RSS 피드"
           href="/rss.xml"
         />
         <link
           rel="alternate"
           type="application/atom+xml"
-          title="Atom Feed"
+          title="Atom 피드"
           href="/atom.xml"
         />
         <link
           rel="alternate"
           type="application/feed+json"
-          title="JSON Feed"
+          title="JSON 피드"
           href="/feed.json"
         />
         <JsonLd data={generateWebSiteSchema()} />

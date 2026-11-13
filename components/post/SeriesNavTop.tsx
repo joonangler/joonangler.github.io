@@ -41,7 +41,7 @@ export function SeriesNavTop({ navigation }: SeriesNavProps) {
       <div className="border-b border-border px-6 py-4">
         <div className="flex items-center justify-between">
           <div className="flex-1">
-            <p className="text-sm text-muted-foreground">Series</p>
+            <p className="text-sm text-muted-foreground">시리즈</p>
             <h3 className="mt-1 text-lg font-semibold text-foreground">
               <Link
                 href={`/series/${series.slug}`}
@@ -53,7 +53,7 @@ export function SeriesNavTop({ navigation }: SeriesNavProps) {
           </div>
           <div className="text-right">
             <p className="mt-1 text-lg font-semibold text-foreground">
-              Part {currentNumber} / {totalPosts}
+              {currentNumber} / {totalPosts}편
             </p>
           </div>
         </div>
@@ -68,7 +68,7 @@ export function SeriesNavTop({ navigation }: SeriesNavProps) {
           aria-controls="series-posts-list"
         >
           <span className="text-sm font-medium text-muted-foreground">
-            View all posts in this series
+            이 시리즈의 글 모두 보기
           </span>
           {isExpanded ? (
             <ChevronUp className="h-4 w-4 text-ink-3" />
@@ -98,7 +98,7 @@ export function SeriesNavTop({ navigation }: SeriesNavProps) {
                             {post.title}
                           </p>
                           <p className="mt-0.5 text-xs text-muted-foreground">
-                            Current post
+                            읽는 중
                           </p>
                         </div>
                       </div>

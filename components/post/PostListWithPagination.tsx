@@ -42,7 +42,7 @@ export function PostListWithPagination({
   return (
     <>
       {/* 포스트 목록 */}
-      <PostList posts={paginatedPosts} emptyMessage="No posts found." />
+      <PostList posts={paginatedPosts} emptyMessage="아직 올린 글이 없습니다" />
 
       {/* 페이지네이션 */}
       {totalPages > 1 && (
@@ -53,7 +53,7 @@ export function PostListWithPagination({
             basePath="/posts"
           />
           <p className="mt-4 text-center text-sm text-muted-foreground">
-            Showing {startIndex + 1}-{Math.min(endIndex, totalPosts)} of {totalPosts}
+            글 {totalPosts}편 중 {startIndex + 1}–{Math.min(endIndex, totalPosts)}
           </p>
         </div>
       )}

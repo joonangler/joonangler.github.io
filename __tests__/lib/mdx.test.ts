@@ -105,7 +105,7 @@ describe('mdx', () => {
       const post = await getPostBySlug('test-post')
 
       expect(post?.readingTime).toBeDefined()
-      expect(post?.readingTime.text).toMatch(/\d+ min read/)
+      expect(post?.readingTime.text).toMatch(/^읽는 데 \d+분$/)
       expect(post?.readingTime.minutes).toBeGreaterThan(0)
       expect(post?.readingTime.words).toBeGreaterThan(0)
     })

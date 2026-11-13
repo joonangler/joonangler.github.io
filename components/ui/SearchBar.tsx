@@ -65,7 +65,7 @@ interface SearchBarProps {
 export function SearchBar({
   onSearch,
   defaultValue = '',
-  placeholder = 'Search...',
+  placeholder = '검색',
   className,
   autoFocus = false,
   showIcon = true,
@@ -156,13 +156,13 @@ export function SearchBar({
           showIcon && 'pl-10',
           (query || showShortcutHint) && 'pr-20'
         )}
-        aria-label="Search"
+        aria-label="검색어"
         aria-describedby="search-description"
       />
 
       {/* Screen reader description */}
       <span id="search-description" className="sr-only">
-        Press Cmd+K to focus search, Escape to clear
+        ⌘K 또는 Ctrl+K로 검색창에 갑니다. Esc로 검색어를 지웁니다
       </span>
 
       {/* Right side: Clear button or Keyboard hint */}
@@ -178,7 +178,7 @@ export function SearchBar({
               'transition-colors',
               'focus:outline-hidden focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background'
             )}
-            aria-label="Clear search"
+            aria-label="검색어 지우기"
           >
             <svg
               className="h-4 w-4"

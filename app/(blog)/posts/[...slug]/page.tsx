@@ -92,8 +92,8 @@ export default async function PostPage({ params }: PostPageProps) {
 
   // JSON-LD 스키마 생성
   const breadcrumbItems = [
-    { name: 'Home', url: '/' },
-    { name: 'Posts', url: '/posts' },
+    { name: '홈', url: '/' },
+    { name: '글', url: '/posts' },
     { name: post.title, url: `/posts/${slugString}` },
   ]
 

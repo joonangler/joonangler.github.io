@@ -7,14 +7,14 @@ import { SeriesCard } from '@/components/series/SeriesCard'
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://yourblog.com'
 
 export const metadata: Metadata = {
-  title: 'Series',
-  description: 'Browse post series',
+  title: '시리즈',
+  description: '글 시리즈 모음',
   alternates: {
     canonical: `${siteUrl}/series`,
   },
   openGraph: {
-    title: 'Series',
-    description: 'Browse post series',
+    title: '시리즈',
+    description: '글 시리즈 모음',
     url: `${siteUrl}/series`,
   },
 }
@@ -25,7 +25,7 @@ export default async function SeriesPage() {
   if (allSeries.length === 0) {
     return (
       <Container className="py-12">
-        <EmptyState message="No series found." />
+        <EmptyState message="아직 시리즈가 없습니다" />
       </Container>
     )
   }
@@ -38,9 +38,9 @@ export default async function SeriesPage() {
     <Container className="py-12">
       {/* 헤더 */}
       <div className="mb-12 text-center">
-        <h1 className="mb-4 text-4xl font-bold text-foreground">Series</h1>
+        <h1 className="mb-4 text-4xl font-bold text-foreground">시리즈</h1>
         <p className="text-lg text-muted-foreground">
-          Explore {allSeries.length} post {allSeries.length === 1 ? 'series' : 'series'}
+          시리즈 {allSeries.length}개
         </p>
       </div>
 

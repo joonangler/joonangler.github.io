@@ -1,4 +1,5 @@
 import { type Metadata } from 'next'
+import Link from 'next/link'
 import { Suspense } from 'react'
 import { getAllPosts } from '@/lib/posts'
 import { Container } from '@/components/layout/Container'
@@ -46,15 +47,26 @@ export default async function SearchPage() {
 
 /**
  * Loading fallback for search interface
+ * 「로딩 중...」은 스크립트가 있을 때(html.js)만 보인다. 스크립트가 꺼진 기기는 검색을 못 쓰므로
+ * 그렇다고 알리고 태그·시리즈로 가는 길을 준다.
  */
 function SearchFallback() {
   return (
     <div className="min-h-[60vh]">
       <div className="mb-8 text-center">
         <h1 className="mb-4 text-4xl font-bold">검색</h1>
-        <p className="text-muted-foreground">로딩 중...</p>
+        <p className="hidden text-muted-foreground [.js_&]:block">로딩 중...</p>
+        <noscript>
+          <p className="text-muted-foreground">
+            검색은 자바스크립트를 켜야 쓸 수 있습니다. 태그나 시리즈로 글을 찾아 보세요.
+          </p>
+          <p className="mt-4 flex justify-center gap-6 text-foreground">
+            <Link href="/tags/" className="underline decoration-ink-3 underline-offset-4">태그</Link>
+            <Link href="/series/" className="underline decoration-ink-3 underline-offset-4">시리즈</Link>
+          </p>
+        </noscript>
       </div>
-      <div className="mx-auto mb-8 max-w-2xl">
+      <div className="mx-auto mb-8 hidden max-w-2xl [.js_&]:block">
         <div className="h-10 w-full animate-pulse rounded-lg bg-muted" />
       </div>
     </div>

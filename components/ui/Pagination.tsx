@@ -65,14 +65,14 @@ export function Pagination({
   return (
     <nav
       className={cn('flex items-center justify-center gap-2', className)}
-      aria-label="Pagination"
+      aria-label="페이지 이동"
     >
       {/* 이전 페이지 */}
       {currentPage > 1 ? (
         <Link
           href={getPageUrl(currentPage - 1)}
           className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition-colors hover:bg-foreground/10 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-          aria-label="Previous page"
+          aria-label="이전 페이지"
         >
           <ChevronLeft className="h-4 w-4" />
         </Link>
@@ -107,7 +107,7 @@ export function Pagination({
                 ? 'border-primary bg-primary text-primary-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background'
                 : 'border-border bg-card text-muted-foreground hover:bg-foreground/10 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background'
             )}
-            aria-label={isCurrentPage ? `Current page ${page}` : `Go to page ${page}`}
+            aria-label={isCurrentPage ? `${page}페이지, 현재 페이지` : `${page}페이지로 이동`}
             aria-current={isCurrentPage ? 'page' : undefined}
           >
             {page}
@@ -120,7 +120,7 @@ export function Pagination({
         <Link
           href={getPageUrl(currentPage + 1)}
           className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-card text-muted-foreground transition-colors hover:bg-foreground/10 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-          aria-label="Next page"
+          aria-label="다음 페이지"
         >
           <ChevronRight className="h-4 w-4" />
         </Link>

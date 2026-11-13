@@ -144,7 +144,7 @@ export const mdxComponents: MDXComponents = {
         <div
           className="relative my-6 overflow-hidden rounded-2xl bg-card shadow-[var(--ring-shadow)]"
           role="region"
-          aria-label={`${language} code snippet`}
+          aria-label={`${language} 코드`}
         >
           {/* 헤더 (복사 버튼 포함) */}
           <CodeBlockHeader code={codeText} language={language} />
@@ -299,7 +299,7 @@ export const mdxComponents: MDXComponents = {
           <div
             className="relative my-6 overflow-hidden rounded-2xl bg-card shadow-[var(--ring-shadow)]"
             role="region"
-            aria-label={`${language} code snippet`}
+            aria-label={`${language} 코드`}
           >
             {/* 헤더 (제목 또는 언어, 복사 버튼 포함) */}
             <CodeBlockHeader code={codeText} language={language} title={title} />

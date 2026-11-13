@@ -56,8 +56,8 @@ export function CodeBlock({
   const hash = createHash('md5').update(codeString).digest('hex').slice(0, 8)
   const codeId = `code-block-${hash}`
   const ariaLabel = title
-    ? `${language} code snippet: ${title}`
-    : `${language} code snippet`
+    ? `${language} 코드: ${title}`
+    : `${language} 코드`
 
   return (
     <div
@@ -77,7 +77,7 @@ export function CodeBlock({
             className
           )}
           {...(showLineNumbers && { 'data-line-numbers': true })}
-          aria-label={`${language} code block${showLineNumbers ? ' with line numbers' : ''}`}
+          aria-label={`${language} 코드${showLineNumbers ? ', 줄 번호 있음' : ''}`}
           tabIndex={0}
         >
           <code className={className} data-language={language}>

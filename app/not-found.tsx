@@ -1,4 +1,14 @@
+import { type Metadata } from 'next'
 import Link from 'next/link'
+
+/**
+ * Next가 404에 noindex를 스스로 넣는다. 루트 메타의 `index, follow`가 남으면 robots 태그가 둘이 되므로
+ * `robots: null`로 지운다(같은 키는 뒤의 것이 덮는다).
+ */
+export const metadata: Metadata = {
+  title: '페이지를 찾을 수 없습니다',
+  robots: null,
+}
 
 /**
  * 404 — 사이트 틀(내비·바닥) 안의 한국어 화면. 나갈 길은 「홈으로」 하나.

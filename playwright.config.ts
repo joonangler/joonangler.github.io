@@ -51,6 +51,8 @@ export default defineConfig({
     // 글은 실제 content가 아니라 e2e fixtures를 읽는다(로컬 초안 유무에 결과가 달라지지 않게). 3000번에 다른 서버가 떠 있으면 env가 먹지 않는다(reuseExistingServer).
     env: {
       NEXT_PUBLIC_AUTHOR_EMAIL: 'someone@example.com',
+      // 글쓴이 기본값이 영어('Blog Author')라 운영과 같은 값(.env.production)을 준다
+      NEXT_PUBLIC_AUTHOR_NAME: 'Joonangler',
       POSTS_DIR: path.resolve('e2e/fixtures/posts'),
       DRAFTS_DIR: path.resolve('e2e/fixtures/drafts'),
     },

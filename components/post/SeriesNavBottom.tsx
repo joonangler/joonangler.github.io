@@ -43,21 +43,21 @@ export function SeriesNavBottom({ navigation }: SeriesNavProps) {
             <ChevronLeft className="h-5 w-5 shrink-0 text-ink-3 transition-transform group-hover:-translate-x-1" />
             <div className="flex-1 text-left">
               <p className="text-xs font-medium text-muted-foreground">
-                Previous
+                이전 글
               </p>
               <p className="mt-1 line-clamp-2 text-sm font-medium text-foreground">
                 {previous.title}
               </p>
               {previous.seriesOrder && (
                 <p className="mt-1 text-xs text-ink-3">
-                  Part {previous.seriesOrder}
+                  {previous.seriesOrder}편
                 </p>
               )}
             </div>
           </Link>
         ) : (
           <div className="flex items-center justify-center p-6 text-ink-3">
-            <p className="text-sm">First post</p>
+            <p className="text-sm">첫 글입니다</p>
           </div>
         )}
 
@@ -69,14 +69,14 @@ export function SeriesNavBottom({ navigation }: SeriesNavProps) {
           >
             <div className="flex-1 text-right">
               <p className="text-xs font-medium text-muted-foreground">
-                Next
+                다음 글
               </p>
               <p className="mt-1 line-clamp-2 text-sm font-medium text-foreground">
                 {next.title}
               </p>
               {next.seriesOrder && (
                 <p className="mt-1 text-xs text-ink-3">
-                  Part {next.seriesOrder}
+                  {next.seriesOrder}편
                 </p>
               )}
             </div>
@@ -84,7 +84,7 @@ export function SeriesNavBottom({ navigation }: SeriesNavProps) {
           </Link>
         ) : (
           <div className="flex items-center justify-center p-6 text-ink-3">
-            <p className="text-sm">Last post</p>
+            <p className="text-sm">마지막 글입니다</p>
           </div>
         )}
       </div>
@@ -98,7 +98,7 @@ export function SeriesNavBottom({ navigation }: SeriesNavProps) {
           aria-controls="series-posts-list"
         >
           <span className="text-sm font-medium text-muted-foreground">
-            View all posts in this series
+            이 시리즈의 글 모두 보기
           </span>
           {isExpanded ? (
             <ChevronUp className="h-4 w-4 text-ink-3" />
@@ -128,7 +128,7 @@ export function SeriesNavBottom({ navigation }: SeriesNavProps) {
                             {post.title}
                           </p>
                           <p className="mt-0.5 text-xs text-muted-foreground">
-                            Current post
+                            읽는 중
                           </p>
                         </div>
                       </div>

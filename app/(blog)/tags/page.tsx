@@ -10,14 +10,14 @@ import { TagCloud } from '@/components/ui/TagCloud'
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://yourblog.com'
 
 export const metadata: Metadata = {
-  title: 'Tags',
-  description: 'Browse posts by tags',
+  title: '태그',
+  description: '태그로 글 찾기',
   alternates: {
     canonical: `${siteUrl}/tags`,
   },
   openGraph: {
-    title: 'Tags',
-    description: 'Browse posts by tags',
+    title: '태그',
+    description: '태그로 글 찾기',
     url: `${siteUrl}/tags`,
   },
 }
@@ -31,7 +31,7 @@ export default async function TagsPage() {
   if (tags.length === 0) {
     return (
       <Container className="py-12">
-        <EmptyState message="No tags found." />
+        <EmptyState message="아직 태그가 없습니다" />
       </Container>
     )
   }
@@ -40,9 +40,9 @@ export default async function TagsPage() {
     <Container className="py-12">
       {/* 헤더 */}
       <div className="mb-12 text-center">
-        <h1 className="mb-4 text-4xl font-bold text-foreground">Tags</h1>
+        <h1 className="mb-4 text-4xl font-bold text-foreground">태그</h1>
         <p className="text-lg text-muted-foreground">
-          Explore {tags.length} {tags.length === 1 ? 'tag' : 'tags'} across all posts
+          태그 {tags.length}개
         </p>
       </div>
 
@@ -56,7 +56,7 @@ export default async function TagsPage() {
 
       {/* 전체 태그 목록 */}
       <section className="mb-16">
-        <h2 className="mb-6 text-2xl font-semibold text-foreground">All Tags</h2>
+        <h2 className="mb-6 text-2xl font-semibold text-foreground">모든 태그</h2>
         <div className="flex flex-wrap gap-3">
           {tags.map((tag) => (
             <Link
